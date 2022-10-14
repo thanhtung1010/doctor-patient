@@ -1,0 +1,1 @@
+export * as AuthenticationComponent from './authentication/authentication.component';
