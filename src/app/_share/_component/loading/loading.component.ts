@@ -6,8 +6,9 @@ import { loadingType } from "../../_enum/loading.enum";
     templateUrl: './loading.component.html'
 })
 
-export class Loading implements OnInit {
-    @Input() type: loadingType = loadingType.Dotcycle;
+export class LoadingComponent implements OnInit {
+    @Input() type: loadingType = loadingType.dotcycle;
+    LOADING_TYPE = loadingType;
 
     constructor() { }
 

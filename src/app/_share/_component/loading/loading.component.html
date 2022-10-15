@@ -1,0 +1,11 @@
+<ng-container *ngSwitch="type">
+    <ng-container *ngSwitchCase="LOADING_TYPE.dotCycle">
+        <div class="tung-loading-dot-cycle">
+            <div></div><div></div><div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="LOADING_TYPE.cycleOneLine">
+        <div class="tung-loading-cycle-one-line"><div></div><div></div><div></div><div></div></div>
+    </ng-container>
+</ng-container>
