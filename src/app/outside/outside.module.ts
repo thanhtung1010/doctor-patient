@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthenticationComponent } from './_component';
-import { ShareModule } from '../_share/share.module';
+import { LoginComponent } from './_component';
 import { RouterModule, Routes } from '@angular/router';
+import SharedModule from 'app/_share/share.module';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/authentication' },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   {
-    path: 'authentication',
-    component: AuthenticationComponent
+    path: 'login',
+    component: LoginComponent
   },
 ];
 
 
 @NgModule({
   declarations: [
-    AuthenticationComponent
+    LoginComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
     CommonModule,
-    ShareModule
+    SharedModule
   ],
   exports: [ ],
 })

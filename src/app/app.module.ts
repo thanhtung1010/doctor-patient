@@ -12,24 +12,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { InsideModule } from './inside/inside.module';
-import { OutsideModule } from './outside/outside.module';
+import SharedModule from './_share/share.module';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [AppComponent],
   imports: [
-    InsideModule,
-    OutsideModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     NzLayoutModule,
-    NzMenuModule
+    NzMenuModule,
+    SharedModule.forRoot()
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }

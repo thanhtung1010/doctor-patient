@@ -1,1 +1,1 @@
-export * from './authentication/authentication.component';
+export * from './login/login.component';

@@ -1,6 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { LoadingComponent } from './_component';
+import { LocalStorageHelper } from './_helps';
+import { AuthGuard } from './_guards';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -8,9 +10,20 @@ import { LoadingComponent } from './_component';
   declarations: [
     LoadingComponent
   ],
-  imports: [ ],
+  imports: [
+    CommonModule
+  ],
   exports: [
     LoadingComponent
   ]
 })
-export class ShareModule { }
+export default class SharedModule {
+  static forRoot(): ModuleWithProviders<SharedModule> {
+    return {
+      ngModule: SharedModule,
+      providers: [
+        AuthGuard
+      ]
+    };
+  }
+}

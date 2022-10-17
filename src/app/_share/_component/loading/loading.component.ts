@@ -7,7 +7,7 @@ import { loadingType } from "../../_enum/loading.enum";
 })
 
 export class LoadingComponent implements OnInit {
-    @Input() type: loadingType = loadingType.dotcycle;
+    @Input() type: loadingType = loadingType.dotCycle;
     LOADING_TYPE = loadingType;
 
     constructor() { }

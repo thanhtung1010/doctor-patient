@@ -1,11 +1,65 @@
-<ng-container *ngSwitch="type">
+<ng-container [ngSwitch]="type">
     <ng-container *ngSwitchCase="LOADING_TYPE.dotCycle">
         <div class="tung-loading-dot-cycle">
-            <div></div><div></div><div></div><div></div><div></div><div></div>
-            <div></div><div></div><div></div><div></div><div></div><div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </ng-container>
     <ng-container *ngSwitchCase="LOADING_TYPE.cycleOneLine">
-        <div class="tung-loading-cycle-one-line"><div></div><div></div><div></div><div></div></div>
+        <div class="tung-loading-cycle-one-line">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="LOADING_TYPE.cycleTwoLine">
+        <div class="tung-loading-cycle-two-line"></div>
+    </ng-container>
+    <ng-container *ngSwitchCase="LOADING_TYPE.dotHalfCycle">
+        <div class="tung-loading-dot-half-cycle">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="LOADING_TYPE.threeDot">
+        <div class="tung-loading-three-dot">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="LOADING_TYPE.horizonDotCycle">
+        <div class="tung-loading-horizon-dot-cycle">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </ng-container>
 </ng-container>
