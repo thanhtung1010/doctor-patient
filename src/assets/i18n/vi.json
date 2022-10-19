@@ -1,0 +1,43 @@
+{
+    "BTN_BACK": "Quay lại",
+    "COMMON": {},
+    "OUTSIDE": {
+        "WELCOME": "Chào Mừng Tới Child Care",
+        "LOGIN": {
+            "INDEX": "Đăng nhập",
+            "CHILD_CARE_ACCOUNT": "Tài Khoản Child Care",
+            "NO_ACCOUNT": "Bạn chưa có tài khoản ?",
+            "GO_TO_SIGN_UP": "Nhấn vào đây để đăng kí.",
+            "EMAIL": "Email",
+            "EMAIL_HOLDER": "Nhập email",
+            "PASSWORD": "Mật khẩu",
+            "PASSWORDL_HOLDER": "Nhập mật khẩu"
+        },
+        "SIGN_UP": {
+            "INDEX": "Đăng kí"
+        }
+    },
+    "error": {
+        "required": "Yêu cầu này là bắt buộc.",
+        "email": "Email không hợp lệ",
+        "minlength": "This field is minimum {{count}} characters",
+        "maxlength": "This field is maximum {{count}} characters",
+        "the_same": "This field needs equal with {{field}}",
+        "difference": "This field needs difference with {{field}}",
+        "SAML_LOGIN_ERROR": "BSC account is not activated on My Orders",
+        "PAGE_NOT_FOUND": "Sorry, the page you visited does not exist.",
+        "NO_DATA": "No Data",
+        "whitespace": "This field is not allow whitespace",
+        "maintaining": "Oops, this function maintaining. Please try again later!",
+        "min": "Mật khẩu phải có ít nhất 6 kí tự {{count}}",
+        "search_empty": "0 item(s) were found!",
+        "columns_hide_all": "All columns are hidden now",
+        "no_permission": "No permission to access this resource",
+        "wrong_extension": "File extension is not valid",
+        "price_null": "There are Product(s) in your cart missing Price setting. Please contact with CC/Admin to resolve this issue!",
+        "submit_failed": "Submitted Failed",
+        "max_file_size": "Exceed 25Mb",
+        "MESS_ERROR_504": "This request takes too long to process, it is timed out by the server. Please input more conditions and try again!",
+        "no_notification": "No Notification"
+    }
+}

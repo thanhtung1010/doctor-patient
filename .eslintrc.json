@@ -1,7 +1,8 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*"
+    "projects/**/*",
+    "src/*.*"
   ],
   "overrides": [
     {
@@ -10,13 +11,19 @@
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.json"
+          "tsconfig.json",
+          "*/tsconfig.spec.json"
         ],
-        "createDefaultProgram": true
+        "createDefaultProgram": false,
+        "tsconfigRootDir": "./",
+        "sourceType": "module"
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "plugins": [
+        "prettier"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -33,6 +40,12 @@
             "type": "element",
             "prefix": "app",
             "style": "kebab-case"
+          }
+        ],
+        "max-len": [
+          "error",
+          {
+            "code": 160
           }
         ]
       }

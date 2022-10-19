@@ -1,0 +1,15 @@
+$mainCls: 'tung';
+/* $fontMain: Penguin-Font, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; */
+$fontMain: Roboto, 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji',
+    -apple-system, BlinkMacSystemFont;
+
+.#{$mainCls} {
+    font-family: $fontMain;
+
+    & body {
+        font-family: $fontMain;
+    }
+}

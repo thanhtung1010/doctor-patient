@@ -1,0 +1,43 @@
+{
+    "BTN_BACK": "Back",
+    "COMMON": {},
+    "OUTSIDE": {
+        "WELCOME": "Welcome To Child Care",
+        "LOGIN": {
+            "INDEX": "Login",
+            "CHILD_CARE_ACCOUNT": "Child Care Account",
+            "NO_ACCOUNT": "No Account ?",
+            "GO_TO_SIGN_UP": "Click Here For Sign up.",
+            "EMAIL": "Email",
+            "EMAIL_HOLDER": "Enter Email",
+            "PASSWORD": "Password",
+            "PASSWORDL_HOLDER": "Enter Password"
+        },
+        "SIGN_UP": {
+            "INDEX": "Sign Up"
+        }
+    },
+    "error": {
+        "required": "This field is required.",
+        "email": "Please enter a valid email address",
+        "minlength": "This field is minimum {{count}} characters",
+        "maxlength": "This field is maximum {{count}} characters",
+        "the_same": "This field needs equal with {{field}}",
+        "difference": "This field needs difference with {{field}}",
+        "SAML_LOGIN_ERROR": "BSC account is not activated on My Orders",
+        "PAGE_NOT_FOUND": "Sorry, the page you visited does not exist.",
+        "NO_DATA": "No Data",
+        "whitespace": "This field is not allow whitespace",
+        "maintaining": "Oops, this function maintaining. Please try again later!",
+        "min": "This field must be greater than {{count}}",
+        "search_empty": "0 item(s) were found!",
+        "columns_hide_all": "All columns are hidden now",
+        "no_permission": "No permission to access this resource",
+        "wrong_extension": "File extension is not valid",
+        "price_null": "There are Product(s) in your cart missing Price setting. Please contact with CC/Admin to resolve this issue!",
+        "submit_failed": "Submitted Failed",
+        "max_file_size": "Exceed 25Mb",
+        "MESS_ERROR_504": "This request takes too long to process, it is timed out by the server. Please input more conditions and try again!",
+        "no_notification": "No Notification"
+    }
+}

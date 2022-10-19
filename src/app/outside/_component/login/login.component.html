@@ -1,2 +1,143 @@
-<p>login works!</p>
-<app-loading [type]="LOADING_TYPE.horizonDotCycle"></app-loading>
+<div class="tung-login">
+    <div class="tung-login-left-side">
+        <div class="tung-login-left-side-welcome">
+            {{'OUTSIDE.WELCOME' | translate}}
+        </div>
+    </div>
+    <div class="tung-login-right-side">
+        <div class="tung-login-template"
+            [ngClass]="{'tung-login-template-step-1': !signUp, 'tung-login-template-step-2': signUp}">
+            <div class="tung-login-template-login">
+                <div class="tung-login-template-login-form tung-align-center">
+                    <div nz-col nzSpan="20">
+                        <title class="tung-title tung-align-center" nz-row>
+                            {{'OUTSIDE.LOGIN.CHILD_CARE_ACCOUNT' | translate}}
+                        </title>
+                        <ng-container *ngIf="loginForm">
+                            <form nz-row [formGroup]="loginForm">
+                                <ng-container *ngIf="loginForm.contains('email')">
+                                    <div nz-col nzSpan="24">
+                                        <nz-form-item>
+                                            <nz-form-control [nzErrorTip]="confirmError">
+                                                <label
+                                                    class="tung-label tung-pl-10 tung-required">{{'OUTSIDE.LOGIN.EMAIL'
+                                                    |
+                                                    translate}}</label>
+                                                <input [type]="'email'" nz-input formControlName="email"
+                                                    [placeholder]="'OUTSIDE.LOGIN.EMAIL_HOLDER' | translate"
+                                                    class="tung-br-25 tung-h-50 tung-m-5" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="loginForm.contains('password')">
+                                    <div nz-col nzSpan="24">
+                                        <nz-form-item>
+                                            <nz-form-control [nzErrorTip]="confirmError">
+                                                <label
+                                                    class="tung-label tung-pl-10 tung-required">{{'OUTSIDE.LOGIN.PASSWORD'
+                                                    |
+                                                    translate}}</label>
+                                                <input nz-input [type]="'password'" formControlName="password"
+                                                    [placeholder]="'OUTSIDE.LOGIN.PASSWORDL_HOLDER' | translate"
+                                                    class="tung-br-25 tung-h-50 tung-m-5" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+                                </ng-container>
+                            </form>
+                        </ng-container>
+                        <div nz-row class="tung-pt-10 tung-align-center">
+                            <button nz-button [nzType]="'primary'" [nzShape]="'round'" class="tung-mr-10 tung-h-40">
+                                {{'OUTSIDE.LOGIN.INDEX' | translate}}
+                            </button>
+                        </div>
+                        <div nz-row class="tung-pt-20 tung-align-center">
+                            <p class="tung-pt-5">
+                                {{'OUTSIDE.LOGIN.NO_ACCOUNT' | translate}}
+                                <a class="tung-p-0" nz-button [nzType]="'link'" [nzShape]="'round'"
+                                    (click)="onClickToSignUp(true)">
+                                    {{'OUTSIDE.LOGIN.GO_TO_SIGN_UP' | translate}}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tung-login-template-sign-up">
+                <div class="tung-login-template-login-form tung-align-center">
+                    <div nz-col nzSpan="20">
+                        <title class="tung-title tung-align-center" nz-row>
+                            {{'OUTSIDE.LOGIN.CHILD_CARE_ACCOUNT' | translate}}
+                        </title>
+                        <ng-container *ngIf="loginForm">
+                            <form nz-row [formGroup]="loginForm">
+                                <ng-container *ngIf="loginForm.contains('email')">
+                                    <div nz-col nzSpan="24">
+                                        <nz-form-item>
+                                            <nz-form-control [nzErrorTip]="confirmError">
+                                                <label
+                                                    class="tung-label tung-pl-10 tung-required">{{'OUTSIDE.LOGIN.EMAIL'
+                                                    |
+                                                    translate}}</label>
+                                                <input [type]="'email'" nz-input formControlName="email"
+                                                    [placeholder]="'OUTSIDE.LOGIN.EMAIL_HOLDER' | translate"
+                                                    class="tung-br-25 tung-h-50 tung-m-5" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="loginForm.contains('password')">
+                                    <div nz-col nzSpan="24">
+                                        <nz-form-item>
+                                            <nz-form-control [nzErrorTip]="confirmError">
+                                                <label
+                                                    class="tung-label tung-pl-10 tung-required">{{'OUTSIDE.LOGIN.PASSWORD'
+                                                    |
+                                                    translate}}</label>
+                                                <input nz-input [type]="'password'" formControlName="password"
+                                                    [placeholder]="'OUTSIDE.LOGIN.PASSWORDL_HOLDER' | translate"
+                                                    class="tung-br-25 tung-h-50 tung-m-5" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+                                </ng-container>
+                            </form>
+                        </ng-container>
+                        <div nz-row class="tung-pt-10 tung-align-center">
+                            <button nz-button [nzType]="'primary'" [nzShape]="'round'" (click)="onClickToSignUp(false)"
+                                class="tung-ml-10">
+                                {{'BTN_BACK' | translate}}
+                            </button>
+                            <button nz-button [nzType]="'primary'" [nzShape]="'round'">
+                                {{'OUTSIDE.SIGN_UP.INDEX' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #confirmError let-control>
+    <div class="tung-pl-10" *ngIf="control.hasError">
+        <ng-container *ngIf="control.hasError('required')">
+            {{'error.required' | translate}}
+            <br />
+        </ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">
+            {{'error.maxlength' | translate }}
+            <br />
+        </ng-container>
+        <ng-container *ngIf="control.hasError('minlength')">
+            {{'error.min' | translate:{count: 6} }}
+            <br />
+        </ng-container>
+        <ng-container *ngIf="control.hasError('email')">
+            {{'error.email' | translate }}
+            <br />
+        </ng-container>
+    </div>
+</ng-template>
