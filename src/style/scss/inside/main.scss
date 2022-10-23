@@ -1,0 +1,39 @@
+&-header {
+    background-color: $mainColor;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 0 20px;
+}
+
+&-logo {
+    height: 100px;
+    color: $whiteColor;
+    font-weight: bold;
+    font-size: $fontSizeLogo;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+}
+
+&-avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    margin: auto 0 auto 0;
+    background-color: $whiteColor;
+    color: $darkBlueColor;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    border: solid 1px $darkBlueColor;
+    transition: all 0.5s ease-out;
+
+    &:hover {
+        background-color: $darkBlueColor;
+        color: white;
+    }
+}

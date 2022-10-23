@@ -16,6 +16,10 @@ $halfFullSize: 50%;
 $fullSize: 100%;
 $doupleFullSize: 200%;
 
+$fontSizeLogo: 50px;
+$fontSizeTitle: 20px;
+$fontSizeNote: 10px;
+
 $shadow: #a5a5a5;
 
 .#{$mainCls} {
@@ -80,6 +84,18 @@ $shadow: #a5a5a5;
         font-weight: bold;
         font-size: 20px;
         color: $darkBlueColor;
+    }
+
+    &-flex {
+        display: flex;
+    }
+
+    &-relative {
+        position: relative;
+    }
+
+    &-pointer {
+        cursor: pointer;
     }
 
     $size: 0,

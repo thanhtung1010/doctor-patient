@@ -1,20 +1,33 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { LoadingComponent } from './_component';
-import { LocalStorageHelper } from './_helps';
-import { AuthGuard } from './_guards';
+import {
+  LoadingComponent,
+  ErrorComponent
+} from './_component';
+import { AuthGuard, ManagerGuard } from './_guards';
 import { CommonModule } from '@angular/common';
+import {
+  NumberOnlyDirective
+} from './_directives';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
 @NgModule({
   declarations: [
-    LoadingComponent
+    LoadingComponent,
+    ErrorComponent,
+
+    NumberOnlyDirective
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule
   ],
   exports: [
-    LoadingComponent
+    LoadingComponent,
+    ErrorComponent,
+
+    NumberOnlyDirective
   ]
 })
 export default class SharedModule {
@@ -22,7 +35,8 @@ export default class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        AuthGuard
+        AuthGuard,
+        ManagerGuard
       ]
     };
   }

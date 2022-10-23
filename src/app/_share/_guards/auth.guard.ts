@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
-import { Observable } from "rxjs";
-import { LocalStorageHelper } from "../_helps";
+import { LocalStorageHelper } from "app/_cores/_helpers/local-storage.helper";
+import { Observable } from "rxjs";;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(
     private _router: Router,
@@ -14,11 +14,12 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
-    if (LocalStorageHelper.get('token')) {
-        return true
-    } else {
-        this._router.navigate(['outside']);
-        return false
-    }
+    return true
+    // if (LocalStorageHelper.get('token')) {
+    //   return true
+    // } else {
+    //   this._router.navigate(['outside']);
+    //   return false
+    // }
   }
 }

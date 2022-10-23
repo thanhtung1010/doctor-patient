@@ -15,6 +15,7 @@ html {
 
 .#{$mainCls} {
     &-theme-primary {
+
         @import "./scss/index.scss";
 
         ::-webkit-scrollbar {

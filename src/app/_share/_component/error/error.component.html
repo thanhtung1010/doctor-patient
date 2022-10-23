@@ -1,0 +1,24 @@
+<div class="tung-pl-10" *ngIf="control.hasError">
+    <div class="tung-relative tung-flex">
+        <ng-container *ngIf="control.hasError('required')">
+            {{'error.required' | translate}}
+            <br />
+        </ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">
+            {{'error.maxlength' | translate }}
+            <br />
+        </ng-container>
+        <ng-container *ngIf="control.hasError('minlength')">
+            {{'error.min' | translate:{count: 6} }}
+            <br />
+        </ng-container>
+        <ng-container *ngIf="control.hasError('email')">
+            {{'error.email' | translate }}
+            <br />
+        </ng-container>
+        <ng-container *ngIf="control.hasError('phone')">
+            {{'error.phone' | translate }}
+            <br />
+        </ng-container>
+    </div>
+</div>

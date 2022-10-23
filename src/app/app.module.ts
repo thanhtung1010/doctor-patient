@@ -15,6 +15,7 @@ import SharedModule from './_share/share.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CoreModule } from './_cores/core.module';
 
 registerLocaleData(en);
 
@@ -29,6 +30,7 @@ registerLocaleData(en);
     NzLayoutModule,
     NzMenuModule,
     SharedModule.forRoot(),
+    CoreModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

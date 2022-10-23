@@ -1,6 +1,9 @@
 {
     "BTN_BACK": "Quay lại",
-    "COMMON": {},
+    "COMMON": {
+        "INPUT_SEARCH": "Tìm kiếm bài viết"
+    },
+    "TITLE": "CHILD CARE",
     "OUTSIDE": {
         "WELCOME": "Chào Mừng Tới Child Care",
         "LOGIN": {
@@ -14,14 +17,22 @@
             "PASSWORDL_HOLDER": "Nhập mật khẩu"
         },
         "SIGN_UP": {
-            "INDEX": "Đăng kí"
+            "INDEX": "Đăng kí",
+            "FULL_NAME": "Họ và Tên",
+            "FULL_NAME_HOLDER": "VD. Nguyễn Văn A",
+            "AGE": "Độ tuổi",
+            "AGE_HOLDER": "Tuổi của bạn",
+            "MALE": "Nam",
+            "FEMALE": "Nữ",
+            "PHONE_NUMBER": "Số điện thoại",
+            "PHONE_NUMBER_HOLDER": "Nhập Số điện thoại"
         }
     },
     "error": {
         "required": "Yêu cầu này là bắt buộc.",
         "email": "Email không hợp lệ",
-        "minlength": "This field is minimum {{count}} characters",
-        "maxlength": "This field is maximum {{count}} characters",
+        "minlength": "Yêu cầu này cần ít nhất {{count}} kí tự",
+        "maxlength": "Yêu cầu này có tối đa {{count}} kí tự",
         "the_same": "This field needs equal with {{field}}",
         "difference": "This field needs difference with {{field}}",
         "SAML_LOGIN_ERROR": "BSC account is not activated on My Orders",
@@ -29,7 +40,7 @@
         "NO_DATA": "No Data",
         "whitespace": "This field is not allow whitespace",
         "maintaining": "Oops, this function maintaining. Please try again later!",
-        "min": "Mật khẩu phải có ít nhất 6 kí tự {{count}}",
+        "min": "Yêu cầu này phải có ít nhất {{count}} kí tự",
         "search_empty": "0 item(s) were found!",
         "columns_hide_all": "All columns are hidden now",
         "no_permission": "No permission to access this resource",
@@ -38,6 +49,7 @@
         "submit_failed": "Submitted Failed",
         "max_file_size": "Exceed 25Mb",
         "MESS_ERROR_504": "This request takes too long to process, it is timed out by the server. Please input more conditions and try again!",
-        "no_notification": "No Notification"
+        "no_notification": "No Notification",
+        "phone": "Số điện thoại không hợp lệ"
     }
 }

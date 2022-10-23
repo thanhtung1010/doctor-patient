@@ -1,6 +1,9 @@
 {
     "BTN_BACK": "Back",
-    "COMMON": {},
+    "COMMON": {
+        "INPUT_SEARCH": "Search content"
+    },
+    "TITLE": "CHILD CARE",
     "OUTSIDE": {
         "WELCOME": "Welcome To Child Care",
         "LOGIN": {
@@ -14,7 +17,15 @@
             "PASSWORDL_HOLDER": "Enter Password"
         },
         "SIGN_UP": {
-            "INDEX": "Sign Up"
+            "INDEX": "Sign Up",
+            "FULL_NAME": "Your Full Name",
+            "FULL_NAME_HOLDER": "Enter Your Full Name",
+            "AGE": "Your Age",
+            "AGE_HOLDER": "Enter Your Age",
+            "MALE": "Male",
+            "FEMALE": "Female",
+            "PHONE_NUMBER": "Phone Number",
+            "PHONE_NUMBER_HOLDER": "Enter Your Phone Number"
         }
     },
     "error": {
@@ -38,6 +49,7 @@
         "submit_failed": "Submitted Failed",
         "max_file_size": "Exceed 25Mb",
         "MESS_ERROR_504": "This request takes too long to process, it is timed out by the server. Please input more conditions and try again!",
-        "no_notification": "No Notification"
+        "no_notification": "No Notification",
+        "phone": "Phone Number Is Invalid"
     }
 }

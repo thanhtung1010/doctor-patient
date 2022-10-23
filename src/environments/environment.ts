@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  appTitle: "Child Care",
+  defaultLanguage: "vi",
+  API_URL: "https://med-service-demo.herokuapp.com/api/",
+  DOMAIN_SHARING: "",
 };
 
 /*
