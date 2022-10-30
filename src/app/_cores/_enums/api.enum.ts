@@ -9,7 +9,15 @@ export const API_URL: IApiUrl = {
     method: 'POST',
     url: 'users/register'
   },
-  PROFILE_GET: {
+  LOGOUT: {
+    method: 'POST',
+    url: 'api/logout'
+  },
+  GET_USER_INFO: {
+    method: 'POST',
+    url: 'users/my-profile'
+  },
+  GET_CURRENT_INFO: {
     method: 'POST',
     url: ''
   },
@@ -17,8 +25,4 @@ export const API_URL: IApiUrl = {
     method: 'POST',
     url: ''
   },
-  GET_USER_INFO: {
-    method: 'POST',
-    url: ''
-  }
 }

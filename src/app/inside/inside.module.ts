@@ -2,10 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { InsideComponent } from './inside.component';
-import { ROUTING_DEFINED } from 'app/_share/_enum/router';
+import { ROUTING_DEFINED } from 'app/_share/_enum/router.enum';
 import { TranslateModule } from '@ngx-translate/core';
 import { ManagerGuard } from 'app/_share/_guards/manager.guard';
-import { HeaderComponent } from './_components';
+import { AvatarComponent, HeaderComponent } from './_components';
+import { InsideChildResolver } from './inside.resolver.service';
+
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import SharedModule from 'app/_share/share.module';
+import { HomeComponent } from './home/home.component';
+import { ManagerComponent } from './manager/manager.component';
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const routes: Routes = [
   {
@@ -30,7 +38,10 @@ export const routes: Routes = [
         loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule),
         canActivate: [ManagerGuard]
       },
-    ]
+    ],
+    resolve: {
+      load: InsideChildResolver,
+    }
   }
 ]
 
@@ -39,11 +50,20 @@ export const routes: Routes = [
   declarations: [
     InsideComponent,
     HeaderComponent,
+    AvatarComponent,
+    HomeComponent,
+    ManagerComponent,
+    ProfileComponent
   ],
   imports: [
     RouterModule.forChild(routes),
     TranslateModule,
     CommonModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+    NzDropDownModule,
   ]
 })
 export class InsideModule { }

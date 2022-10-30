@@ -31,7 +31,6 @@ export class APIService {
       headers = headers.append('Authorization', `Bearer ${access_token}`);
     }
     headers = headers.append('Content-Type', 'application/json');
-    headers = headers.append('Access-Control-Allow-Origin', '*')
 
     if (_customHeader) {
       for (let d in _customHeader) {
@@ -136,11 +135,6 @@ export class APIService {
     if (!_.isEmpty(access_token)) {
       headers = headers.append('Authorization', `Bearer ${access_token}`);
     }
-    headers = headers.append('Content-Language', Helpers.getCurrentLang());
-    // headers = headers.append('Content-Type', 'application/json');
-    // headers = headers.append('Timezone-Offset', Helpers.timezone());
-    // headers = headers.append('language', Helpers.getCurrentLang());
-    // headers = headers.append('Origin-Url', window.location.hostname)
     return headers;
   }
 

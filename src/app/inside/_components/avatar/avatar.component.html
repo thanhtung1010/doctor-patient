@@ -1,0 +1,15 @@
+<div class="tung-avatar-content" nz-dropdown [nzDropdownMenu]="menu">
+    <span class="tung-fs-15 tung-bold">
+        {{avatarText}}
+    </span>
+</div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="tung-w-200 tung-menu" nz-menu>
+        <ng-container *ngFor="let menu of menus">
+            <div class="tung-h-50 tung-menu-item" nz-menu-item (click)="menu.url ? goToURL(menu.url) : logOut()">
+                {{menu.title | translate}}
+            </div>
+        </ng-container>
+    </div>
+</nz-dropdown-menu>

@@ -12,7 +12,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from 'app/_cores/core.module';
-import { LoginService } from './_service/login.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 const routes: Routes = [
   {
@@ -48,6 +48,7 @@ const routes: Routes = [
   ],
   exports: [],
   providers: [
+    NzMessageService
   ]
 })
 export class OutsideModule { }

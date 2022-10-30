@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ROUTING_DEFINED } from './_share/_enum/router';
+import { ROUTING_DEFINED } from './_share/_enum/router.enum';
 import { AuthGuard } from './_share/_guards/auth.guard';
 
 const routes: Routes = [

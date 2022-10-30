@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ROUTING_DEFINED } from 'app/_share/_enum/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ROUTING_DEFINED } from 'app/_share/_enum';
+import { BehaviorSubject } from 'rxjs';
 import { API_URL } from '../_enums/api.enum';
+import { cookieHelper } from '../_helpers/cookieHelper';;
 import { APIService } from './api.service';
 
 @Injectable({
@@ -19,25 +20,34 @@ export class CommonService {
     return this.apiService.callApi(API_URL['GET_USER_INFO'], {});
   }
 
+  logout() {
+    return this.apiService.callApi(API_URL['LOGOUT'], {});
+  }
+
+  login(_params: any) {
+    return this.apiService.callApi(API_URL['LOGIN'], _params);
+  }
+
+  register(_params: any) {
+    return this.apiService.callApi(API_URL['REGISTER'], _params);
+  }
+
   handleLogout() {
-    let _retUrl = this.router.url || '';
-    return this.router.navigate([ROUTING_DEFINED.OUTSIDE], {
-      queryParams: {
-        retUrl: _retUrl
-      }
-    })
+    const _cookie = new cookieHelper();
+    _cookie.remove('token');
+    this.router.navigate([ROUTING_DEFINED.OUTSIDE])
+  }
+
+  handleLogin(tokenInfor: any): boolean {
+    const _cookie = new cookieHelper();
+    if (tokenInfor['accessToken']) {
+      _cookie.setWithDefault('token', tokenInfor['accessToken'], '/', tokenInfor['expiredIn'] || '');
+      return true
+    }
+    return false
   }
 
   showSystemError(_msg: string) {
     this.systemError.next(_msg);
-  }
-
-  profile = {
-    getProfile: () => {
-      return this.apiService.callApi(API_URL['PROFILE_GET'], null);
-    },
-    updateProfile: (object: any) => {
-      return this.apiService.callApi(API_URL['PROFILE_UPDATE'], object);
-    }
   }
 }

@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from 'app/outside/_service/login.service';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { CommonService } from 'app/_cores/_services/common.service';
+import { ROUTING_DEFINED } from 'app/_share/_enum';
+import { getSystemMsgByCode } from 'app/_share/_enum/errors.enum';
 import { loadingType } from 'app/_share/_enum/loading.enum';
+import { SessionService } from 'app/_share/_services';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +25,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private loginSer: LoginService
+    private commonSer: CommonService,
+    private message: NzMessageService,
+    private translate: TranslateService,
+    private sesionSer: SessionService,
+    private route: Router
   ) { }
 
   ngOnInit(): void {
@@ -64,14 +74,38 @@ export class LoginComponent implements OnInit {
   login() {
     const _params = this.prepareRequestData();
     this.loading.login = true;
-    this.loginSer.login(_params).subscribe({
+    this.commonSer.login(_params).subscribe({
       next: (resp) => {
-        console.log('hihi')
+        if (resp && resp.data) {
+          if (this.commonSer.handleLogin(resp.data)) {
+
+            this.commonSer.getUserInfo().subscribe({
+              next: (res) => {
+                if (res && res.data) {
+                  if (this.sesionSer.setUserLogged(resp.data['accessToken'], {
+                    ...res.data,
+                    role: res.data['role'] ? res.data['role'].toUpperCase() : ''
+                  })) {
+                    this.route.navigate([ROUTING_DEFINED.HOME])
+                  } else {
+                    this.showError('8');
+                  }
+                } else {
+                  this.showError('8');
+                }
+              },
+              error: (error) => {
+                this.showError(error['error'] ? error['error'].code : '8');
+              },
+              complete: () => { }
+            });
+          }
+        }
         this.loading.login = false;
       },
       error: (error) => {
-        console.log('haha')
         this.loading.login = false;
+        this.showError(error['error'] ? error['error'].code : '8');
       },
       complete: () => { }
     });
@@ -81,14 +115,36 @@ export class LoginComponent implements OnInit {
   register() {
     const _params = this.prepareRequestData();
     this.loading.register = true;
-    this.loginSer.register(_params).subscribe({
+    this.commonSer.register(_params).subscribe({
       next: (resp) => {
-        console.log('hihi')
+        if (this.commonSer.handleLogin(resp.data)) {
+
+          this.commonSer.getUserInfo().subscribe({
+            next: (res) => {
+              if (res && res.data) {
+                if (this.sesionSer.setUserLogged(resp.data['accessToken'], {
+                  ...res.data,
+                  role: res.data['role'] ? res.data['role'].toUpperCase() : ''
+                })) {
+                  this.route.navigate([ROUTING_DEFINED.HOME])
+                } else {
+                  this.showError('8');
+                }
+              } else {
+                this.showError('8');
+              }
+            },
+            error: (error) => {
+              this.showError(error['error'] ? error['error'].code : '8');
+            },
+            complete: () => { }
+          });
+        }
         this.loading.register = false;
       },
-      error: (err) => {
-        console.log('haha')
+      error: (error) => {
         this.loading.register = false;
+        this.showError(error['error'] ? error['error'].code : '8');
       },
       complete: () => { }
     });
@@ -108,4 +164,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  showError(code: string) {
+    const _msg = getSystemMsgByCode(code || '8') as string;
+    this.message.error(this.translate.instant(_msg));
+  }
 }

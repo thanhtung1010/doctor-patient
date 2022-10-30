@@ -1,0 +1,6 @@
+<nz-upload [nzDisabled]="disabled" nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
+    <ng-container>
+        <span class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></span>
+        <div class="ant-upload-text">Upload</div>
+    </ng-container>
+</nz-upload>

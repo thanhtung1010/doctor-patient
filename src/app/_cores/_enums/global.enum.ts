@@ -2,7 +2,7 @@ import { environment } from "environments/environment";
 
 export const GlobalConfig = {
   DEFAULT_TITLE: environment.appTitle,
-  TOKEN_KEY: "access_token",
+  TOKEN_KEY: "token",
   REFRESH_KEY: "refresh_token",
   API_URL: environment.API_URL,
   MAX_NUMBER: 2147483647,

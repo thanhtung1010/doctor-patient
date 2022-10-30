@@ -1,9 +1,9 @@
 <div class="tung-header">
-    <div class="tung-logo tung-pointer">
+    <div class="tung-logo tung-pointer" (click)="goToURL(ROUTING_DEFINED.HOME)">
         {{'TITLE' | translate}}
     </div>
     <div class="tung-avatar">
-        hihi
+        <app-avatar></app-avatar>
     </div>
 </div>
 <ng-template #suffixIconSearch>

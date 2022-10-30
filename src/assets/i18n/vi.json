@@ -28,6 +28,11 @@
             "PHONE_NUMBER_HOLDER": "Nhập Số điện thoại"
         }
     },
+    "HEADER": {
+        "PROFILE": "Trang cá nhân",
+        "LOG_OUT": "Đăng xuất",
+        "MANAGER": "Quản lí"
+    },
     "error": {
         "required": "Yêu cầu này là bắt buộc.",
         "email": "Email không hợp lệ",
@@ -51,5 +56,9 @@
         "MESS_ERROR_504": "This request takes too long to process, it is timed out by the server. Please input more conditions and try again!",
         "no_notification": "No Notification",
         "phone": "Số điện thoại không hợp lệ"
+    },
+    "SYS_MSG": {
+        "ERROR_TYPE_UPLOAD": "Định dạng ảnh phải là JPG hoặc PNG !",
+        "ERROR_SIZE_UPLOAD": "Kích thước dữ liệu không vượt quá 2MB !"
     }
 }

@@ -28,6 +28,11 @@
             "PHONE_NUMBER_HOLDER": "Enter Your Phone Number"
         }
     },
+    "HEADER": {
+        "PROFILE": "Profile",
+        "LOG_OUT": "Log out",
+        "MANAGER": "Manager"
+    },
     "error": {
         "required": "This field is required.",
         "email": "Please enter a valid email address",
@@ -51,5 +56,9 @@
         "MESS_ERROR_504": "This request takes too long to process, it is timed out by the server. Please input more conditions and try again!",
         "no_notification": "No Notification",
         "phone": "Phone Number Is Invalid"
+    },
+    "SYS_MSG": {
+        "ERROR_TYPE_UPLOAD": "You Can Only Upload JPG Or PNG File!",
+        "ERROR_SIZE_UPLOAD": "Image must smaller than 2MB!"
     }
 }

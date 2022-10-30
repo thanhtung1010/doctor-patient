@@ -98,6 +98,10 @@ $shadow: #a5a5a5;
         cursor: pointer;
     }
 
+    &-bold {
+        font-weight: bold;
+    }
+
     $size: 0,
         5,
         10,
