@@ -1,1 +1,8 @@
-<app-upload-file></app-upload-file>
+<ejs-richtexteditor #richTextEditor [toolbarSettings]="customToolbar" [(ngModel)]="content" [value]="content"
+    (change)="onChangeContent($event)" (ngModelChange)="onChangeContent($event)" (valueChange)="onChangeContent($event)"
+    (imageSelected)="imageSelected($event)" (imageUploading)="uploadImg($event, 'imageUploading')"
+    (imageUploadSuccess)="imageUploadSuccess($event)" (imageUploadFailed)="uploadImg($event, 'imageUploadFailed')"
+    [insertImageSettings]="insertImageSettings" (beforeImageDrop)="uploadImg($event, 'beforeImageDrop')"
+    (beforeImageUpload)="imageSelected($event)">
+    {{content}}
+</ejs-richtexteditor>

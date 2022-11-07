@@ -1,7 +1,14 @@
 {
     "BTN_BACK": "Back",
+    "BTN_LOGIN": "Login",
+    "BTN_BOOKING": "Book An Appointment",
+    "BTN_CONFIRM": "Confirm",
+    "BTN_CANCEL": "Cancel",
+    "YES": "Yes",
+    "NO": "No",
     "COMMON": {
-        "INPUT_SEARCH": "Search content"
+        "INPUT_SEARCH": "Search content",
+        "SELECT_DATE": "Select Date"
     },
     "TITLE": "CHILD CARE",
     "OUTSIDE": {
@@ -33,6 +40,33 @@
         "LOG_OUT": "Log out",
         "MANAGER": "Manager"
     },
+    "BOOKING": {
+        "TITLE": "Book An Appointment",
+        "SERVICE": "Service",
+        "ORDER": "Order",
+        "APPOINTMENT_INFORMATION": "Appointment Information",
+        "SPECIALIST": "Specialist",
+        "SPECIALIST_HOLDER": "Select Specialist",
+        "DOCTOR": "Doctor",
+        "DOCTOR_HOLDER": "Select Doctor",
+        "CONSULT_PACKAGE": "Consult Package",
+        "CONSULT_PACKAGE_HOLDER": "Select Consult Package",
+        "COUNSELING_AT_HOME": "Counseling At Home",
+        "ONLINE_CONSULTATION": "Online Consultation",
+        "COUNSELING_AT_THE_CLINIC": "Counseling At The Clinic",
+        "TIME": "Time",
+        "SHIFT": {
+            "1": "Shift 1",
+            "2": "Shift 2",
+            "3": "Shift 3",
+            "4": "Shift 4"
+        },
+        "PEDIATRIC_DENTIST": "Pediatric Dentist",
+        "OPTOMETRIST": "Optometrist",
+        "ALLERGIST": "Allergist",
+        "DERMATOLOGIST": "Dermatologist",
+        "CONFIRM_INFORMATION": "Confirm Information"
+    },
     "error": {
         "required": "This field is required.",
         "email": "Please enter a valid email address",
@@ -60,5 +94,8 @@
     "SYS_MSG": {
         "ERROR_TYPE_UPLOAD": "You Can Only Upload JPG Or PNG File!",
         "ERROR_SIZE_UPLOAD": "Image must smaller than 2MB!"
+    },
+    "WARNING_MSG": {
+        "SUBMIT_BOOKING_WITHOUT_LOGIN": "You Need To Log In To Continue"
     }
 }

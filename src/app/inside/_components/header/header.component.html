@@ -3,7 +3,14 @@
         {{'TITLE' | translate}}
     </div>
     <div class="tung-avatar">
-        <app-avatar></app-avatar>
+        <ng-container *ngIf="isLogged; else noAuth">
+            <app-avatar></app-avatar>
+        </ng-container>
+        <ng-template #noAuth>
+            <app-booking></app-booking>
+            <button class="tung-br-10 tung-ml-10" nz-button [nzType]="'default'"
+                (click)="goToURL(ROUTING_DEFINED.OUTSIDE)">{{'BTN_LOGIN' | translate}}</button>
+        </ng-template>
     </div>
 </div>
 <ng-template #suffixIconSearch>

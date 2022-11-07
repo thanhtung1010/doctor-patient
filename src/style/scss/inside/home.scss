@@ -1,3 +1,16 @@
 &-home {
-    background-color: blueviolet;
+    display: flex;
+    background-image: url('../../../assets/imgs/background-home.png');
+
+    &-left {
+        height: 100vh;
+    }
+
+    &-center {
+        height: 100vh;
+    }
+
+    &-right {
+        height: 100vh;
+    }
 }

@@ -6,3 +6,18 @@ export const API_URL: IApiUrl = {
         url: 'upload'
     }
 }
+
+export const API_BOOKING: IApiUrl = {
+    GET_ALL_DOCTOR: {
+        method: 'POST',
+        url: 'doctor/get-doctor-list'
+    },
+    GET_BOOKED_AT_LIST: {
+        method: 'POST',
+        url: 'booking/get-booking-list-by-day'
+    },
+    BOOK: {
+        method: 'POST',
+        url: 'booking/book'
+    },
+}

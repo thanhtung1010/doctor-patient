@@ -32,10 +32,10 @@ export class CommonService {
     return this.apiService.callApi(API_URL['REGISTER'], _params);
   }
 
-  handleLogout() {
+  handleLogout(gotoAuth: boolean = true) {
     const _cookie = new cookieHelper();
     _cookie.remove('token');
-    this.router.navigate([ROUTING_DEFINED.OUTSIDE])
+    if (gotoAuth) this.router.navigate([ROUTING_DEFINED.OUTSIDE])
   }
 
   handleLogin(tokenInfor: any): boolean {

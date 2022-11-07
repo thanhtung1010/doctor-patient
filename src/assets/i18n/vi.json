@@ -1,7 +1,14 @@
 {
     "BTN_BACK": "Quay lại",
+    "BTN_LOGIN": "Đăng nhập",
+    "BTN_BOOKING": "Đặt lịch khám",
+    "BTN_CONFIRM": "Xác nhận",
+    "BTN_CANCEL": "Huỷ",
+    "YES": "Ô kê",
+    "NO": "Hong",
     "COMMON": {
-        "INPUT_SEARCH": "Tìm kiếm bài viết"
+        "INPUT_SEARCH": "Tìm kiếm bài viết",
+        "SELECT_DATE": "Chọn ngày"
     },
     "TITLE": "CHILD CARE",
     "OUTSIDE": {
@@ -33,6 +40,33 @@
         "LOG_OUT": "Đăng xuất",
         "MANAGER": "Quản lí"
     },
+    "BOOKING": {
+        "TITLE": "Đặt lịch khám",
+        "SERVICE": "Dịch vụ",
+        "ORDER": "Đặt hẹn",
+        "APPOINTMENT_INFORMATION": "Thông tin đặt hẹn",
+        "SPECIALIST": "Chọn Chuyên khoa",
+        "SPECIALIST_HOLDER": "Chuyên khoa",
+        "DOCTOR": "Chọn bác sĩ",
+        "DOCTOR_HOLDER": "Bác sĩ",
+        "CONSULT_PACKAGE": "Gói tư vấn",
+        "CONSULT_PACKAGE_HOLDER": "Chọn gói tư vấn",
+        "COUNSELING_AT_HOME": "Tư vấn tại nhà",
+        "ONLINE_CONSULTATION": "Tư vấn online",
+        "COUNSELING_AT_THE_CLINIC": "Tư vấn tại phòng khám",
+        "TIME": "Thời gian",
+        "SHIFT": {
+            "1": "Ca 1",
+            "2": "Ca 2",
+            "3": "Ca 3",
+            "4": "Ca 4"
+        },
+        "PEDIATRIC_DENTIST": "Khoa răng miệng",
+        "OPTOMETRIST": "Khoa mắt",
+        "ALLERGIST": "Dị ứng",
+        "DERMATOLOGIST": "Khoa da liễu",
+        "CONFIRM_INFORMATION": "Xác nhận thông tin"
+    },
     "error": {
         "required": "Yêu cầu này là bắt buộc.",
         "email": "Email không hợp lệ",
@@ -58,7 +92,10 @@
         "phone": "Số điện thoại không hợp lệ"
     },
     "SYS_MSG": {
-        "ERROR_TYPE_UPLOAD": "Định dạng ảnh phải là JPG hoặc PNG !",
+        "ERROR_TYPE_UPLOAD": "Bạn vẫn chưa đăng nhập, bạn có chắc chắn muốn làm điều này khum?",
         "ERROR_SIZE_UPLOAD": "Kích thước dữ liệu không vượt quá 2MB !"
+    },
+    "WARNING_MSG": {
+        "SUBMIT_BOOKING_WITHOUT_LOGIN": "Bạn cần đăng nhập để tiếp tục á"
     }
 }

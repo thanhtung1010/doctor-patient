@@ -4,11 +4,18 @@ $scrollBarColor: #c4c4c4;
 $scrollBarHoverColor: #a5a5a5;
 
 $mainColor: #5FBDF5;
+$darkMainColor: #2A536B;
+$lightMainColor: #5BB6EB;
 $secondColor: #C4EAFF;
 $whiteColor: #FFFFFF;
 $darkBlueColor: #000566;
 $greenColor: #39B348;
+$darkGreenColor: #226B2B;
+$lightGreenColor: #4BEB5E;
 $brownColor: #A36B21;
+
+$stepColor: #1890ff;
+$darkStepColor: #0A3C6B;
 
 $borderRadius30: 30px;
 
@@ -72,7 +79,9 @@ $shadow: #a5a5a5;
     }
 
     &-label {
-        color: $darkBlueColor;
+        color: $mainColor;
+        margin-left: 10px;
+        margin-bottom: 5px;
         display: block;
         text-align: left;
         justify-content: flex-start;
@@ -100,6 +109,57 @@ $shadow: #a5a5a5;
 
     &-bold {
         font-weight: bold;
+    }
+
+    &-block {
+        display: block;
+    }
+
+    &-bd {
+        border: 1px solid $shadow;
+    }
+
+    &-bd-t {
+        border-top: 1px solid $shadow;
+    }
+
+    &-bd-bt {
+        border-bottom: 1px solid $shadow;
+    }
+
+    &-bd-l {
+        border-left: 1px solid $shadow;
+    }
+
+    &-bd-r {
+        border-right: 1px solid $shadow;
+    }
+
+    &-step {
+        &-dot {
+            height: 25px;
+            width: 25px;
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.123em;
+            border: 1px solid $stepColor;
+            background-color: $whiteColor;
+            color: $stepColor;
+            margin: auto;
+
+            &-finish {
+                background-color: $stepColor;
+                border-color: $stepColor;
+                color: $whiteColor;
+            }
+
+            &-active {
+                border: 1px solid $darkStepColor;
+                color: $darkStepColor;
+            }
+        }
     }
 
     $size: 0,

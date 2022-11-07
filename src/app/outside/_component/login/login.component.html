@@ -71,9 +71,9 @@
                         <title class="tung-title tung-align-center" nz-row>
                             {{'OUTSIDE.SIGN_UP.INDEX' | translate}}
                         </title>
-                        <ng-container *ngIf="loginForm">
-                            <form nz-row [formGroup]="loginForm" [ngClass]="{'tung-disabled': loading.register}">
-                                <ng-container *ngIf="loginForm.contains('email')">
+                        <ng-container *ngIf="signupFrom">
+                            <form nz-row [formGroup]="signupFrom" [ngClass]="{'tung-disabled': loading.register}">
+                                <ng-container *ngIf="signupFrom.contains('email')">
                                     <div nz-col nzSpan="24">
                                         <nz-form-item>
                                             <nz-form-control [nzErrorTip]="confirmError">
@@ -88,7 +88,7 @@
                                         </nz-form-item>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="loginForm.contains('password')">
+                                <ng-container *ngIf="signupFrom.contains('password')">
                                     <div nz-col nzSpan="24">
                                         <nz-form-item>
                                             <nz-form-control [nzErrorTip]="confirmError">
@@ -103,7 +103,7 @@
                                         </nz-form-item>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="loginForm.contains('fullName')">
+                                <ng-container *ngIf="signupFrom.contains('fullName')">
                                     <div nz-col nzSpan="24">
                                         <nz-form-item>
                                             <nz-form-control [nzErrorTip]="confirmError">
@@ -118,7 +118,7 @@
                                         </nz-form-item>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="loginForm.contains('age')">
+                                <ng-container *ngIf="signupFrom.contains('age')">
                                     <div nz-col nzSpan="5">
                                         <nz-form-item>
                                             <nz-form-control [nzErrorTip]="confirmError">
@@ -135,7 +135,7 @@
                                     </div>
                                 </ng-container>
                                 <div nz-col nzSpan="4"></div>
-                                <ng-container *ngIf="loginForm.contains('gender')">
+                                <ng-container *ngIf="signupFrom.contains('gender')">
                                     <div class="tung-flex tung-align-center" nz-col nzSpan="15">
                                         <nz-radio-group formControlName="gender">
                                             <label nz-radio [nzValue]="1">{{'OUTSIDE.SIGN_UP.MALE'
@@ -147,7 +147,7 @@
                                         </nz-radio-group>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="loginForm.contains('age')">
+                                <ng-container *ngIf="signupFrom.contains('age')">
                                     <div nz-col nzSpan="24">
                                         <nz-form-item>
                                             <nz-form-control [nzErrorTip]="confirmError">
@@ -169,7 +169,7 @@
                                 (click)="onClickToSignUp(false)" [disabled]="loading.register">
                                 {{'BTN_BACK' | translate}}
                             </button>
-                            <button nz-button [disabled]="!loginForm.valid" [nzLoading]="loading.register"
+                            <button nz-button [disabled]="!signupFrom.valid" [nzLoading]="loading.register"
                                 [nzType]="'primary'" [nzShape]="'round'" (click)="register()">
                                 {{'OUTSIDE.SIGN_UP.INDEX' | translate}}
                             </button>

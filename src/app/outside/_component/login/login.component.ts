@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Helpers } from 'app/_cores/_helpers';
 import { CommonService } from 'app/_cores/_services/common.service';
 import { ROUTING_DEFINED } from 'app/_share/_enum';
 import { getSystemMsgByCode } from 'app/_share/_enum/errors.enum';
 import { loadingType } from 'app/_share/_enum/loading.enum';
-import { SessionService } from 'app/_share/_services';
+import { BookingModel } from 'app/_share/_models/booking.model';
+import { BookingService, SessionService } from 'app/_share/_services';
+import * as _ from 'lodash';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -17,6 +20,8 @@ export class LoginComponent implements OnInit {
   LOADING_TYPE = loadingType;
   signUp: boolean = false
   loginForm!: FormGroup;
+  signupFrom!: FormGroup;
+  _paramsForBooking: BookingModel | null = null
 
   loading = {
     login: false,
@@ -29,35 +34,40 @@ export class LoginComponent implements OnInit {
     private message: NzMessageService,
     private translate: TranslateService,
     private sesionSer: SessionService,
-    private route: Router
+    private route: Router,
+    private bookingSer: BookingService,
   ) { }
 
   ngOnInit(): void {
-    this.createForm(true);
+    this.createForm();
+    const _object = Helpers.convertParamsToObject(Helpers.getParamString());
+    if (_.size(_object)) {
+      this._paramsForBooking = new BookingModel(_object);
+    }
+    this.signUp = Helpers.checkBooleanParam(Helpers.getQueryString('signUp'))
   }
 
   onClickToSignUp(evt: boolean) {
     this.signUp = evt;
-    this.createForm(!evt)
+    // this.createForm()
   }
 
-  createForm(isLogin: boolean) {
+  createForm() {
     if (!this.loginForm) {
       this.loginForm = this.fb.group({
         email: [null, [Validators.required, Validators.email]],
         password: [null, [Validators.required, Validators.minLength(6)]]
       })
     }
-    if (this.signUp) {
-      this.loginForm.addControl('fullName', new FormControl(null, [Validators.required]));
-      this.loginForm.addControl('age', new FormControl(null, [Validators.required]));
-      this.loginForm.addControl('gender', new FormControl(null, [Validators.required]));
-      this.loginForm.addControl('phone', new FormControl(null, [Validators.required, this.phoneValidators]));
-    } else {
-      this.loginForm.removeControl('fullName');
-      this.loginForm.removeControl('age');
-      this.loginForm.removeControl('gender');
-      this.loginForm.removeControl('phone');
+    if (!this.signupFrom) {
+      this.signupFrom = this.fb.group({
+        email: [null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required, Validators.minLength(6)]],
+        fullName: [null, [Validators.required]],
+        age: [null, [Validators.required]],
+        gender: [null, [Validators.required]],
+        phone: [null, [Validators.required, this.phoneValidators]],
+      })
     }
   }
 
@@ -82,12 +92,11 @@ export class LoginComponent implements OnInit {
             this.commonSer.getUserInfo().subscribe({
               next: (res) => {
                 if (res && res.data) {
-                  if (this.sesionSer.setUserLogged(resp.data['accessToken'], {
+                  const _setUser = this.sesionSer.setUserLogged(resp.data['accessToken'], {
                     ...res.data,
                     role: res.data['role'] ? res.data['role'].toUpperCase() : ''
-                  })) {
-                    this.route.navigate([ROUTING_DEFINED.HOME])
-                  } else {
+                  });
+                  if (!_setUser) {
                     this.showError('8');
                   }
                 } else {
@@ -97,7 +106,9 @@ export class LoginComponent implements OnInit {
               error: (error) => {
                 this.showError(error['error'] ? error['error'].code : '8');
               },
-              complete: () => { }
+              complete: () => {
+                this.checkBooking();
+              }
             });
           }
         }
@@ -122,12 +133,11 @@ export class LoginComponent implements OnInit {
           this.commonSer.getUserInfo().subscribe({
             next: (res) => {
               if (res && res.data) {
-                if (this.sesionSer.setUserLogged(resp.data['accessToken'], {
+                const _setUser = this.sesionSer.setUserLogged(resp.data['accessToken'], {
                   ...res.data,
                   role: res.data['role'] ? res.data['role'].toUpperCase() : ''
-                })) {
-                  this.route.navigate([ROUTING_DEFINED.HOME])
-                } else {
+                });
+                if (!_setUser) {
                   this.showError('8');
                 }
               } else {
@@ -137,7 +147,9 @@ export class LoginComponent implements OnInit {
             error: (error) => {
               this.showError(error['error'] ? error['error'].code : '8');
             },
-            complete: () => { }
+            complete: () => {
+              this.checkBooking();
+            }
           });
         }
         this.loading.register = false;
@@ -148,15 +160,32 @@ export class LoginComponent implements OnInit {
       },
       complete: () => { }
     });
+  }
 
+  checkBooking() {
+    if (this.sesionSer.isLogged()) {
+      if (this._paramsForBooking && _.size(this._paramsForBooking)) {
+        this.bookingSer.book({ ...this._paramsForBooking }).subscribe({
+          next: resp => {
+            this.route.navigate([ROUTING_DEFINED.HOME])
+            this.showSuccess();
+          },
+          error: error => {
+            this.showError(error['error'] ? error['error'].code : '8');
+          },
+          complete() { },
+        });
+      } else {
+        this.route.navigate([ROUTING_DEFINED.HOME])
+      }
+    }
   }
 
   prepareRequestData() {
-    if (!this.loginForm.value) return
     if (this.signUp) {
       return {
-        ...this.loginForm.value,
-        age: +this.loginForm.value['age'] || 0
+        ...this.signupFrom.value,
+        age: +this.signupFrom.value['age'] || 0
       }
     }
     return {
@@ -167,5 +196,9 @@ export class LoginComponent implements OnInit {
   showError(code: string) {
     const _msg = getSystemMsgByCode(code || '8') as string;
     this.message.error(this.translate.instant(_msg));
+  }
+
+  showSuccess() {
+    this.message.success(this.translate.instant('STATUS.SUCCESS'));
   }
 }

@@ -1,0 +1,17 @@
+<ng-container *ngIf="step.length > 0">
+    <div>
+        <nz-steps [nzStartIndex]="0" [nzCurrent]="active" [nzProgressDot]="progressTemplate">
+            <ng-container *ngFor="let item of step; let _index = index">
+                <nz-step [nzTitle]="item | translate"></nz-step>
+            </ng-container>
+        </nz-steps>
+    </div>
+    <ng-content select="[content]"></ng-content>
+    <ng-content select="[buttons]">
+    </ng-content>
+</ng-container>
+<ng-template #progressTemplate let-dot let-status="status" let-index="index">
+    <div class="tung-step-dot tung-step-dot-{{status}}" [ngClass]="{'tung-step-dot-active': index === active}">
+        {{index + 1}}
+    </div>
+</ng-template>

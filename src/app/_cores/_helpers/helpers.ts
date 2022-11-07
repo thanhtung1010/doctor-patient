@@ -10,6 +10,9 @@ import { Observable, Subject } from 'rxjs';;
 import { startOfDay, endOfDay } from 'date-fns'
 import { LocalStorageHelper } from './local-storage.helper';
 import { environment } from 'environments/environment';
+import { Moment } from 'moment';
+import { IShift } from 'app/_share/_interface/booking.interface';
+import { DateTimeLabelPipe } from 'app/_share/_pipes/datetime-label.pipe';
 
 export class Helpers {
   public static loading = {
@@ -282,6 +285,50 @@ export class Helpers {
       const _date = getStart ? startOfDay(_value) : endOfDay(_value);
       const _dateStr = Helpers.dateTime.convertToUTCfromDate(_date, 'YYYY-MM-DD')
       return new Date(_dateStr);
+    },
+    setHour(hour: number, from: number | string | Date | null = null) {
+      const _checkFromMoment = (_from: number | string | Date | null = null): Moment => {
+        if (_.isNumber(_from) || _.isDate(_from)) {
+          return moment(startOfDay(_from));
+        }
+        if (_.isString(_from)) {
+          return moment(startOfDay(+_from));
+        }
+        return moment(startOfDay(new Date()));
+      }
+
+      return moment(_checkFromMoment(from)).hours(hour).unix() * 1000;
+    },
+    getShift(shift: number): string {
+      const _dateTimeLabel = new DateTimeLabelPipe();
+      const timeFormat = 'HH:mm a';
+      let shiftList = [
+        {
+          shift: 1,
+          start: Helpers.dateTime.setHour(8),
+          end: Helpers.dateTime.setHour(10),
+        },
+        {
+          shift: 2,
+          start: Helpers.dateTime.setHour(10),
+          end: Helpers.dateTime.setHour(12),
+        },
+        {
+          shift: 3,
+          start: Helpers.dateTime.setHour(13),
+          end: Helpers.dateTime.setHour(15),
+        },
+        {
+          shift: 4,
+          start: Helpers.dateTime.setHour(15),
+          end: Helpers.dateTime.setHour(17),
+        },
+      ] as IShift[];
+
+      if (!shift) return ''
+      const _shift = shiftList.find(item => item.shift === shift);
+      if (!_shift) return ''
+      return _dateTimeLabel.transform(_shift.start, timeFormat) + '-' + _dateTimeLabel.transform(_shift.end, timeFormat)
     }
   }
   public static groupBy(_list: any[], _key: string) {

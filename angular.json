@@ -36,7 +36,12 @@
               "src/theme.less",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/@syncfusion"
+              ]
+            }
           },
           "configurations": {
             "production": {

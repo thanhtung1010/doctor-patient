@@ -1,17 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { loadingType } from "../../_enum/loading.enum";
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'app-error',
     templateUrl: './error.component.html'
 })
 
-export class ErrorComponent implements OnInit {
+export class ErrorComponent {
     @Input() control: any;
 
     constructor() { }
-
-    ngOnInit(): void {
-        console.log('error')
-    }
 }

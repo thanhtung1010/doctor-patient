@@ -13,8 +13,8 @@ export class InsideChildResolver implements Resolve<boolean> {
     private readonly _commonService: CommonService) {
   }
 
-  handleLogout() {
-    this._commonService.handleLogout();
+  handleLogout(gotoAuth: boolean = false) {
+    this._commonService.handleLogout(gotoAuth);
   }
 
   resolve(): Observable<any> | Promise<any> | any {
@@ -26,15 +26,16 @@ export class InsideChildResolver implements Resolve<boolean> {
         if (val && val['data']) {
           this._sessionService.setUserLogged((new cookieHelper().get('token')), val['data']);
           return of(true)
+        } else {
+          this.handleLogout();
+          return of(false);
         }
-        return of(false);
       }), catchError(() => {
-        // console.log('catchError resolve')
-        // Helpers.loading.toggle(false)
-        return of(false)
+        this.handleLogout();
+        return of(true)
       }));
     } else {
-      return of(this.handleLogout());
+      return of(true);
     }
   }
 }

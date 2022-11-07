@@ -58,3 +58,88 @@
         }
     }
 }
+
+&-step-content {
+    max-height: 50vh;
+    min-height: 20vh;
+    overflow: auto;
+    padding: 20px 50px;
+}
+
+&-booking-step {
+    box-shadow: 0px 0px 5px $shadow;
+    padding: 10px;
+    min-height: 20vh;
+
+    &-1 {}
+
+    &-2 {}
+
+    &-3 {}
+
+    &-box {
+        padding: 10px;
+    }
+}
+
+&-label-step {
+    color: $mainColor;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-weight: bold;
+    border-bottom: 1px solid $shadow;
+}
+
+&-label-content {
+    color: $mainColor;
+}
+
+&-step-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+&-shift {
+    display: flex;
+
+    &-wrap {
+        width: 25%;
+        padding: 5px;
+    }
+
+    &-content {
+        border-radius: 10px;
+        min-height: 100px;
+        max-height: 300px;
+        cursor: pointer;
+        padding: 10px;
+        text-align: center;
+        color: $whiteColor;
+
+        &-title {
+            font-weight: bold;
+            display: block;
+        }
+
+
+        &-normal {
+            border: 2px solid $lightGreenColor;
+            color: $mainColor;
+            background-image: url('../../../assets/imgs/shift-background.png');
+        }
+
+        &-booked {
+            background-color: $lightGreenColor;
+            color: $whiteColor;
+            background-image: url('../../../assets/imgs/shift-background.png');
+        }
+
+        &-expired {
+            background-color: $shadow;
+            background-image: url('../../../assets/imgs/shift-background.png');
+        }
+    }
+}

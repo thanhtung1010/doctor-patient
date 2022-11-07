@@ -9,11 +9,18 @@ import { AvatarComponent, HeaderComponent } from './_components';
 import { InsideChildResolver } from './inside.resolver.service';
 
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
 import SharedModule from 'app/_share/share.module';
 import { HomeComponent } from './home/home.component';
 import { ManagerComponent } from './manager/manager.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from 'app/_cores/core.module';
+import { NotFoundComponent } from 'app/_share/_component';
 
 export const routes: Routes = [
   {
@@ -38,6 +45,15 @@ export const routes: Routes = [
         loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule),
         canActivate: [ManagerGuard]
       },
+      {
+        path: ROUTING_DEFINED.NOTFOUND,
+        component: NotFoundComponent
+      },
+      {
+        path: "**",
+        redirectTo: ROUTING_DEFINED.NOTFOUND,
+        pathMatch: "full"
+      }
     ],
     resolve: {
       load: InsideChildResolver,
@@ -60,10 +76,15 @@ export const routes: Routes = [
     TranslateModule,
     CommonModule,
     SharedModule,
+    CoreModule,
     FormsModule,
     ReactiveFormsModule,
 
     NzDropDownModule,
+    NzGridModule,
+    NzButtonModule,
+    NzModalModule,
+    NzIconModule
   ]
 })
 export class InsideModule { }

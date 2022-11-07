@@ -11,11 +11,11 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./inside/inside.module').then(m => m.InsideModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: '**',
-    redirectTo: ROUTING_DEFINED.OUTSIDE
+    redirectTo: ''
   }
 ];
 
