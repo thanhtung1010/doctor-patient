@@ -6,9 +6,17 @@
     "BTN_CANCEL": "Huỷ",
     "YES": "Ô kê",
     "NO": "Hong",
+    "ROLE": {
+        "ADMIN": "Admin",
+        "USER": "Thường",
+        "DOCTOR": "Bác sĩ"
+    },
     "COMMON": {
         "INPUT_SEARCH": "Tìm kiếm bài viết",
-        "SELECT_DATE": "Chọn ngày"
+        "SELECT_DATE": "Chọn ngày",
+        "ACCOUNT": "Tài khoản",
+        "INFORMATION": "Thông tin",
+        "APPOINTMENT_SCHEDULE": "Lịch hẹn"
     },
     "TITLE": "CHILD CARE",
     "OUTSIDE": {
@@ -25,14 +33,15 @@
         },
         "SIGN_UP": {
             "INDEX": "Đăng kí",
-            "FULL_NAME": "Họ và Tên",
+            "FULL_NAME": "Họ Tên",
             "FULL_NAME_HOLDER": "VD. Nguyễn Văn A",
             "AGE": "Độ tuổi",
             "AGE_HOLDER": "Tuổi của bạn",
             "MALE": "Nam",
             "FEMALE": "Nữ",
             "PHONE_NUMBER": "Số điện thoại",
-            "PHONE_NUMBER_HOLDER": "Nhập Số điện thoại"
+            "PHONE_NUMBER_HOLDER": "Nhập Số điện thoại",
+            "GENDER": "Giới tính"
         }
     },
     "HEADER": {

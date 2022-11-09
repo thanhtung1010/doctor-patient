@@ -28,10 +28,10 @@ export class AppUser {
       if (!_.isEmpty(_userInfo['fullName'])) {
         this.fullName = _userInfo['fullName'];
       }
-      if (!_.isEmpty(_userInfo['gender'])) {
+      if (_.isNumber(_userInfo['gender'])) {
         this.gender = _userInfo['gender'];
       }
-      if (!_.isEmpty(_userInfo['age'])) {
+      if (_.isNumber(_userInfo['age'])) {
         this.age = _userInfo['age'];
       }
       if (!_.isEmpty(_userInfo['role'])) {
@@ -63,26 +63,12 @@ export class AppUser {
   }
 }
 
-export interface IPermission {
-  permission_action: string;
-  permission_group: string;
-  permission_module: string;
-
-
-  action: string;
-  module: string;
-  role: string;
-  name: string;
-  parent: string;
-
-}
-
 export interface IUserProfile {
-  address: string;
-  city: string;
-  country: string;
   email: string;
   fullName: string;
-  phoneNumber: string;
+  gender: number;
+  age: number;
+  role: ROLE;
+  phone: string;
 }
 

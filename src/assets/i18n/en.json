@@ -6,9 +6,17 @@
     "BTN_CANCEL": "Cancel",
     "YES": "Yes",
     "NO": "No",
+    "ROLE": {
+        "ADMIN": "Admin",
+        "USER": "User",
+        "DOCTOR": "Doctor"
+    },
     "COMMON": {
         "INPUT_SEARCH": "Search content",
-        "SELECT_DATE": "Select Date"
+        "SELECT_DATE": "Select Date",
+        "ACCOUNT": "Account",
+        "INFORMATION": "Information",
+        "APPOINTMENT_SCHEDULE": "Appointment Schedule"
     },
     "TITLE": "CHILD CARE",
     "OUTSIDE": {
@@ -32,7 +40,8 @@
             "MALE": "Male",
             "FEMALE": "Female",
             "PHONE_NUMBER": "Phone Number",
-            "PHONE_NUMBER_HOLDER": "Enter Your Phone Number"
+            "PHONE_NUMBER_HOLDER": "Enter Your Phone Number",
+            "GENDER": "Gender"
         }
     },
     "HEADER": {

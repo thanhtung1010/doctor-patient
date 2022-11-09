@@ -1,5 +1,104 @@
 &-profile {
-    display: flex;
     background-image: url('../../../assets/imgs/background-home.png');
-    height: 70vh;
+    padding-left: 10vh;
+    padding-right: 10vh;
+    padding-top: 10px;
+    height: 90vh;
+}
+
+&-user-profile {
+
+    &-head {
+        height: 50px;
+        background-color: $whiteColor;
+        border-radius: 10px;
+        box-shadow: 0px 0px 3px $shadow;
+        display: flex;
+        margin: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        justify-content: center;
+
+        &-item {
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $mainColor;
+            margin: 5px;
+
+            &-active {
+                border-bottom: 2px solid $mainColor;
+                margin-bottom: 3px;
+            }
+        }
+    }
+
+    &-content {
+        display: flex;
+
+        &-item {
+            box-shadow: 0px 0px 3px $shadow;
+            background-color: $whiteColor;
+            border-radius: 10px;
+
+            &-infor {
+                margin: 5px;
+                width: 30%;
+                padding: 5px;
+            }
+
+            &-post {
+                margin: 5px;
+                width: 70%;
+            }
+        }
+    }
+}
+
+&-user-calendar {
+    width: 80%;
+    height: 80vh;
+    background-color: $whiteColor;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px $shadow;
+
+    &-head {
+        height: 50px;
+        border-bottom: 1px solid $shadow;
+        margin: 0px 10px 0px 10px;
+
+        &-select-date {
+            padding: 10px;
+        }
+
+        .ant-picker {
+            margin: auto;
+        }
+
+        &-book {
+            padding: 0px 10px 0px 10px;
+            display: flex;
+
+            &-btn {
+                margin: auto 0px auto 0px;
+            }
+        }
+
+        .ant-btn {
+            border: unset;
+            background-color: $mainColor;
+            color: $whiteColor;
+
+            &:hover {
+                background-color: $secondColor;
+            }
+        }
+    }
+
+    &-content {
+        margin: 10px 0px 10px 0px;
+        overflow: scroll;
+    }
 }

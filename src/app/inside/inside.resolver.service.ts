@@ -24,7 +24,10 @@ export class InsideChildResolver implements Resolve<boolean> {
       }
       return this._commonService.getUserInfo().pipe(map((val: any) => {
         if (val && val['data']) {
-          this._sessionService.setUserLogged((new cookieHelper().get('token')), val['data']);
+          this._sessionService.setUserLogged((new cookieHelper().get('token')), {
+            ...val['data'],
+            role: val['data'].role ? val['data'].role.toUpperCase() : ''
+          });
           return of(true)
         } else {
           this.handleLogout();

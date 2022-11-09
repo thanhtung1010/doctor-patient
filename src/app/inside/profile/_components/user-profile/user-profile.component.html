@@ -1,0 +1,32 @@
+<div class="tung-user-profile">
+    <div class="tung-user-profile-content">
+        <div class="tung-user-profile-content-item tung-user-profile-content-item-infor">
+            <nz-list>
+                <ng-container *ngFor="let item of userInforList">
+                    <ng-container [ngSwitch]="item.field">
+                        <ng-container *ngSwitchCase="USER_FIELD.gender">
+                            <nz-list-item>
+                                <span>{{item.title | translate}}</span>
+                                {{item.value | translate}}
+                            </nz-list-item>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="USER_FIELD.role">
+                            <nz-list-item>
+                                <span>{{item.title | translate}}</span>
+                                {{'ROLE.' + item.value | translate}}
+                            </nz-list-item>
+                        </ng-container>
+
+                        <ng-container *ngSwitchDefault>
+                            <nz-list-item>
+                                <span>{{item.title | translate}}</span>
+                                {{item.value || ''}}
+                            </nz-list-item>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </nz-list>
+        </div>
+        <div class="tung-user-profile-content-item tung-user-profile-content-item-post"></div>
+    </div>
+</div>

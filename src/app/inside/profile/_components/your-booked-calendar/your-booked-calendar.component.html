@@ -1,0 +1,21 @@
+<div class="tung-user-calendar">
+    <div nz-row class="tung-user-calendar-head">
+        <div nz-col nzSpan="8" class="tung-user-calendar-head-select-date">
+            <nz-date-picker [nzPlaceHolder]="'COMMON.SELECT_DATE' | translate" [nzAllowClear]="false"
+                [nzRenderExtraFooter]="undefined" [nzSuffixIcon]="prefixTemplateCalendar"
+                [nzFormat]="dateFormatForEdit">
+            </nz-date-picker>
+        </div>
+        <div nz-col nzSpan="8"></div>
+        <div class="tung-user-calendar-head-book tung-align-right" nz-col nzSpan="8">
+            <div class="tung-user-calendar-head-book-btn">
+                <app-booking></app-booking>
+            </div>
+        </div>
+    </div>
+    <div class="tung-user-calendar-content"></div>
+</div>
+
+<ng-template #prefixTemplateCalendar>
+    <span class="tung-icon" nz-icon nzType="calendar" nzTheme="outline"></span>
+</ng-template>

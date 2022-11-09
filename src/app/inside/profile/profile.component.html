@@ -1,3 +1,11 @@
 <div class="tung-profile">
+    <div class="tung-user-profile-head">
+        <ng-container *ngFor="let head of profileMenu">
+            <div [ngClass]="{'tung-user-profile-head-item-active': head.id === active}"
+                class="tung-user-profile-head-item tung-bold" (click)="goToURL(head.url);onToggleActive(head.id)">
+                {{head.title | translate}}
+            </div>
+        </ng-container>
+    </div>
     <router-outlet></router-outlet>
 </div>

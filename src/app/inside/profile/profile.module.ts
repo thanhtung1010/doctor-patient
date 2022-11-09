@@ -9,6 +9,12 @@ import {
 import { ROUTING_DEFINED } from 'app/_share/_enum';
 import SharedModule from 'app/_share/share.module';
 
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { TranslateModule } from '@ngx-translate/core';
+
 export const routes: Routes = [
   {
     path: '',
@@ -40,6 +46,12 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     SharedModule,
+    TranslateModule,
+
+    NzGridModule,
+    NzListModule,
+    NzInputModule,
+    NzDatePickerModule,
   ]
 })
 export class ProfileModule { }

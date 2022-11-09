@@ -20,4 +20,8 @@ export const API_BOOKING: IApiUrl = {
         method: 'POST',
         url: 'booking/book'
     },
+    GET_BOOKED_AT_LIST_BY_USER: {
+        method: 'POST',
+        url: 'booking/get-booking-list-by-user'
+    },
 }

@@ -4,7 +4,7 @@ import { GlobalConfig } from 'app/_cores/_enums/global.enum';
 import { Helpers } from 'app/_cores/_helpers';
 import { cookieHelper } from 'app/_cores/_helpers/cookieHelper';
 import { LocalStorageHelper } from 'app/_cores/_helpers/local-storage.helper';
-import { AppUser } from 'app/_cores/_models';
+import { AppUser, IUserProfile } from 'app/_cores/_models';
 import { APIService } from 'app/_cores/_services/api.service';
 import { CommonService } from 'app/_cores/_services/common.service';
 import { environment } from 'environments/environment';
@@ -46,6 +46,22 @@ export class SessionService {
    */
   getFullName(): string {
     return !_.isNull(this.UserLogged) ? this.UserLogged.fullName : '';
+  }
+
+  /**
+   *  Get User infor
+   * @returns object
+   */
+  getUserInfor(): IUserProfile | null {
+    return this.isLogged() ? (this.UserLogged as IUserProfile) : null;
+  }
+
+  /**
+   *  Get User infor
+   * @returns object
+   */
+  getUserPost(): any[] {
+    return !_.isNull(this.UserLogged) ? this.UserLogged.postSearchResultDtoList || [] : [];
   }
 
   /**

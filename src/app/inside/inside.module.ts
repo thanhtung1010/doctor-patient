@@ -21,6 +21,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from 'app/_cores/core.module';
 import { NotFoundComponent } from 'app/_share/_component';
+import { AuthGuard } from 'app/_share/_guards';
 
 export const routes: Routes = [
   {
@@ -38,7 +39,8 @@ export const routes: Routes = [
       },
       {
         path: ROUTING_DEFINED.PROFILE,
-        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+        canActivate: [AuthGuard]
       },
       {
         path: ROUTING_DEFINED.MANAGER,
