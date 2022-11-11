@@ -1,0 +1,41 @@
+&-wc {
+
+    &-btn {
+        background-color: $whiteColor;
+        display: flex;
+        cursor: text;
+        border: solid 1px $shadow;
+        border-radius: 5px;
+        padding: 10px;
+        margin: auto;
+        width: 50%;
+
+        &-avatar {
+            height: 30px;
+            width: 30px;
+            border-radius: 100%;
+            color: $lightMainColor;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            border: solid 1px $lightMainColor;
+            transition: all 0.5s ease-out;
+        }
+
+        &-input {
+            margin-left: 10px;
+            border: 1px solid $shadow;
+            border-radius: 20px;
+            font-size: 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+        }
+
+        &:hover {
+            background-color: $lightShadow;
+        }
+    }
+}

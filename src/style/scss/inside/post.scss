@@ -1,0 +1,38 @@
+&-post {
+    cursor: pointer;
+    margin: 20px auto 20px auto;
+    width: 600px;
+    overflow: hidden;
+    border-radius: 10px;
+
+    img {
+        height: 400px;
+    }
+
+    &-title {
+        height: 75px;
+        color: $mainColor;
+        border: 1px solid $shadow;
+        border-top: unset;
+        border-radius: 10px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+&-full-post {
+    .angular-editor {
+        .angular-editor-wrapper {
+            .angular-editor-textarea {
+                border: unset !important;
+                padding: 0px 10px 0px 10px !important;
+                margin-top: 0px !important;
+            }
+        }
+    }
+}

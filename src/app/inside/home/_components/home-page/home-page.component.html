@@ -1,0 +1,22 @@
+<div class="tung-home" nz-col nzSpan="24">
+    <div class="tung-home-left" nz-col nzSpan="5">
+        <ng-container *ngFor="let thread of data.threads">
+            <div class="tung-thread-item" (click)="getPostbyThread(thread.id)">
+                <span class="tung-mr-10" nz-icon nzType="search" nzTheme="outline"></span>
+                {{thread.name}}
+            </div>
+        </ng-container>
+    </div>
+    <div class="tung-home-center" nz-col nzSpan="14">
+        <app-write-content></app-write-content>
+        <div class="tung-home-center-list-content">
+            <ng-container *ngIf="loading.post">
+                <app-loading></app-loading>
+            </ng-container>
+            <ng-container *ngFor="let post of data.posts">
+                <app-post [postInfor]="post"></app-post>
+            </ng-container>
+        </div>
+    </div>
+    <div class="tung-home-right" nz-col nzSpan="5"></div>
+</div>

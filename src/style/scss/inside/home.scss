@@ -1,16 +1,38 @@
 &-home {
     display: flex;
     background-image: url('../../../assets/imgs/background-home.png');
+    padding-top: 10px;
+    height: 90vh;
 
     &-left {
-        height: 100vh;
+        padding: 100px 20px 0px 20px;
     }
 
     &-center {
-        height: 100vh;
+
+        &-list-content {
+            position: relative;
+            margin: 10px auto 0px auto;
+            box-shadow: 0px 0px 3px $shadow;
+            background-color: $whiteColor;
+            height: 80vh;
+            width: 800px;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
     }
 
-    &-right {
-        height: 100vh;
+    &-right {}
+}
+
+&-thread-item {
+    cursor: pointer;
+    color: $lightMainColor;
+    padding: 5px;
+    border-bottom: 1px solid $shadow;
+    margin: 0px 5px 0px 5px;
+
+    &:hover {
+        background-color: $lightShadow;
     }
 }

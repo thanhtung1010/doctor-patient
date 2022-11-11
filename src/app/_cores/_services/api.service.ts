@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { map } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { IApiObject } from '../_interfaces/api-url.interface';
 import { IApiBaseResponse } from '../_interceptors/api-base-response.interface';
 import { cookieHelper } from '../_helpers/cookieHelper';
 import { Helpers } from '../_helpers/helpers';
+import { UploadResponse } from '@kolkov/angular-editor';
 
 @Injectable()
 export class APIService {
@@ -125,6 +126,22 @@ export class APIService {
       console.log('=== [ERROR CALL API]', error);
       return new Observable(undefined);
     }
+  }
+
+  //#region  Upload File
+  callUploadHTTPRequest(object: IApiObject, body: any, customHeader?: any, customParams?: any): Observable<HttpEvent<UploadResponse>> {
+    const _url = this.buildURI(!!object.external, object.url);
+    const initials = this.setInitUpload(customParams);
+    const reqOption = new HttpRequest(object.method, _url, body, initials);
+    return this.http.request(reqOption).pipe(
+      map((response: any) => {
+        // if (response && response.status === 200 && response['body']) {
+        //   return response.body as IApiBaseResponse;
+        // } else {
+        return response;
+        // }
+      })
+    );
   }
 
   setHeaderUpload() {

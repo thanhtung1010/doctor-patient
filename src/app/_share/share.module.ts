@@ -8,6 +8,7 @@ import {
   BookingComponent,
   ShiftListComponent,
   NotFoundComponent,
+  PostComponent,
 } from './_component';
 import { AuthGuard, ManagerGuard } from './_guards';
 import { CommonModule } from '@angular/common';
@@ -16,14 +17,6 @@ import {
 } from './_directives';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import {
-  HtmlEditorService,
-  ToolbarService,
-  LinkService,
-  ImageService,
-  RichTextEditorModule,
-} from '@syncfusion/ej2-angular-richtexteditor';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
@@ -38,8 +31,10 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 import { DateTimeLabelPipe } from './_pipes';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 
@@ -53,6 +48,7 @@ import { DateTimeLabelPipe } from './_pipes';
     BookingComponent,
     ShiftListComponent,
     NotFoundComponent,
+    PostComponent,
 
     NumberOnlyDirective,
 
@@ -63,10 +59,10 @@ import { DateTimeLabelPipe } from './_pipes';
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularEditorModule,
 
     NzUploadModule,
     NzIconModule,
-    RichTextEditorModule,
     NzStepsModule,
     NzButtonModule,
     NzModalModule,
@@ -77,6 +73,7 @@ import { DateTimeLabelPipe } from './_pipes';
     NzEmptyModule,
     NzPopconfirmModule,
     NzInputModule,
+    NzFormModule,
   ],
   exports: [
     LoadingComponent,
@@ -86,6 +83,7 @@ import { DateTimeLabelPipe } from './_pipes';
     StepComponent,
     BookingComponent,
     NotFoundComponent,
+    PostComponent,
 
     NumberOnlyDirective,
 
@@ -93,11 +91,6 @@ import { DateTimeLabelPipe } from './_pipes';
   ],
   providers: [
     NzMessageService,
-    HtmlEditorService,
-    ToolbarService,
-    LinkService,
-    ImageService,
-
     DateTimeLabelPipe,
   ]
 })

@@ -25,3 +25,22 @@ export const API_BOOKING: IApiUrl = {
         url: 'booking/get-booking-list-by-user'
     },
 }
+
+export const API_POST: IApiUrl = {
+    GET_ALL_THREAD: {
+        method: "POST",
+        url: 'content/get-all-thread'
+    },
+    CREATE_POST: {
+        method: "POST",
+        url: 'content/post'
+    },
+    GET_ALL_POST: {
+        method: 'POST',
+        url: 'admin/post/all'
+    },
+    GET_POST_BY_THREAD: {
+        method: 'POST',
+        url: 'content/get-post-inside-thread'
+    }
+}

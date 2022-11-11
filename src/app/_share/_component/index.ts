@@ -6,3 +6,4 @@ export * from './step/step.component';
 export * from './booking/booking.component';
 export * from './shift-list/shift-list.component';
 export * from './not-found/not-found.component';
+export * from './post/post.component';

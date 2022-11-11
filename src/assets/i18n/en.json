@@ -16,7 +16,9 @@
         "SELECT_DATE": "Select Date",
         "ACCOUNT": "Account",
         "INFORMATION": "Information",
-        "APPOINTMENT_SCHEDULE": "Appointment Schedule"
+        "APPOINTMENT_SCHEDULE": "Appointment Schedule",
+        "CREATE_POST": "Create New Post",
+        "ENTER_YOUR_CONTENT": "Enter Your Content"
     },
     "TITLE": "CHILD CARE",
     "OUTSIDE": {
@@ -75,6 +77,12 @@
         "ALLERGIST": "Allergist",
         "DERMATOLOGIST": "Dermatologist",
         "CONFIRM_INFORMATION": "Confirm Information"
+    },
+    "POST": {
+        "TITLE": "Tiêu đề",
+        "TITLE_HOLDER": "Nhập tiêu đề",
+        "THREAD": "Chủ đề",
+        "THREAD_HOLDER": "Chọn chủ đề"
     },
     "error": {
         "required": "This field is required.",

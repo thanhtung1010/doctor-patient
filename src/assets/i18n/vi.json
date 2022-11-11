@@ -16,7 +16,9 @@
         "SELECT_DATE": "Chọn ngày",
         "ACCOUNT": "Tài khoản",
         "INFORMATION": "Thông tin",
-        "APPOINTMENT_SCHEDULE": "Lịch hẹn"
+        "APPOINTMENT_SCHEDULE": "Lịch hẹn",
+        "CREATE_POST": "Tạo bài viết",
+        "ENTER_YOUR_CONTENT": "Nhập nội dung"
     },
     "TITLE": "CHILD CARE",
     "OUTSIDE": {
@@ -76,6 +78,12 @@
         "DERMATOLOGIST": "Khoa da liễu",
         "CONFIRM_INFORMATION": "Xác nhận thông tin"
     },
+    "POST": {
+        "TITLE": "Tiêu đề",
+        "TITLE_HOLDER": "Nhập tiêu đề",
+        "THREAD": "Chủ đề",
+        "THREAD_HOLDER": "Chọn chủ đề"
+    },
     "error": {
         "required": "Yêu cầu này là bắt buộc.",
         "email": "Email không hợp lệ",
@@ -101,7 +109,7 @@
         "phone": "Số điện thoại không hợp lệ"
     },
     "SYS_MSG": {
-        "ERROR_TYPE_UPLOAD": "Bạn vẫn chưa đăng nhập, bạn có chắc chắn muốn làm điều này khum?",
+        "ERROR_TYPE_UPLOAD": "Định dạng ảnh phải là JPG hoặc PNG !",
         "ERROR_SIZE_UPLOAD": "Kích thước dữ liệu không vượt quá 2MB !"
     },
     "WARNING_MSG": {

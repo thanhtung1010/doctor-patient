@@ -1,0 +1,22 @@
+<ng-container *ngIf="postInfor">
+    <div class="tung-post" (click)="onToggleVisibleFullPost(true)">
+        <img [src]="postInfor.thumbnailImage" [alt]="postInfor.title" />
+        <div class="tung-post-title">{{postInfor.title}}</div>
+    </div>
+
+
+
+    <nz-modal [nzWidth]="'50vw'" [nzVisible]="visibleFullPostModal" [nzCloseIcon]="closeIcon">
+        <div *nzModalTitle class="tung-title tung-p-0">
+            {{postInfor.title}}
+        </div>
+        <div *nzModalContent class="tung-full-post">
+            <angular-editor [ngModel]="postInfor.content" [config]="editorConfig"></angular-editor>
+        </div>
+        <div *nzModalFooter></div>
+    </nz-modal>
+</ng-container>
+
+<ng-template #closeIcon>
+    <span nz-icon nzType="close" nzTheme="outline"></span>
+</ng-template>
