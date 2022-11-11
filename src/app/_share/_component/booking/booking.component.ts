@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Params, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
@@ -6,6 +6,7 @@ import { Helpers } from "app/_cores/_helpers";
 import { ROUTING_DEFINED } from "app/_share/_enum";
 import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
 import { IBookingInfor, IDoctorInfor } from "app/_share/_interface";
+import { BookingModel } from "app/_share/_models/booking.model";
 import { BookingService, SessionService } from "app/_share/_services";
 import { environment } from "environments/environment";
 import * as _ from "lodash";
@@ -20,6 +21,7 @@ import { loadingType } from "../../_enum/loading.enum";
 
 export class BookingComponent implements OnInit {
     @Input() showBtn: boolean = true;
+    @Output() oSubmitSuccess = new EventEmitter();
     isLogged: boolean = false;
     step = {
         steps: ['BOOKING.SERVICE', 'BOOKING.ORDER', 'BOOKING.APPOINTMENT_INFORMATION'],
@@ -45,7 +47,7 @@ export class BookingComponent implements OnInit {
         specialist: '',
 
         bookedAt: null,
-        bookedShift: null,
+        shift: null,
         consult: null,
         content: ''
     }
@@ -135,7 +137,7 @@ export class BookingComponent implements OnInit {
                 break;
             // step 2
             case 'shifts':
-                this.bookingInfor.bookedShift = evt;
+                this.bookingInfor.shift = evt;
                 break;
             case 'bookedAt':
                 this.bookingInfor.bookedAt = moment(evt).hours(0).unix() * 1000;
@@ -184,7 +186,7 @@ export class BookingComponent implements OnInit {
                 return !_.isEmpty(this.bookingInfor.content)
             case 1:
                 return !_.isNull(this.bookingInfor.bookedAt) && !_.isNaN(this.bookingInfor.bookedAt)
-                    && !_.isNull(this.bookingInfor.bookedShift) && !_.isNaN(this.bookingInfor.bookedShift)
+                    && !_.isNull(this.bookingInfor.shift) && !_.isNaN(this.bookingInfor.shift)
 
             default:
                 return !_.isNull(this.bookingInfor.specialist) && !_.isEmpty(this.bookingInfor.specialist)
@@ -198,10 +200,10 @@ export class BookingComponent implements OnInit {
             this.loading.submit = true;
             this.bookingSer.book({ ...this.bookingInfor }).subscribe({
                 next: resp => {
-                    this.showSuccess(),
-                        this.loading.submit = false;
+                    this.showSuccess();
+                    this.loading.submit = false;
                     this.onToggleBookingModal(false);
-                    this.bookingInfor
+                    this.onEmitSucces();
                 },
                 error: error => {
                     this.showError(error['error'] ? error['error'].code || 8 : 8);
@@ -243,5 +245,11 @@ export class BookingComponent implements OnInit {
             }
         }
 
+    }
+
+    onEmitSucces() {
+        this.step.active = 0;
+        this.bookingInfor = new BookingModel(null);
+        this.oSubmitSuccess.emit();
     }
 }

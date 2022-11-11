@@ -14,6 +14,8 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { TranslateModule } from '@ngx-translate/core';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 export const routes: Routes = [
   {
@@ -52,6 +54,8 @@ export const routes: Routes = [
     NzListModule,
     NzInputModule,
     NzDatePickerModule,
+    NzTableModule,
+    NzButtonModule
   ]
 })
 export class ProfileModule { }

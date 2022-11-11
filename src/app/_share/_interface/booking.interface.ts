@@ -5,7 +5,7 @@ export interface IBookingInfor {
     specialist: null | string;
 
     bookedAt: null | number | string | Date;
-    bookedShift: null | number;
+    shift: null | number;
     content: string;
     consult: string | null;
 }

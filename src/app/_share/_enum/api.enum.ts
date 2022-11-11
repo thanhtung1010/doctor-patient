@@ -28,6 +28,10 @@ export const API_BOOKING: IApiUrl = {
         method: 'POST',
         url: 'booking/get-booking-list-by-doctor'
     },
+    APPROVAL_BOOKING: {
+        method: 'POST',
+        url: 'booking/approve/'
+    },
 }
 
 export const API_POST: IApiUrl = {

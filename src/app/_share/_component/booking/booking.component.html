@@ -88,7 +88,7 @@
             <div nz-col nzSpan="8"></div>
         </div>
         <ng-container *ngIf="bookingInfor.bookedAt">
-            <app-shift-list [bookingDate]="bookingInfor.bookedAt" [shift]="bookingInfor.bookedShift"
+            <app-shift-list [bookingDate]="bookingInfor.bookedAt" [shift]="bookingInfor.shift"
                 (oChangeShift)="onchange($event, 'shifts')"></app-shift-list>
         </ng-container>
     </div>
@@ -111,7 +111,7 @@
                     {{'BOOKING.CONSULT_PACKAGE' | translate}}: {{'BOOKING.' + bookingInfor.consult | translate}}
                 </div>
                 <div nz-col nzSpan="12">
-                    {{'BOOKING.TIME' | translate}}: {{getDoctorNameById('shift', bookingInfor.bookedShift)}}
+                    {{'BOOKING.TIME' | translate}}: {{getDoctorNameById('shift', bookingInfor.shift)}}
                     {{bookingInfor.bookedAt | dateTimeLabel:_dateFormatForShow}}
                 </div>
             </div>

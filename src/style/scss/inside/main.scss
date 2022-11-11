@@ -132,7 +132,7 @@
             background-image: url('../../../assets/imgs/shift-background.png');
         }
 
-        &-booked {
+        &-selected {
             background-color: $lightGreenColor;
             color: $whiteColor;
             background-image: url('../../../assets/imgs/shift-background.png');
@@ -141,6 +141,56 @@
         &-expired {
             background-color: $shadow;
             background-image: url('../../../assets/imgs/shift-background.png');
+        }
+
+        &-hover {
+            position: relative;
+
+            &-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0);
+                transition: all 0.5s ease;
+                border-radius: 5px;
+            }
+
+            &-button {
+                position: absolute;
+                width: 100%;
+                left: 0;
+                top: 50%;
+                text-align: center;
+                opacity: 0;
+                transition: opacity .35s ease;
+
+                button {
+                    font-weight: bold;
+                }
+            }
+
+            &:hover .tung-shift-content-hover-overlay {
+                display: block;
+                background: rgba(0, 0, 0, .3);
+            }
+
+            &:hover .tung-shift-content-hover-button {
+                opacity: 1;
+            }
+        }
+
+        &-rejected {
+            border: unset !important;
+            background-color: $lightRedColor !important;
+            color: $whiteColor !important;
+        }
+
+        &-approved {
+            border: unset !important;
+            background-color: $stepColor !important;
+            color: $whiteColor !important;
         }
     }
 }

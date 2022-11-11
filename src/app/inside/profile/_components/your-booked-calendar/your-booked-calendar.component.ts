@@ -1,11 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { Helpers } from "app/_cores/_helpers";
 import { getSystemMsgByCode } from "app/_share/_enum";
 import { IBookingInfor } from "app/_share/_interface";
-import { BookingService } from "app/_share/_services";
+import { ITableElement } from "app/_share/_interface/share.interface";
+import { BookingService, SessionService } from "app/_share/_services";
 import { environment } from "environments/environment";
 import * as _ from "lodash";
+import * as moment from "moment";
 import { NzMessageService } from "ng-zorro-antd/message";
+import { IBookingItem } from "../../_interfaces";
 
 @Component({
     selector: 'app-your-booked-calendar',
@@ -14,24 +18,44 @@ import { NzMessageService } from "ng-zorro-antd/message";
 
 export class YourBookedCalendarComponent implements OnInit {
     data = {
-        bookedListRaw: [] as IBookingInfor[],
+        bookedListRaw: [] as IBookingItem[],
         bookedList: [] as {
             bookedAt: Date | string | number,
-            children: IBookingInfor[]
+            children: IBookingItem[]
         }[]
     }
+    loading = {
+        list: false,
+        approval: false,
+    }
+    isDoctor: boolean = false
     defautlFormat: any = null;
     dateFormatForEdit: string = '';
     _dateFormatForShow: string = '';
+    timeFormat: string = 'HH:mm a';
+    tableHeader: ITableElement[] = [
+        { title: "Ngày Hẹn", field: "bookedAt" },
+        { title: "Ca 1", field: "1" },
+        { title: "Ca 2", field: "2" },
+        { title: "Ca 3", field: "3" },
+        { title: "Ca 4", field: "4" },
+    ]
     constructor(
         private bookingSer: BookingService,
         private translate: TranslateService,
         private msg: NzMessageService,
+        private sessionSer: SessionService,
     ) {
+        this.isDoctor = this.sessionSer.isDoctor();
         this.defautlFormat = environment.FORMAT_SETTING
         if (this.defautlFormat) {
             this._dateFormatForShow = this.defautlFormat.date;
             this.dateFormatForEdit = this._dateFormatForShow ? this._dateFormatForShow.replace('DD', 'dd').replace('YYYY', 'yyyy') : '';
+            this.timeFormat = this.defautlFormat['time'] || this.timeFormat
+
+            if (this.timeFormat) {
+                this.timeFormat = this.timeFormat.replace(':ss', '');
+            }
         }
     }
 
@@ -40,34 +64,100 @@ export class YourBookedCalendarComponent implements OnInit {
     }
 
     getCalendar() {
-        this.bookingSer.getBookedListByUser().subscribe({
-            next: resp => {
-                if (resp.data && resp.data.length) {
-                    this.data.bookedListRaw = resp.data;
-                    this.data.bookedList = this.cookingBookedList(resp.data);
-                } else {
+        this.loading.list = true;
+        const _request = this.isDoctor ? this.bookingSer.getBookedListByDoctor() : this.bookingSer.getBookedListByUser();
+        if (_request) {
+            _request.subscribe({
+                next: resp => {
+                    if (resp.data && resp.data.length) {
+                        this.data.bookedListRaw = resp.data.map((item: any) => {
+                            return {
+                                ...item,
+                                expired: !item.bookedAt ? false : moment(new Date()).unix() > item.bookedAt,
+                                shift: item.bookedShift
+                            }
+                        });
+                        this.data.bookedList = this.cookingBookedList(resp.data);
+                    } else {
+                        this.data.bookedListRaw = [];
+                        this.data.bookedList = [];
+                    }
+                    this.loading.list = false;
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
                     this.data.bookedListRaw = [];
                     this.data.bookedList = [];
-                }
-            },
-            error: error => {
-                this.showError(error['error'] ? error['error'].code || 8 : 8);
-                this.data.bookedListRaw = [];
-                this.data.bookedList = [];
-            },
-            complete() { },
-        });
+                    this.loading.list = false;
+                },
+                complete: () => {
+                    this.loading.list = false;
+                },
+            });
+        }
     }
 
-    cookingBookedList(_list: IBookingInfor[]): { bookedAt: Date | string | number, children: IBookingInfor[] }[] {
+    cookingBookedList(_list: IBookingItem[]): { bookedAt: Date | string | number, children: IBookingItem[] }[] {
         const _bookedListByDate = _.chain(_list)
             .groupBy('bookedAt')
             .toPairs()
             .map(item => {
                 const _object = _.zipObject(['bookedAt', 'children'], item);
-                return _object
+                const child = [..._object['children']]
+                return {
+                    ..._object,
+                    bookedAt: +_object['bookedAt'] / 1000,
+                    children: this.cookingShifts(child)
+                }
             }).value()
         return _bookedListByDate as any
+    }
+
+    cookingShifts(list: any[]) {
+        const _returnList = [] as any[];
+        let count = 1;
+        while (_returnList.length < 4) {
+            const _existItem = list.find(item => item.bookedShift === count);
+            if (_existItem) {
+                _returnList.push(_existItem);
+            } else {
+                _returnList.push(null);
+            }
+            count++
+        }
+        return _returnList.map(item => {
+            return this.parseMissingfield(item)
+        })
+    }
+
+    parseMissingfield(item: any) {
+        if (!item) return null
+        const bookedTime = item.bookedShift === 1 ? 8 : item.bookedShift === 2 ? 10 : item.bookedShift === 3 ? 13 : 15;
+        return {
+            ...item,
+            start: Helpers.dateTime.setHour(bookedTime, item.bookedAt / 1000),
+            end: Helpers.dateTime.setHour(bookedTime + 2, item.bookedAt / 1000)
+        }
+    }
+
+    approval(id: number, isAccept: boolean) {
+        this.loading.approval = true;
+        if (this.sessionSer.isDoctor()) {
+            this.bookingSer.approvalBooking(id, { approve: isAccept }).subscribe({
+                next: resp => {
+                    this.showSuccess();
+                    this.getCalendar();
+                    this.loading.approval = false;
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.approval = false;
+                },
+                complete: () => {
+                    this.loading.approval = false;
+                },
+            });
+        }
     }
 
     showError(code: string) {

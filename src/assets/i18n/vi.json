@@ -110,7 +110,9 @@
     },
     "SYS_MSG": {
         "ERROR_TYPE_UPLOAD": "Định dạng ảnh phải là JPG hoặc PNG !",
-        "ERROR_SIZE_UPLOAD": "Kích thước dữ liệu không vượt quá 2MB !"
+        "ERROR_SIZE_UPLOAD": "Kích thước dữ liệu không vượt quá 2MB !",
+        "SUCCESS": "Thành công",
+        "SOMETHING_WRONG": "Lỗi không xác định"
     },
     "WARNING_MSG": {
         "SUBMIT_BOOKING_WITHOUT_LOGIN": "Bạn cần đăng nhập để tiếp tục á",

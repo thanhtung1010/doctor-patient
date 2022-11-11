@@ -30,4 +30,11 @@ export class BookingService {
     book(_params: any) {
         return this.api.callApi(API_BOOKING['BOOK'], _params || {});
     }
+
+    approvalBooking(id: number, _params: any) {
+        return this.api.callApi({
+            ...API_BOOKING['APPROVAL_BOOKING'],
+            url: API_BOOKING['APPROVAL_BOOKING'].url + id
+        }, _params || {});
+    }
 }

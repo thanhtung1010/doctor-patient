@@ -215,3 +215,13 @@
         color: $lightMainColor;
     }
 }
+
+.ant-message-notice-content {
+    border-radius: 10px;
+    font-size: 13px;
+
+    .ant-message-custom-content {
+        display: flex;
+        align-items: center;
+    }
+}

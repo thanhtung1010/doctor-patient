@@ -110,7 +110,9 @@
     },
     "SYS_MSG": {
         "ERROR_TYPE_UPLOAD": "You Can Only Upload JPG Or PNG File!",
-        "ERROR_SIZE_UPLOAD": "Image must smaller than 2MB!"
+        "ERROR_SIZE_UPLOAD": "Image must smaller than 2MB!",
+        "SUCCESS": "Success",
+        "SOMETHING_WRONG": "Something Wrong!"
     },
     "WARNING_MSG": {
         "SUBMIT_BOOKING_WITHOUT_LOGIN": "You Need To Log In To Continue",

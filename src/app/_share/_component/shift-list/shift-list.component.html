@@ -10,7 +10,7 @@
     <div class="tung-shift-content" [ngClass]="{
         'tung-shift-content-normal': !item.expired,
         'tung-shift-content-expired': item.expired,
-        'tung-shift-content-booked': shift && shift === item.shift
+        'tung-shift-content-selected': shift && shift === item.shift
     }">
         <p class="tung-shift-content-title">{{'BOOKING.SHIFT.' + item.shift | translate}}</p>
         <p class="tung-shift-content-content">

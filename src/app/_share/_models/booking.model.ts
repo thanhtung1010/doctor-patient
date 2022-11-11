@@ -6,7 +6,7 @@ export class BookingModel {
     specialist: null | string = null;
 
     bookedAt: null | number | string | Date = null;
-    bookedShift: null | number = null;
+    shift: null | number = null;
     content: string = '';
     consult: string | null = null;
 
@@ -18,7 +18,7 @@ export class BookingModel {
 
             this.checkForNumber('doctorId', _params['doctorId']);
             this.checkForNumber('bookedAt', _params['bookedAt']);
-            this.checkForNumber('bookedShift', _params['bookedShift']);
+            this.checkForNumber('shift', _params['shift']);
         }
     }
 
@@ -27,7 +27,7 @@ export class BookingModel {
             this[param] = value;
         }
     }
-    private checkForNumber(param: 'doctorId' | 'bookedAt' | 'bookedShift', value: any) {
+    private checkForNumber(param: 'doctorId' | 'bookedAt' | 'shift', value: any) {
         if (value && !_.isNaN(+value)) {
             this[param] = +value;
         }
