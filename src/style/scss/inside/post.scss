@@ -22,6 +22,11 @@
         padding: 10px;
         display: flex;
         align-items: center;
+
+        &-text {
+            cursor: pointer;
+            color: $mainColor;
+        }
     }
 }
 

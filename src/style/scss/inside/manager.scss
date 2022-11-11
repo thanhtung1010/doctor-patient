@@ -1,0 +1,23 @@
+&-manager {
+    height: 90vh;
+    display: flex;
+
+    &-content {
+        width: 90vw;
+        height: 100%;
+    }
+
+    &-post {
+        margin: 20px auto 20px auto;
+
+        .ant-table-wrapper {
+            margin: 20px;
+        }
+    }
+}
+
+&-nav-bar {
+    border-right: 1px solid $shadow;
+    width: 10vw;
+    height: 100%;
+}

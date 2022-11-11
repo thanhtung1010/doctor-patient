@@ -47,6 +47,10 @@ export class CommonService {
     return false
   }
 
+  getAllAccount() {
+    return this.apiService.callApi(API_URL['GET_ALL_USER'], {});
+  }
+
   showSystemError(_msg: string) {
     this.systemError.next(_msg);
   }

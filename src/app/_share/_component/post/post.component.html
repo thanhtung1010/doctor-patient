@@ -1,12 +1,19 @@
 <ng-container *ngIf="postInfor">
-    <div class="tung-post" (click)="onToggleVisibleFullPost(true)">
-        <img [src]="postInfor.thumbnailImage" [alt]="postInfor.title" />
-        <div class="tung-post-title">{{postInfor.title}}</div>
-    </div>
+    <ng-container *ngIf="!textOnly;else titleTextOnly">
+        <div class="tung-post" (click)="onToggleVisibleFullPost(true)">
+            <img [src]="postInfor.thumbnailImage" [alt]="postInfor.title" />
+            <div class="tung-post-title">{{postInfor.title}}</div>
+        </div>
+    </ng-container>
+
+    <ng-template #titleTextOnly>
+        <div (click)="onToggleVisibleFullPost(true)" class="tung-post-title-text">{{postInfor.title}}</div>
+    </ng-template>
 
 
 
-    <nz-modal [nzWidth]="'50vw'" [nzVisible]="visibleFullPostModal" [nzCloseIcon]="closeIcon">
+    <nz-modal [nzWidth]="'50vw'" [nzVisible]="visibleFullPostModal" [nzCloseIcon]="closeIcon"
+        (nzOnCancel)="onToggleVisibleFullPost(false)">
         <div *nzModalTitle class="tung-title tung-p-0">
             {{postInfor.title}}
         </div>

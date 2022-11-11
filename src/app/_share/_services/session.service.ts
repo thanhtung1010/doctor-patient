@@ -49,6 +49,14 @@ export class SessionService {
   }
 
   /**
+   *  Get fullName
+   * @returns Number: user ID
+   */
+  getID(): number {
+    return !_.isNull(this.UserLogged) ? this.UserLogged.id : 0;
+  }
+
+  /**
    *  Get User infor
    * @returns object
    */

@@ -1,9 +1,11 @@
 export interface IBookingInfor {
+    id?: number;
+    doctorName?: string;
     doctorId: null | number;
     specialist: null | string;
 
     bookedAt: null | number | string | Date;
-    shifts: null | number;
+    bookedShift: null | number;
     content: string;
     consult: string | null;
 }

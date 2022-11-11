@@ -201,3 +201,17 @@
 // .ant-modal-close-x {
 //     cursor: auto;
 // }
+
+.tung-delete {
+    .anticon {
+        font-size: 20px;
+        color: $lightRedColor;
+    }
+}
+
+.tung-update {
+    .anticon {
+        font-size: 20px;
+        color: $lightMainColor;
+    }
+}

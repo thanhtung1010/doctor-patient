@@ -24,6 +24,10 @@ export const API_BOOKING: IApiUrl = {
         method: 'POST',
         url: 'booking/get-booking-list-by-user'
     },
+    GET_BOOKED_AT_LIST_BY_DOCTOR: {
+        method: 'POST',
+        url: 'booking/get-booking-list-by-doctor'
+    },
 }
 
 export const API_POST: IApiUrl = {
@@ -39,8 +43,16 @@ export const API_POST: IApiUrl = {
         method: 'POST',
         url: 'admin/post/all'
     },
+    GET_POST_BY_ID: {
+        method: 'POST',
+        url: 'content/get-post-by-user/'
+    },
     GET_POST_BY_THREAD: {
         method: 'POST',
         url: 'content/get-post-inside-thread'
-    }
+    },
+    DELETE_POST: {
+        method: 'POST',
+        url: 'content/delete'
+    },
 }

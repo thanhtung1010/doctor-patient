@@ -3,6 +3,7 @@ import * as _ from "lodash";
 
 export class AppUser {
   private accessToken: string;
+  id: number = 0;
   email: string = '';
   fullName: string = "";
   gender: number = 1;
@@ -22,6 +23,9 @@ export class AppUser {
     this.accessToken = _accessToken;
 
     if (_userInfo) {
+      if (_.isNumber(_userInfo['id'])) {
+        this.id = +_userInfo['id'];
+      }
       if (!_.isEmpty(_userInfo['email'])) {
         this.email = _userInfo['email'];
       }
@@ -29,10 +33,10 @@ export class AppUser {
         this.fullName = _userInfo['fullName'];
       }
       if (_.isNumber(_userInfo['gender'])) {
-        this.gender = _userInfo['gender'];
+        this.gender = +_userInfo['gender'];
       }
       if (_.isNumber(_userInfo['age'])) {
-        this.age = _userInfo['age'];
+        this.age = +_userInfo['age'];
       }
       if (!_.isEmpty(_userInfo['role'])) {
         this.role = _userInfo['role'];
@@ -64,6 +68,7 @@ export class AppUser {
 }
 
 export interface IUserProfile {
+  id?: number;
   email: string;
   fullName: string;
   gender: number;

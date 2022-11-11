@@ -3,19 +3,53 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ManagerComponent } from './manager.component';
 
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+
+import { AccountManagerComponent, PostManagerComponent } from './_components';
+import { ROUTING_DEFINED } from 'app/_share/_enum';
+import SharedModule from 'app/_share/share.module';
+import { TranslateModule } from '@ngx-translate/core';
+
 export const routes: Routes = [
   {
     path: '',
     component: ManagerComponent,
-    children: []
+    children: [
+      {
+        path: ROUTING_DEFINED.ACCOUNT,
+        component: AccountManagerComponent,
+      },
+      {
+        path: ROUTING_DEFINED.POST,
+        component: PostManagerComponent,
+      },
+      {
+        path: '**',
+        pathMatch: 'full',
+        redirectTo: ROUTING_DEFINED.ACCOUNT
+      }
+    ],
   }
 ]
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    PostManagerComponent,
+    AccountManagerComponent
+  ],
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    SharedModule,
+    TranslateModule,
+
+    NzMenuModule,
+    NzTableModule,
+    NzIconModule,
+    NzPopconfirmModule,
   ]
 })
 export class ManagerModule { }

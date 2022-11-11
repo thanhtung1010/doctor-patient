@@ -113,6 +113,7 @@
         "ERROR_SIZE_UPLOAD": "Kích thước dữ liệu không vượt quá 2MB !"
     },
     "WARNING_MSG": {
-        "SUBMIT_BOOKING_WITHOUT_LOGIN": "Bạn cần đăng nhập để tiếp tục á"
+        "SUBMIT_BOOKING_WITHOUT_LOGIN": "Bạn cần đăng nhập để tiếp tục á",
+        "ARE_YOU_SURE": "Bạn có chắc chắn muốn thực hiện điều này?"
     }
 }

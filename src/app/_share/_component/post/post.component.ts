@@ -9,6 +9,7 @@ import { IPost } from "app/_share/_interface";
 })
 
 export class PostComponent {
+    @Input() textOnly: boolean = false;
     @Input() postInfor: IPost | null = null;
 
     visibleFullPostModal: boolean = false;

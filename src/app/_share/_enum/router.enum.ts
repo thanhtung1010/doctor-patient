@@ -8,5 +8,7 @@ export const ROUTING_DEFINED = {
     PROFILE: "profile",
     YOUR_BOOKED_CALENDAR: "your-booked-calendar",
 
-    MANAGER: "manager"
+    MANAGER: "manager",
+    ACCOUNT: "account",
+    POST: "post",
 }

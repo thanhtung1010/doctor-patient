@@ -45,12 +45,13 @@ export class BookingComponent implements OnInit {
         specialist: '',
 
         bookedAt: null,
-        shifts: null,
+        bookedShift: null,
         consult: null,
         content: ''
     }
     loading = {
-        doctor: false
+        doctor: false,
+        submit: false
     }
     defautlFormat: any = null;
     dateFormatForEdit: string = '';
@@ -117,6 +118,10 @@ export class BookingComponent implements OnInit {
         this.msg.error(this.translate.instant(_msg));
     }
 
+    showSuccess() {
+        this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+    }
+
     onchange(evt: any, type: string | null = null) {
         switch (type) {
             // step 1
@@ -130,7 +135,7 @@ export class BookingComponent implements OnInit {
                 break;
             // step 2
             case 'shifts':
-                this.bookingInfor.shifts = evt;
+                this.bookingInfor.bookedShift = evt;
                 break;
             case 'bookedAt':
                 this.bookingInfor.bookedAt = moment(evt).hours(0).unix() * 1000;
@@ -179,7 +184,7 @@ export class BookingComponent implements OnInit {
                 return !_.isEmpty(this.bookingInfor.content)
             case 1:
                 return !_.isNull(this.bookingInfor.bookedAt) && !_.isNaN(this.bookingInfor.bookedAt)
-                    && !_.isNull(this.bookingInfor.shifts) && !_.isNaN(this.bookingInfor.shifts)
+                    && !_.isNull(this.bookingInfor.bookedShift) && !_.isNaN(this.bookingInfor.bookedShift)
 
             default:
                 return !_.isNull(this.bookingInfor.specialist) && !_.isEmpty(this.bookingInfor.specialist)
@@ -190,10 +195,21 @@ export class BookingComponent implements OnInit {
 
     onClickSubmit() {
         if (this.isLogged) {
+            this.loading.submit = true;
             this.bookingSer.book({ ...this.bookingInfor }).subscribe({
-                next: resp => { },
-                error: error => { },
-                complete() { },
+                next: resp => {
+                    this.showSuccess(),
+                        this.loading.submit = false;
+                    this.onToggleBookingModal(false);
+                    this.bookingInfor
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.submit = false;
+                },
+                complete: () => {
+                    this.loading.submit = false;
+                },
             });
         } else {
             this.goToURL(ROUTING_DEFINED.OUTSIDE, {

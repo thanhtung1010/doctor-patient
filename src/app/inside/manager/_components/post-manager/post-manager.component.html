@@ -1,0 +1,34 @@
+<div class="tung-manager-post">
+    <nz-table [nzData]="data.posts" [nzShowPagination]="false" [nzFrontPagination]="false" [nzShowPagination]="false"
+        [nzScroll]="{ x: '80vw', y: '75vh'}" [nzLoading]="loading.post" [nzLoadingIndicator]="loadingTable"
+        nzSize="small">
+        <thead>
+            <tr>
+                <th *ngFor="let header of tableHeader; let _last = last; let _first=first; let index=index"
+                    [style.text-align]="header.align || 'left'"
+                    [nzWidth]="(header.width) ? (header.width.toString()) : 'auto'">
+                    {{ header.title }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of data.posts; let idx = index; let lst = last">
+                <td>
+                    <app-post [textOnly]="true" [postInfor]="post"></app-post>
+                </td>
+                <td>{{ post.author }}</td>
+                <td>{{ post.createAt | dateTimeLabel }}</td>
+                <td>{{ post.updatedAt | dateTimeLabel }}</td>
+                <td class="tung-delete tung-align-center">
+                    <span class="tung-pointer" nz-icon nzType="delete" nzTheme="outline" nz-popconfirm
+                        [nzPopconfirmTitle]="'WARNING_MSG.ARE_YOU_SURE' | translate" [nzOkText]="'YES' | translate"
+                        [nzCancelText]="'NO' | translate" (nzOnConfirm)="deletePost(post.id)"></span>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+
+<ng-template #loadingTable>
+    <app-loading></app-loading>
+</ng-template>

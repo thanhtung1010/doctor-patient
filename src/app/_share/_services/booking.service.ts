@@ -23,6 +23,10 @@ export class BookingService {
         return this.api.callApi(API_BOOKING['GET_BOOKED_AT_LIST_BY_USER'], {});
     }
 
+    getBookedListByDoctor() {
+        return this.api.callApi(API_BOOKING['GET_BOOKED_AT_LIST_BY_DOCTOR'], {});
+    }
+
     book(_params: any) {
         return this.api.callApi(API_BOOKING['BOOK'], _params || {});
     }

@@ -13,6 +13,7 @@ import { environment } from 'environments/environment';
 import { Moment } from 'moment';
 import { IShift } from 'app/_share/_interface/booking.interface';
 import { DateTimeLabelPipe } from 'app/_share/_pipes/datetime-label.pipe';
+import { Location } from '@angular/common';
 
 export class Helpers {
   public static loading = {

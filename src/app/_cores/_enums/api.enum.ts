@@ -25,4 +25,8 @@ export const API_URL: IApiUrl = {
     method: 'POST',
     url: ''
   },
+  GET_ALL_USER: {
+    method: 'POST',
+    url: 'admin/user/all'
+  }
 }

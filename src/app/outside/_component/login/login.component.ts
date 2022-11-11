@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { emailPatternValidator } from 'app/_cores/_enums/validator.enum';
 import { Helpers } from 'app/_cores/_helpers';
 import { CommonService } from 'app/_cores/_services/common.service';
 import { ROUTING_DEFINED } from 'app/_share/_enum';
@@ -55,13 +56,13 @@ export class LoginComponent implements OnInit {
   createForm() {
     if (!this.loginForm) {
       this.loginForm = this.fb.group({
-        email: [null, [Validators.required, Validators.email]],
+        email: [null, [Validators.required, emailPatternValidator]],
         password: [null, [Validators.required, Validators.minLength(6)]]
       })
     }
     if (!this.signupFrom) {
       this.signupFrom = this.fb.group({
-        email: [null, [Validators.required, Validators.email]],
+        email: [null, [Validators.required, emailPatternValidator]],
         password: [null, [Validators.required, Validators.minLength(6)]],
         fullName: [null, [Validators.required]],
         age: [null, [Validators.required]],

@@ -1,0 +1,12 @@
+<div class="tung-manager">
+    <div class="tung-nav-bar">
+        <ul nz-menu nzMode="inline">
+            <ng-container *ngFor="let item of navBar">
+                <li nz-menu-item [nzSelected]="item.select" (click)="goToURL(item.url)">{{item.title}}</li>
+            </ng-container>
+        </ul>
+    </div>
+    <div class="tung-manager-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

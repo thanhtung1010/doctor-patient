@@ -1,0 +1,37 @@
+<div class="tung-manager-post">
+    <nz-table [nzData]="data.accounts" [nzShowPagination]="false" [nzFrontPagination]="false" [nzShowPagination]="false"
+        [nzScroll]="{ x: '80vw', y: '75vh'}" [nzLoading]="loading.account" [nzLoadingIndicator]="loadingTable"
+        nzSize="small">
+        <thead>
+            <tr>
+                <th *ngFor="let header of tableHeader; let _last = last; let _first=first; let index=index"
+                    [style.text-align]="header.align || 'left'"
+                    [nzWidth]="(header.width) ? (header.width.toString()) : 'auto'">
+                    {{ header.title }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of data.accounts; let idx = index; let lst = last">
+                <td [nzAlign]="'center'">
+                    {{user.id}}
+                </td>
+                <td>{{ user.fullName || '' }}</td>
+                <td>{{ user.email || '' }}</td>
+                <td [nzAlign]="'right'">{{ user.age || '' }}</td>
+                <td>{{ (user.gender === 1 ? 'OUTSIDE.SIGN_UP.MALE' : 'OUTSIDE.SIGN_UP.FEMALE') | translate }}</td>
+                <td>{{ user.phone || '' }}</td>
+                <td>{{ 'ROLE.' + user.role | translate }}</td>
+                <td class="tung-update tung-align-center">
+                    <ng-container *ngIf="user.role === ROLE.USER">
+                        <span class="tung-pointer" nz-icon nzType="up-square" nzTheme="outline"></span>
+                    </ng-container>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+
+<ng-template #loadingTable>
+    <app-loading></app-loading>
+</ng-template>

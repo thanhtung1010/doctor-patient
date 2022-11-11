@@ -31,7 +31,15 @@ export class ShareService {
         return this.api.callApi(API_POST['GET_ALL_POST'], {});
     }
 
+    getPostByID(_params: any) {
+        return this.api.callApi(API_POST['GET_POST_BY_ID'], _params);
+    }
+
     getPostByThread(_params: any) {
         return this.api.callApi(API_POST['GET_POST_BY_THREAD'], _params);
+    }
+
+    deletePost(_params: any) {
+        return this.api.callApi(API_POST['DELETE_POST'], _params);
     }
 }
