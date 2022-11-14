@@ -51,7 +51,7 @@
     <div class="tung-shift-content" [ngClass]="{
         'tung-shift-content-normal': !item.expired,
         'tung-shift-content-expired': item.expired,
-        'tung-shift-content-hover': isDoctor && item.isApproved === null,
+        'tung-shift-content-hover': isDoctor && item.isApproved === null && !item.expired,
         'tung-shift-content-rejected': item.isApproved === false,
         'tung-shift-content-approved': item.isApproved === true
     }">

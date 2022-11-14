@@ -15,13 +15,15 @@ import { tap } from "rxjs";
 
 export class WriteContentComponent implements OnInit, OnChanges {
     @Input() inputEditorConfig: AngularEditorConfig | null = null;
+    @Input() isComment: boolean = false;
+    @Input() visibleCreatePostModal: boolean = false;
 
     @Output() onSubmitPostSuccess = new EventEmitter();
+    @Output() oToggleVisiblePostModal = new EventEmitter();
 
     avatarText: string = '';
     formPost: FormGroup | null = null;
     allowCreatePost: boolean = false;
-    visibleCreatePostModal: boolean = false
     data = {
         threads: [] as { id: number, name: string }[]
     }
@@ -103,6 +105,11 @@ export class WriteContentComponent implements OnInit, OnChanges {
                 threadId: [null, Validators.required],
                 content: ['', Validators.required],
             })
+
+            if (this.isComment) {
+                this.formPost.removeControl('title');
+                this.formPost.removeControl('threadId');
+            }
         }
         this.initData()
     }
@@ -210,9 +217,14 @@ export class WriteContentComponent implements OnInit, OnChanges {
 
     onToggleCreatePostModal(visible: boolean) {
         this.visibleCreatePostModal = visible;
+        this.onToggleVisiblePostModal();
     }
 
     notiSubmitPostSuccess() {
         this.onSubmitPostSuccess.emit();
+    }
+
+    onToggleVisiblePostModal() {
+        this.oToggleVisiblePostModal.emit(this.visibleCreatePostModal);
     }
 }

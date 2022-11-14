@@ -77,7 +77,7 @@ export class YourBookedCalendarComponent implements OnInit {
                                 shift: item.bookedShift
                             }
                         });
-                        this.data.bookedList = this.cookingBookedList(resp.data);
+                        this.data.bookedList = _.orderBy(this.cookingBookedList(resp.data), ['bookedAt']);
                     } else {
                         this.data.bookedListRaw = [];
                         this.data.bookedList = [];
@@ -136,7 +136,8 @@ export class YourBookedCalendarComponent implements OnInit {
         return {
             ...item,
             start: Helpers.dateTime.setHour(bookedTime, item.bookedAt / 1000),
-            end: Helpers.dateTime.setHour(bookedTime + 2, item.bookedAt / 1000)
+            end: Helpers.dateTime.setHour(bookedTime + 2, item.bookedAt / 1000),
+            expired: moment().unix() * 1000 >= Helpers.dateTime.setHour(bookedTime - 1, item.bookedAt / 1000)
         }
     }
 

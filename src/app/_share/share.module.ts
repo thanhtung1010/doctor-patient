@@ -33,7 +33,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 
-import { DateTimeLabelPipe } from './_pipes';
+import { DateTimeLabelPipe, NumberLabelPipe } from './_pipes';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
@@ -53,6 +53,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     NumberOnlyDirective,
 
     DateTimeLabelPipe,
+    NumberLabelPipe,
   ],
   imports: [
     CommonModule,
@@ -88,10 +89,12 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     NumberOnlyDirective,
 
     DateTimeLabelPipe,
+    NumberLabelPipe,
   ],
   providers: [
     NzMessageService,
     DateTimeLabelPipe,
+    NumberLabelPipe,
   ]
 })
 export default class SharedModule {

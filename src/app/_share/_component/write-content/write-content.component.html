@@ -1,4 +1,4 @@
-<ng-container *ngIf="allowCreatePost">
+<ng-container *ngIf="allowCreatePost || isComment">
     <div class="tung-wc-btn" (click)="onToggleCreatePostModal(true)">
         <div class="tung-wc-btn-avatar">
             <span class="tung-fs-10 tung-bold">
@@ -7,7 +7,7 @@
         </div>
         <div class="tung-wc-btn-input">
             <span>
-                {{'COMMON.CREATE_POST' | translate}}
+                {{isComment ? 'Chia sẻ cảm nghĩ của bạn' : ('COMMON.CREATE_POST' | translate)}}
             </span>
         </div>
     </div>

@@ -6,4 +6,6 @@ export interface IPost {
     thumbnailImage: string;
     title: string;
     author: string;
+    totalLike?: number;
+    totalDislike?: number;
 }

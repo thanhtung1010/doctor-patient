@@ -80,6 +80,28 @@
     color: $mainColor;
 }
 
+.tung-delete {
+    .anticon {
+        font-size: 20px;
+        color: $lightRedColor;
+    }
+}
+
+.tung-update {
+    .anticon {
+        font-size: 20px;
+        color: $lightMainColor;
+    }
+}
+
+.tung-post-demo-title {
+    .anticon {
+        font-size: 10px;
+        color: $shadow;
+        font-weight: unset;
+    }
+}
+
 .tung-step-footer {
     .ant-btn {
         margin: 0;
@@ -201,20 +223,6 @@
 // .ant-modal-close-x {
 //     cursor: auto;
 // }
-
-.tung-delete {
-    .anticon {
-        font-size: 20px;
-        color: $lightRedColor;
-    }
-}
-
-.tung-update {
-    .anticon {
-        font-size: 20px;
-        color: $lightMainColor;
-    }
-}
 
 .ant-message-notice-content {
     border-radius: 10px;

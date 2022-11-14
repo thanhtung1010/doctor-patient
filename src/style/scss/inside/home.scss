@@ -32,6 +32,11 @@
     border-bottom: 1px solid $shadow;
     margin: 0px 5px 0px 5px;
 
+    &-active {
+        background-color: $lightMainColor;
+        color: $whiteColor;
+    }
+
     &:hover {
         background-color: $lightShadow;
     }

@@ -2,7 +2,21 @@
     <ng-container *ngIf="!textOnly;else titleTextOnly">
         <div class="tung-post" (click)="onToggleVisibleFullPost(true)">
             <img [src]="postInfor.thumbnailImage" [alt]="postInfor.title" />
-            <div class="tung-post-title">{{postInfor.title}}</div>
+            <div class="tung-post-demo">
+                <div class="tung-post-demo-title">
+                    {{postInfor.title}}
+                    <div class="tung-post-demo-title-like">
+                        <span class="tung-mr-5">
+                            {{(postInfor.totalLike || 0) | numberLabel:0}}
+                        </span>
+                        <span nz-icon nzType="like" nzTheme="outline"></span>
+                    </div>
+                </div>
+                <div class="tung-post-demo-infor">
+                    <span>{{postInfor.author}}</span>
+                    <span>{{postInfor.createAt | dateTimeLabel}}</span>
+                </div>
+            </div>
         </div>
     </ng-container>
 
@@ -20,7 +34,11 @@
         <div *nzModalContent class="tung-full-post">
             <angular-editor [ngModel]="postInfor.content" [config]="editorConfig"></angular-editor>
         </div>
-        <div *nzModalFooter></div>
+        <div *nzModalFooter>
+            <app-write-content [isComment]="true" [visibleCreatePostModal]="visibleCommentModal"
+                (oToggleVisiblePostModal)="onTogglevisibleCommentModal($event)"></app-write-content>
+            <div class="tung-comment"></div>
+        </div>
     </nz-modal>
 </ng-container>
 

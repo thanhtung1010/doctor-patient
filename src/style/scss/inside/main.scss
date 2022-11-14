@@ -138,11 +138,6 @@
             background-image: url('../../../assets/imgs/shift-background.png');
         }
 
-        &-expired {
-            background-color: $shadow;
-            background-image: url('../../../assets/imgs/shift-background.png');
-        }
-
         &-hover {
             position: relative;
 
@@ -191,6 +186,11 @@
             border: unset !important;
             background-color: $stepColor !important;
             color: $whiteColor !important;
+        }
+
+        &-expired {
+            background-color: $shadow !important;
+            background-image: url('../../../assets/imgs/shift-background.png');
         }
     }
 }

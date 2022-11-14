@@ -1,7 +1,8 @@
 <div class="tung-home" nz-col nzSpan="24">
     <div class="tung-home-left" nz-col nzSpan="5">
         <ng-container *ngFor="let thread of data.threads">
-            <div class="tung-thread-item" (click)="getPostbyThread(thread.id)">
+            <div class="tung-thread-item" [ngClass]="{'tung-thread-item-active': params.threadId === thread.id}"
+                (click)="onChangeThread(thread.id)">
                 <span class="tung-mr-10" nz-icon nzType="search" nzTheme="outline"></span>
                 {{thread.name}}
             </div>

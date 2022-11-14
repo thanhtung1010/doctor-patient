@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
+import { Helpers } from "app/_cores/_helpers";
 import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
 import { IPost } from "app/_share/_interface";
 import { ShareService } from "app/_share/_services/share.service";
 import { NzMessageService } from "ng-zorro-antd/message";
+import { HomePageModel } from "../_models";
 
 @Component({
     selector: "app-home-page",
@@ -19,10 +22,12 @@ export class HomePageComponent implements OnInit {
         post: false,
         thread: false,
     }
+    params!: HomePageModel
     constructor(
         private translate: TranslateService,
         private shareSer: ShareService,
         private msg: NzMessageService,
+        private _router: Router,
     ) { }
 
     ngOnInit(): void {
@@ -30,8 +35,30 @@ export class HomePageComponent implements OnInit {
     }
 
     initData() {
-        this.getAllPost();
+        this.parseParams();
         this.getAllThread();
+    }
+
+    parseParams() {
+        const _object = Helpers.convertParamsToObject(Helpers.getParamString());
+        this.params = new HomePageModel(_object || null);
+        this.changeURL();
+    }
+
+    changeURL() {
+        this._router.navigate([], {
+            queryParams: this.params || {},
+            queryParamsHandling: 'merge'
+        });
+        this.getPost();
+    }
+
+    getPost() {
+        if (this.params && this.params.threadId) {
+            this.getPostbyThread();
+        } else {
+            this.getAllPost();
+        }
     }
 
     getAllPost() {
@@ -75,9 +102,9 @@ export class HomePageComponent implements OnInit {
         });
     }
 
-    getPostbyThread(id: number) {
+    getPostbyThread() {
         this.loading.post = true;
-        const _params = { threadId: id }
+        const _params = { threadId: this.params.threadId }
         this.shareSer.getPostByThread(_params).subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
@@ -95,6 +122,12 @@ export class HomePageComponent implements OnInit {
                 this.loading.post = false;
             }
         });
+    }
+
+    onChangeThread(id: number) {
+        this.params.threadId = +id;
+        this.params = new HomePageModel(this.params);
+        this.changeURL();
     }
 
     showError(code: string) {

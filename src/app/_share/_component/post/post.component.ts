@@ -13,6 +13,7 @@ export class PostComponent {
     @Input() postInfor: IPost | null = null;
 
     visibleFullPostModal: boolean = false;
+    visibleCommentModal: boolean = false;
     editorConfig: AngularEditorConfig = {
         editable: false,
         spellcheck: false,
@@ -29,13 +30,23 @@ export class PostComponent {
 
     @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
         const keyCode = event.keyCode
-        if (keyCode === KEY_CODE_WINDOW.ESCAPE && this.visibleFullPostModal) {
-            this.visibleFullPostModal = false
+        if (keyCode === KEY_CODE_WINDOW.ESCAPE) {
+            if (this.visibleCommentModal) {
+                this.onTogglevisibleCommentModal(false);
+                return
+            }
+            if (this.visibleFullPostModal) {
+                this.visibleFullPostModal = false
+            }
         }
     }
     constructor() { }
 
     onToggleVisibleFullPost(visible: boolean) {
         this.visibleFullPostModal = visible;
+    }
+
+    onTogglevisibleCommentModal(visible: boolean) {
+        this.visibleCommentModal = visible;
     }
 }
