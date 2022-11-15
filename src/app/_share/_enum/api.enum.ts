@@ -63,4 +63,8 @@ export const API_POST: IApiUrl = {
         method: 'POST',
         url: 'content/comment'
     },
+    GET_COMMENT_BY_POST_ID: {
+        method: 'POST',
+        url: 'content/get-comment/'
+    },
 }

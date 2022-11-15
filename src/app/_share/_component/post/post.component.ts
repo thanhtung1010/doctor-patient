@@ -14,6 +14,7 @@ export class PostComponent {
     @Input() visibleFullPostModal: boolean = false;
 
     @Output() oEmitvisibleFullPostModal = new EventEmitter();
+    @Output() oReloadComment = new EventEmitter();
 
     visibleCommentModal: boolean = false;
     editorConfig: AngularEditorConfig = {
@@ -58,5 +59,11 @@ export class PostComponent {
 
     oEmitVisibleFullPostModal() {
         this.oEmitvisibleFullPostModal.emit(this.visibleFullPostModal);
+    }
+
+    reloadComment() {
+        if (this.postInfor) {
+            this.oReloadComment.emit(this.postInfor.id);
+        }
     }
 }

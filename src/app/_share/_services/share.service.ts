@@ -46,4 +46,11 @@ export class ShareService {
     commentPost(_params: any) {
         return this.api.callApi(API_POST['COMMENT_POST'], _params);
     }
+
+    getCommentByPosyId(id: number) {
+        return this.api.callApi({
+            ...API_POST['GET_COMMENT_BY_POST_ID'],
+            url: API_POST['GET_COMMENT_BY_POST_ID'].url + id
+        }, {});
+    }
 }

@@ -6,6 +6,7 @@ import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
 import { IPost } from "app/_share/_interface";
 import { SessionService } from "app/_share/_services/session.service";
 import { ShareService } from "app/_share/_services/share.service";
+import * as _ from "lodash";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { HomePageModel } from "../_models";
 
@@ -113,7 +114,12 @@ export class HomePageComponent implements OnInit {
         this.shareSer.getPostByThread(_params).subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
-                    this.data.posts = resp.data;
+                    this.data.posts = resp.data.map((item: any) => {
+                        return {
+                            ...item,
+                            commentList: _.orderBy([...(item.commentList || [])], ['createdAt'], ['desc'])
+                        }
+                    });
                 } else {
                     this.data.posts = [];
                 }
@@ -133,6 +139,23 @@ export class HomePageComponent implements OnInit {
         this.params.threadId = +id;
         this.params = new HomePageModel(this.params);
         this.changeURL();
+    }
+
+    onReloadComment(id: number) {
+        this.shareSer.getCommentByPosyId(id).subscribe({
+            next: resp => {
+                if (resp.data && resp.data.length) {
+                    const _exitsIndex = this.data.posts.findIndex(post => post.id === id);
+                    if (_exitsIndex > -1) {
+                        this.data.posts[_exitsIndex].commentList = _.orderBy([...resp.data], ['createdAt'], ['desc'])
+                    }
+                }
+            },
+            error: error => {
+                this.showError(error['error'] ? error['error'].code || 8 : 8);
+            },
+            complete: () => { }
+        });
     }
 
     showError(code: string) {

@@ -36,7 +36,8 @@
         </div>
         <div *nzModalFooter>
             <app-write-content [isPopup]="false" [isComment]="true" [visibleCreatePostModal]="visibleCommentModal"
-                [postId]="postInfor.id" (oToggleVisiblePostModal)="onTogglevisibleCommentModal($event)">
+                [postId]="postInfor.id" (oToggleVisiblePostModal)="onTogglevisibleCommentModal($event)"
+                (onSubmitPostSuccess)="reloadComment()">
             </app-write-content>
             <div class="tung-comment">
                 <ng-container *ngFor="let comment of postInfor.commentList">

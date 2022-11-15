@@ -100,6 +100,11 @@ export class WriteContentComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
+        this.validationFrom();
+        this.initData()
+    }
+
+    validationFrom() {
         if (!this.formPost) {
             this.formPost = this.fb.group({
                 title: [null, Validators.required],
@@ -112,7 +117,6 @@ export class WriteContentComponent implements OnInit, OnChanges {
                 this.formPost.removeControl('threadId');
             }
         }
-        this.initData()
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -135,6 +139,10 @@ export class WriteContentComponent implements OnInit, OnChanges {
                     this.formPost.patchValue({ 'content': '' })
                 }
             }
+        }
+
+        if (changes['isComment'] && changes['isComment'].currentValue === true) {
+            this.editorConfig.height = '200px'
         }
     }
 
@@ -259,6 +267,9 @@ export class WriteContentComponent implements OnInit, OnChanges {
     }
 
     onToggleCreatePostModal(visible: boolean) {
+        if (visible) {
+            this.validationFrom();
+        }
         this.visibleCreatePostModal = visible;
         this.onToggleVisiblePostModal();
     }
