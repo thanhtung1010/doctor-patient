@@ -53,4 +53,11 @@ export class ShareService {
             url: API_POST['GET_COMMENT_BY_POST_ID'].url + id
         }, {});
     }
+
+    interactPost(id: any, _params: any) {
+        return this.api.callApi({
+            ...API_POST['INTERACT_POST'],
+            url: API_POST['INTERACT_POST'].url + id
+        }, _params);
+    }
 }

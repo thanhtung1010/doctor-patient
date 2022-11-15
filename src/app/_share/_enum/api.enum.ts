@@ -67,4 +67,8 @@ export const API_POST: IApiUrl = {
         method: 'POST',
         url: 'content/get-comment/'
     },
+    INTERACT_POST: {
+        method: 'POST',
+        url: 'content/interact/'
+    },
 }

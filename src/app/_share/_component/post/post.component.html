@@ -10,6 +10,10 @@
                             {{(postInfor.totalLike || 0) | numberLabel:0}}
                         </span>
                         <span nz-icon nzType="like" nzTheme="outline"></span>
+                        <span class="tung-mr-5">
+                            {{(postInfor.totalDislike || 0) | numberLabel:0}}
+                        </span>
+                        <span nz-icon nzType="dislike" nzTheme="outline"></span>
                     </div>
                 </div>
                 <div class="tung-post-demo-infor">
@@ -33,6 +37,20 @@
         </div>
         <div *nzModalContent class="tung-full-post">
             <angular-editor [ngModel]="postInfor.content" [config]="editorConfig"></angular-editor>
+            <div class="tung-full-post-react" nz-row>
+                <div class="tung-full-post-react-item" [ngClass]="{'tung-full-post-react-active': interact === true}"
+                    (click)="onClickInteract(true, 'totalLike')" nz-col nzSpan="12">
+                    <span nz-icon nzType="like" nzTheme="outline">
+                        {{(postInfor.totalLike || 0) | numberLabel:0}}
+                    </span>
+                </div>
+                <div class="tung-full-post-react-item" [ngClass]="{'tung-full-post-react-active': interact === false}"
+                    (click)="onClickInteract(false, 'totalDislike')" nz-col nzSpan="12">
+                    <span nz-icon nzType="dislike" nzTheme="outline">
+                        {{(postInfor.totalDislike || 0) | numberLabel:0}}
+                    </span>
+                </div>
+            </div>
         </div>
         <div *nzModalFooter>
             <app-write-content [isPopup]="false" [isComment]="true" [visibleCreatePostModal]="visibleCommentModal"

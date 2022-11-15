@@ -10,6 +10,9 @@
         </div>
         <div class="tung-comment-item-content">
             <angular-editor [(ngModel)]="commentInfor.content" [config]="editorConfig"></angular-editor>
+            <span class="tung-comment-item-content-createat">
+                {{commentInfor.createdAt | dateTimeLabel:_dateFormatForShow}}
+            </span>
         </div>
     </div>
 </ng-container>

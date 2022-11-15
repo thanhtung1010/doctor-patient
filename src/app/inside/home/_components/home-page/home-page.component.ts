@@ -158,6 +158,14 @@ export class HomePageComponent implements OnInit {
         });
     }
 
+    onChangeInteract(evt: { id: number, field: 'totalDislike' | 'totalLike', value: number }) {
+        const { id, field, value } = evt
+        const _existIndex = this.data.posts.findIndex(post => post.id === id);
+        if (_existIndex > -1) {
+            this.data.posts[_existIndex][field] = (this.data.posts[_existIndex][field] || 0) + value
+        }
+    }
+
     showError(code: string) {
         const _msg = getSystemMsgByCode(code || '8') as string;
         this.msg.error(this.translate.instant(_msg));

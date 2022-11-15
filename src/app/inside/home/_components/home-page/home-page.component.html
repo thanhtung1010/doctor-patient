@@ -17,7 +17,8 @@
                 <app-loading></app-loading>
             </ng-container>
             <ng-container *ngFor="let post of data.posts">
-                <app-post [postInfor]="post" (oReloadComment)="onReloadComment($event)"></app-post>
+                <app-post [postInfor]="post" (oReloadComment)="onReloadComment($event)"
+                    (oChangeReact)="onChangeInteract($event)"></app-post>
             </ng-container>
         </div>
     </div>

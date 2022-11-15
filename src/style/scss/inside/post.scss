@@ -34,7 +34,7 @@
                 font-size: 10px;
 
                 span {
-                    margin: auto 5px auto 0px;
+                    margin: auto 5px auto 5px;
                 }
 
                 .anticon {
@@ -64,6 +64,28 @@
                 border: unset !important;
                 padding: 0px 10px 0px 10px !important;
                 margin-top: 0px !important;
+            }
+        }
+    }
+
+    &-react {
+        margin-top: 10px;
+        padding: 5px;
+
+        &-item {
+            display: flex;
+
+            .anticon {
+                cursor: pointer;
+                margin: auto;
+                color: $shadow;
+            }
+        }
+
+        &-active {
+
+            .anticon {
+                color: $mainColor;
             }
         }
     }
@@ -103,6 +125,11 @@
         &-content {
             width: 90%;
             padding: 5px;
+
+            &-createat {
+                font-size: 10px;
+                color: $shadow;
+            }
         }
     }
 }
