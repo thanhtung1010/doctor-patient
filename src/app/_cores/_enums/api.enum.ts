@@ -28,5 +28,9 @@ export const API_URL: IApiUrl = {
   GET_ALL_USER: {
     method: 'POST',
     url: 'admin/user/all'
-  }
+  },
+  GET_ALL_BOOKED: {
+    method: 'POST',
+    url: 'admin/booking/all'
+  },
 }

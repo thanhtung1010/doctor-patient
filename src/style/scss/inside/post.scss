@@ -70,5 +70,39 @@
 }
 
 &-comment {
-    height: 500px;
+    min-height: 200px;
+
+    &-item {
+        text-align: left;
+        display: flex;
+        margin-top: 10px;
+        border-top: 1px solid $shadow;
+        border-bottom: 1px solid $shadow;
+
+        &-infor {
+            min-height: 100px;
+            width: 10%;
+            padding: 5px;
+            border-right: 1px solid $shadow;
+            text-align: center;
+
+            &-avatar {
+                border: 1px solid $mainColor;
+                height: 50px;
+                width: 50px;
+                border-radius: 25px;
+                text-align: center;
+                margin: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+        }
+
+        &-content {
+            width: 90%;
+            padding: 5px;
+        }
+    }
 }

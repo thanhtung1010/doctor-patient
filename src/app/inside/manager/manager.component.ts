@@ -19,6 +19,11 @@ export class ManagerComponent implements OnInit {
             title: 'Bài viết',
             url: `${ROUTING_DEFINED.MANAGER}/${ROUTING_DEFINED.POST}`,
             select: false
+        },
+        {
+            title: 'Lịch hẹn',
+            url: `${ROUTING_DEFINED.MANAGER}/${ROUTING_DEFINED.BOOKED}`,
+            select: false
         }
     ]
     constructor(

@@ -59,4 +59,8 @@ export const API_POST: IApiUrl = {
         method: 'POST',
         url: 'content/delete'
     },
+    COMMENT_POST: {
+        method: 'POST',
+        url: 'content/comment'
+    },
 }

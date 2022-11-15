@@ -4,6 +4,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Helpers } from "app/_cores/_helpers";
 import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
 import { IPost } from "app/_share/_interface";
+import { SessionService } from "app/_share/_services/session.service";
 import { ShareService } from "app/_share/_services/share.service";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { HomePageModel } from "../_models";
@@ -23,12 +24,16 @@ export class HomePageComponent implements OnInit {
         thread: false,
     }
     params!: HomePageModel
+    allowCreatePost: boolean = false;
     constructor(
         private translate: TranslateService,
         private shareSer: ShareService,
         private msg: NzMessageService,
         private _router: Router,
-    ) { }
+        private sessionSer: SessionService,
+    ) {
+        this.allowCreatePost = this.sessionSer.isLogged() && (this.sessionSer.isDoctor() || this.sessionSer.isAdmin());
+    }
 
     ngOnInit(): void {
         this.initData();

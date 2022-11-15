@@ -35,6 +35,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 
 import { DateTimeLabelPipe, NumberLabelPipe } from './_pipes';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { CommentComponent } from './_component/comment/comment.component';
 
 
 
@@ -49,6 +50,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     ShiftListComponent,
     NotFoundComponent,
     PostComponent,
+    CommentComponent,
 
     NumberOnlyDirective,
 
@@ -85,6 +87,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     BookingComponent,
     NotFoundComponent,
     PostComponent,
+    CommentComponent,
 
     NumberOnlyDirective,
 

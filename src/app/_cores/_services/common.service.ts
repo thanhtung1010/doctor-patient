@@ -51,6 +51,10 @@ export class CommonService {
     return this.apiService.callApi(API_URL['GET_ALL_USER'], {});
   }
 
+  getAllBooked() {
+    return this.apiService.callApi(API_URL['GET_ALL_BOOKED'], {});
+  }
+
   showSystemError(_msg: string) {
     this.systemError.next(_msg);
   }

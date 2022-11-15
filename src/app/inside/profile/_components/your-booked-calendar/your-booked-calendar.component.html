@@ -51,7 +51,7 @@
     <div class="tung-shift-content" [ngClass]="{
         'tung-shift-content-normal': !item.expired,
         'tung-shift-content-expired': item.expired,
-        'tung-shift-content-hover': isDoctor && item.isApproved === null && !item.expired,
+        'tung-shift-content-hover': item.isApproved === null && !item.expired,
         'tung-shift-content-rejected': item.isApproved === false,
         'tung-shift-content-approved': item.isApproved === true
     }">
@@ -59,7 +59,9 @@
         <div class="tung-shift-content-hover-button">
             <button class="tung-mr-10" nz-button nzType="primary" nzDanger
                 (click)="approval(item.id, false)">Huỷ</button>
-            <button nz-button nzType="primary" (click)="approval(item.id, true)">Xác nhận</button>
+            <ng-container *ngIf="isDoctor">
+                <button nz-button nzType="primary" (click)="approval(item.id, true)">Xác nhận</button>
+            </ng-container>
         </div>
         <p class="tung-shift-content-title">
             {{'BOOKING.SHIFT.' + item.bookedShift | translate}}: {{item.start | dateTimeLabel:timeFormat}} - {{item.end

@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from "@angular/core";
+import { Component, EventEmitter, HostListener, Input, Output } from "@angular/core";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
 import { KEY_CODE_WINDOW } from "app/_share/_enum";
 import { IPost } from "app/_share/_interface";
@@ -11,8 +11,10 @@ import { IPost } from "app/_share/_interface";
 export class PostComponent {
     @Input() textOnly: boolean = false;
     @Input() postInfor: IPost | null = null;
+    @Input() visibleFullPostModal: boolean = false;
 
-    visibleFullPostModal: boolean = false;
+    @Output() oEmitvisibleFullPostModal = new EventEmitter();
+
     visibleCommentModal: boolean = false;
     editorConfig: AngularEditorConfig = {
         editable: false,
@@ -28,25 +30,33 @@ export class PostComponent {
         sanitize: false,
     }
 
-    @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-        const keyCode = event.keyCode
-        if (keyCode === KEY_CODE_WINDOW.ESCAPE) {
-            if (this.visibleCommentModal) {
-                this.onTogglevisibleCommentModal(false);
-                return
-            }
-            if (this.visibleFullPostModal) {
-                this.visibleFullPostModal = false
-            }
-        }
-    }
+    // @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    //     const keyCode = event.keyCode
+    //     if (keyCode === KEY_CODE_WINDOW.ESCAPE) {
+    //         if (this.visibleCommentModal) {
+    //             this.onTogglevisibleCommentModal(false);
+    //             return
+    //         }
+    //         if (this.visibleFullPostModal) {
+    //             this.visibleFullPostModal = false
+    //         }
+    //     }
+    // }
     constructor() { }
 
     onToggleVisibleFullPost(visible: boolean) {
         this.visibleFullPostModal = visible;
+        if (this.visibleFullPostModal) {
+            this.onTogglevisibleCommentModal(false)
+        }
+        this.oEmitVisibleFullPostModal();
     }
 
     onTogglevisibleCommentModal(visible: boolean) {
         this.visibleCommentModal = visible;
+    }
+
+    oEmitVisibleFullPostModal() {
+        this.oEmitvisibleFullPostModal.emit(this.visibleFullPostModal);
     }
 }

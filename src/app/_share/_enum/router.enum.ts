@@ -11,4 +11,5 @@ export const ROUTING_DEFINED = {
     MANAGER: "manager",
     ACCOUNT: "account",
     POST: "post",
+    BOOKED: "book",
 }

@@ -35,9 +35,14 @@
             <angular-editor [ngModel]="postInfor.content" [config]="editorConfig"></angular-editor>
         </div>
         <div *nzModalFooter>
-            <app-write-content [isComment]="true" [visibleCreatePostModal]="visibleCommentModal"
-                (oToggleVisiblePostModal)="onTogglevisibleCommentModal($event)"></app-write-content>
-            <div class="tung-comment"></div>
+            <app-write-content [isPopup]="false" [isComment]="true" [visibleCreatePostModal]="visibleCommentModal"
+                [postId]="postInfor.id" (oToggleVisiblePostModal)="onTogglevisibleCommentModal($event)">
+            </app-write-content>
+            <div class="tung-comment">
+                <ng-container *ngFor="let comment of postInfor.commentList">
+                    <app-comment [commentInfor]="comment"></app-comment>
+                </ng-container>
+            </div>
         </div>
     </nz-modal>
 </ng-container>

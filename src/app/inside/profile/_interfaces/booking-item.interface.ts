@@ -7,6 +7,7 @@ export interface IBookingItem {
     bookedAt: null | number | string | Date;
     shift?: number;
     bookedShift?: number;
+    createdBy?: string;
     content: string;
     consult: string | null;
 }

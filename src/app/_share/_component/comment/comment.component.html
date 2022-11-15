@@ -1,0 +1,15 @@
+<ng-container *ngIf="commentInfor">
+    <div class="tung-comment-item">
+        <div class="tung-comment-item-infor">
+            <div class="tung-comment-item-infor-avatar">
+                <span>
+                    {{avatarText}}
+                </span>
+            </div>
+            {{commentInfor.createdBy || ''}}
+        </div>
+        <div class="tung-comment-item-content">
+            <angular-editor [(ngModel)]="commentInfor.content" [config]="editorConfig"></angular-editor>
+        </div>
+    </div>
+</ng-container>

@@ -42,4 +42,8 @@ export class ShareService {
     deletePost(_params: any) {
         return this.api.callApi(API_POST['DELETE_POST'], _params);
     }
+
+    commentPost(_params: any) {
+        return this.api.callApi(API_POST['COMMENT_POST'], _params);
+    }
 }

@@ -16,14 +16,16 @@ import { tap } from "rxjs";
 export class WriteContentComponent implements OnInit, OnChanges {
     @Input() inputEditorConfig: AngularEditorConfig | null = null;
     @Input() isComment: boolean = false;
+    @Input() postId: number | null = null;
+    @Input() isPopup: boolean = true;
     @Input() visibleCreatePostModal: boolean = false;
 
     @Output() onSubmitPostSuccess = new EventEmitter();
+    @Output() onCommentPostSuccess = new EventEmitter();
     @Output() oToggleVisiblePostModal = new EventEmitter();
 
     avatarText: string = '';
     formPost: FormGroup | null = null;
-    allowCreatePost: boolean = false;
     data = {
         threads: [] as { id: number, name: string }[]
     }
@@ -94,7 +96,6 @@ export class WriteContentComponent implements OnInit, OnChanges {
         private msg: NzMessageService,
         private sessionSer: SessionService,
     ) {
-        this.allowCreatePost = this.sessionSer.isLogged() && (this.sessionSer.isDoctor() || this.sessionSer.isAdmin());
         this.avatarText = this.sessionSer.getTextAvatar();
     }
 
@@ -119,6 +120,20 @@ export class WriteContentComponent implements OnInit, OnChanges {
             this.editorConfig = {
                 ...this.editorConfig,
                 ...this.inputEditorConfig
+            }
+        }
+
+        if (changes['visibleCreatePostModal'] && changes['visibleCreatePostModal'].currentValue === false) {
+            if (this.formPost) {
+                if (this.formPost.contains('title')) {
+                    this.formPost.patchValue({ 'title': null })
+                }
+                if (this.formPost.contains('threadId')) {
+                    this.formPost.patchValue({ 'threadId': null })
+                }
+                if (this.formPost.contains('content')) {
+                    this.formPost.patchValue({ 'content': '' })
+                }
             }
         }
     }
@@ -200,6 +215,34 @@ export class WriteContentComponent implements OnInit, OnChanges {
                         this.showSuccess();
                         this.loading.post = false;
                         this.formPost = null;
+                        this.notiCommentPostSuccess();
+                        this.onToggleCreatePostModal(false);
+                    }
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.post = false;
+                },
+                complete: () => {
+                    this.loading.post = false;
+                }
+            });
+        }
+    }
+
+    onSubmitComment() {
+        if (this.formPost && this.formPost.valid) {
+            this.loading.post = true;
+            const _params = {
+                ...this.formPost.value,
+                id: this.postId
+            };
+            this.shareSer.commentPost(_params).subscribe({
+                next: resp => {
+                    if (resp) {
+                        this.showSuccess();
+                        this.loading.post = false;
+                        this.formPost = null;
                         this.notiSubmitPostSuccess();
                         this.onToggleCreatePostModal(false);
                     }
@@ -222,6 +265,10 @@ export class WriteContentComponent implements OnInit, OnChanges {
 
     notiSubmitPostSuccess() {
         this.onSubmitPostSuccess.emit();
+    }
+
+    notiCommentPostSuccess() {
+        this.onCommentPostSuccess.emit();
     }
 
     onToggleVisiblePostModal() {

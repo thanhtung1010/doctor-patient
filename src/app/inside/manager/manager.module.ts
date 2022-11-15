@@ -8,7 +8,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
-import { AccountManagerComponent, PostManagerComponent } from './_components';
+import { AccountManagerComponent, BookedManagerComponent, PostManagerComponent } from './_components';
 import { ROUTING_DEFINED } from 'app/_share/_enum';
 import SharedModule from 'app/_share/share.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,6 +27,10 @@ export const routes: Routes = [
         component: PostManagerComponent,
       },
       {
+        path: ROUTING_DEFINED.BOOKED,
+        component: BookedManagerComponent,
+      },
+      {
         path: '**',
         pathMatch: 'full',
         redirectTo: ROUTING_DEFINED.ACCOUNT
@@ -38,7 +42,8 @@ export const routes: Routes = [
 @NgModule({
   declarations: [
     PostManagerComponent,
-    AccountManagerComponent
+    AccountManagerComponent,
+    BookedManagerComponent,
   ],
   imports: [
     RouterModule.forChild(routes),

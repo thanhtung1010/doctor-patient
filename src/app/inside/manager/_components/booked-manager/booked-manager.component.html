@@ -1,0 +1,55 @@
+<div class="tung-manager-post">
+    <nz-table [nzData]="data.bookedList" [nzShowPagination]="false" [nzFrontPagination]="false"
+        [nzShowPagination]="false" [nzScroll]="{ x: '70vw', y: '75vh'}" [nzLoading]="loading.list"
+        [nzLoadingIndicator]="loadingTable" nzSize="small">
+        <thead>
+            <tr>
+                <ng-container *ngFor="let head of tableHeader">
+                    <th [style.text-align]="head.align ? head.align : 'center'" [nzWidth]="'auto'">
+                        {{ head.title }}
+                    </th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of data.bookedList; let idx = index; let lst = last">
+                <td>
+                    {{ data.createdBy || ''}}
+                </td>
+                <td [nzAlign]="'center'">{{ data.bookedAt ? (+data.bookedAt | dateTimeLabel:_dateFormatForShow) : ''
+                    }}</td>
+                <ng-container *ngFor="let child of data.children">
+                    <td [nzAlign]="'center'">
+                        <ng-container *ngIf="child">
+                            <ng-container [ngTemplateOutlet]="shiftContent" [ngTemplateOutletContext]="{data: child}">
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+
+<ng-template #shiftContent let-item="data">
+    <div class="tung-shift-content" [ngClass]="{
+        'tung-shift-content-normal': !item.expired,
+        'tung-shift-content-expired': item.expired,
+        'tung-shift-content-rejected': item.isApproved === false,
+        'tung-shift-content-approved': item.isApproved === true
+    }">
+        <p class="tung-shift-content-title">
+            {{'BOOKING.SHIFT.' + item.bookedShift | translate}}: {{item.start | dateTimeLabel:timeFormat}} - {{item.end
+            |
+            dateTimeLabel:timeFormat}}
+        </p>
+        <p class="tung-shift-content-content">
+            {{'BOOKING.DOCTOR_HOLDER' | translate}}: {{item.doctorName || ''}}<br>
+            {{'BOOKING.CONSULT_PACKAGE' | translate}}: {{'BOOKING.' + item.consult | translate}}<br>
+        </p>
+    </div>
+</ng-template>
+
+<ng-template #loadingTable>
+    <app-loading></app-loading>
+</ng-template>

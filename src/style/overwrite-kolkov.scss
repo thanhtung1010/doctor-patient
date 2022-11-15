@@ -1,4 +1,5 @@
 .angular-editor {
+    text-align: left;
 
     .angular-editor-toolbar {}
 
@@ -7,6 +8,27 @@
             width: 60%;
             margin: auto;
             display: block;
+        }
+    }
+}
+
+.tung-comment-item-content {
+    .angular-editor {
+        text-align: left;
+
+        .angular-editor-toolbar {}
+
+        .angular-editor-wrapper {
+            img {
+                width: 60%;
+                margin: auto;
+                display: block;
+            }
+
+            .angular-editor-textarea {
+                border: unset !important;
+                padding: 0px !important;
+            }
         }
     }
 }
