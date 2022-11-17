@@ -56,7 +56,7 @@
                 {{'Quay lại'}}
             </button>
             <button nz-button [disabled]="loading.submit"
-                [disabled]="!allowUpdate || !data.firstStepValid || !data.secondStepValid || !data.thirstStepValid"
+                [disabled]="!allowUpdate || !data.firstStepValid || !data.secondStepValid || !data.thirstStepValid || !changeBookingInfor"
                 nz-popconfirm [nzPopconfirmTitle]="'Bạn có chắc chấn muốn cập nhật khum?'"
                 [nzOkText]="'YES' | translate" [nzCancelText]="'NO' | translate" [nzCondition]="isLogged"
                 (nzOnConfirm)="onClickSubmitUpdate()" [nzType]="'primary'" [nzShape]="'round'">

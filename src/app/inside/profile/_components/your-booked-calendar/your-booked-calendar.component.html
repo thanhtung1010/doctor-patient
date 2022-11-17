@@ -75,8 +75,10 @@
             {{'BOOKING.CONSULT_PACKAGE' | translate}}: {{'BOOKING.' + item.consult | translate}}<br>
         </p>
     </div>
-    <app-booking [isUpdate]="true" [allowUpdate]="item.isApproved === null && !item.expired" [inputBookingInfor]="item"
-        [visibleBookingModal]="item.visibleInforModal" [showBtn]="false" (oSubmitSuccess)="getCalendar()"
+    <app-booking [isUpdate]="true"
+        [allowUpdate]="item.isApproved === null && !item.expired || (isDoctor && item.isApproved)"
+        [inputBookingInfor]="item" [visibleBookingModal]="item.visibleInforModal" [showBtn]="false"
+        (oSubmitSuccess)="getCalendar()"
         (oChangevisibleBookingModal)="onToggleBookedInforModal(parentIdx, childIdx, $event)">
     </app-booking>
 </ng-template>

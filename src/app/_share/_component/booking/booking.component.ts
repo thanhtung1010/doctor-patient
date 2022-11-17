@@ -67,6 +67,12 @@ export class BookingComponent implements OnInit, OnChanges {
     dateFormatForEdit: string = '';
     _dateFormatForShow: string = '';
 
+    get changeBookingInfor() {
+        if (!this.inputBookingInfor) return true
+
+        return this.inputBookingInfor.bookedAt !== this.bookingInfor.bookedAt || this.inputBookingInfor.shift !== this.bookingInfor.shift
+    }
+
     constructor(
         private bookingSer: BookingService,
         private translate: TranslateService,
@@ -92,6 +98,9 @@ export class BookingComponent implements OnInit, OnChanges {
                 ...this.inputBookingInfor,
             };
             this.checkValidStep();
+        }
+        if (changes['visibleBookingModal'] && changes['visibleBookingModal'].currentValue === true && this.inputBookingInfor) {
+            if (this.allowUpdate) this.getBookedAtList();
         }
     }
 
@@ -184,7 +193,12 @@ export class BookingComponent implements OnInit, OnChanges {
         this.bookingSer.getBookedListByDay(_params).subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
-                    this.data.bookedList = resp.data;
+                    let _resp = resp.data;
+                    if (this.inputBookingInfor) {
+                        const shift = this.inputBookingInfor.shift;
+                        _resp = _resp.filter((item: any) => item.bookedShift !== shift)
+                    }
+                    this.data.bookedList = _resp;
                 } else {
                     this.data.bookedList = [];
                 }
@@ -209,6 +223,11 @@ export class BookingComponent implements OnInit, OnChanges {
     onToggleBookingModal(evt: boolean) {
         this.visibleBookingModal = evt;
         this.onEmitToggleBookingModal();
+        if (!evt && this.inputBookingInfor) {
+            this.bookingInfor = {
+                ...this.inputBookingInfor,
+            };
+        }
     }
 
     onEmitToggleBookingModal() {

@@ -80,7 +80,7 @@ export class YourBookedCalendarComponent implements OnInit {
                                 bookedAt: item.bookedAt.toString().length > 13 ? item.bookedAt / 1000 : item.bookedAt
                             }
                         });
-                        this.data.bookedList = _.orderBy(this.cookingBookedList(this.data.bookedListRaw), ['bookedAt'], ['desc']);
+                        this.data.bookedList = _.orderBy(this.cookingBookedList(this.data.bookedListRaw), ['bookedAt']);
                     } else {
                         this.data.bookedListRaw = [];
                         this.data.bookedList = [];
@@ -173,8 +173,8 @@ export class YourBookedCalendarComponent implements OnInit {
     }
 
     approval(id: number, approve: boolean, allowApproval: boolean) {
-        this.loading.approval = true;
-        if (this.sessionSer.isDoctor() && allowApproval) {
+        if (allowApproval) {
+            this.loading.approval = true;
             this.bookingSer.approvalBooking(id, { approve: approve }).subscribe({
                 next: resp => {
                     this.showSuccess();
@@ -193,9 +193,11 @@ export class YourBookedCalendarComponent implements OnInit {
     }
 
     onToggleBookedInforModal(parentIdx: number, childIdx: number, evt: boolean) {
-        if (this.data.bookedList[parentIdx]) {
-            if (this.data.bookedList[parentIdx].children && this.data.bookedList[parentIdx].children[childIdx]) {
-                this.data.bookedList[parentIdx].children[childIdx].visibleInforModal = evt;
+        if (!this.loading.approval) {
+            if (this.data.bookedList[parentIdx]) {
+                if (this.data.bookedList[parentIdx].children && this.data.bookedList[parentIdx].children[childIdx]) {
+                    this.data.bookedList[parentIdx].children[childIdx].visibleInforModal = evt;
+                }
             }
         }
     }

@@ -124,6 +124,7 @@
         padding: 10px;
         text-align: center;
         color: $whiteColor;
+        z-index: 1;
 
         &-title {
             font-weight: bold;
@@ -168,6 +169,7 @@
 
                 button {
                     font-weight: bold;
+                    z-index: 10;
                 }
             }
 
