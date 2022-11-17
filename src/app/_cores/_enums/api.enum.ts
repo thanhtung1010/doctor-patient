@@ -11,11 +11,15 @@ export const API_URL: IApiUrl = {
   },
   LOGOUT: {
     method: 'POST',
-    url: 'api/logout'
+    url: 'logout'
   },
   GET_USER_INFO: {
     method: 'POST',
     url: 'users/my-profile'
+  },
+  GET_USER_INFO_BY_ID: {
+    method: 'POST',
+    url: 'users/profile/'
   },
   GET_CURRENT_INFO: {
     method: 'POST',

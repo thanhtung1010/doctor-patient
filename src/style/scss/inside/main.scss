@@ -81,6 +81,10 @@
     &-box {
         padding: 10px;
     }
+
+    &-update {
+        box-shadow: unset;
+    }
 }
 
 &-label-step {
@@ -105,6 +109,7 @@
 
 &-shift {
     display: flex;
+    position: relative;
 
     &-wrap {
         width: 25%;

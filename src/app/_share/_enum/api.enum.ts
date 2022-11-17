@@ -20,6 +20,10 @@ export const API_BOOKING: IApiUrl = {
         method: 'POST',
         url: 'booking/book'
     },
+    UPDATE_BOOK: {
+        method: 'POST',
+        url: 'booking/update/'
+    },
     GET_BOOKED_AT_LIST_BY_USER: {
         method: 'POST',
         url: 'booking/get-booking-list-by-user'
@@ -70,5 +74,9 @@ export const API_POST: IApiUrl = {
     INTERACT_POST: {
         method: 'POST',
         url: 'content/interact/'
+    },
+    CHECK_INTERACT_POST: {
+        method: 'POST',
+        url: 'content/interaction-check/'
     },
 }

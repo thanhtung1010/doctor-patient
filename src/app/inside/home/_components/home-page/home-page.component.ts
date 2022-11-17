@@ -8,7 +8,7 @@ import { SessionService } from "app/_share/_services/session.service";
 import { ShareService } from "app/_share/_services/share.service";
 import * as _ from "lodash";
 import { NzMessageService } from "ng-zorro-antd/message";
-import { HomePageModel } from "../_models";
+import { HomePageModel } from "../../_models";
 
 @Component({
     selector: "app-home-page",

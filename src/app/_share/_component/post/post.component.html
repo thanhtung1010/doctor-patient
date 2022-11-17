@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="tung-post-demo-infor">
-                    <span>{{postInfor.author}}</span>
+                    <span (click)="goToProfile(postInfor.userId)">{{postInfor.author}}</span>
                     <span>{{postInfor.createAt | dateTimeLabel}}</span>
                 </div>
             </div>
@@ -40,23 +40,29 @@
             <div class="tung-full-post-react" nz-row>
                 <div class="tung-full-post-react-item" [ngClass]="{'tung-full-post-react-active': interact === true}"
                     (click)="onClickInteract(true, 'totalLike')" nz-col nzSpan="12">
-                    <span nz-icon nzType="like" nzTheme="outline">
+                    <span class="tung-full-post-react-item-total">
                         {{(postInfor.totalLike || 0) | numberLabel:0}}
+                    </span>
+                    <span nz-icon nzType="like" nzTheme="outline">
                     </span>
                 </div>
                 <div class="tung-full-post-react-item" [ngClass]="{'tung-full-post-react-active': interact === false}"
                     (click)="onClickInteract(false, 'totalDislike')" nz-col nzSpan="12">
-                    <span nz-icon nzType="dislike" nzTheme="outline">
+                    <span class="tung-full-post-react-item-total">
                         {{(postInfor.totalDislike || 0) | numberLabel:0}}
+                    </span>
+                    <span nz-icon nzType="dislike" nzTheme="outline">
                     </span>
                 </div>
             </div>
         </div>
         <div *nzModalFooter>
-            <app-write-content [isPopup]="false" [isComment]="true" [visibleCreatePostModal]="visibleCommentModal"
-                [postId]="postInfor.id" (oToggleVisiblePostModal)="onTogglevisibleCommentModal($event)"
-                (onSubmitPostSuccess)="reloadComment()">
-            </app-write-content>
+            <ng-container *ngIf="isLogged">
+                <app-write-content [isPopup]="false" [isComment]="true" [visibleCreatePostModal]="visibleCommentModal"
+                    [postId]="postInfor.id" (oToggleVisiblePostModal)="onTogglevisibleCommentModal($event)"
+                    (onSubmitPostSuccess)="reloadComment()">
+                </app-write-content>
+            </ng-container>
             <div class="tung-comment">
                 <ng-container *ngFor="let comment of postInfor.commentList">
                     <app-comment [commentInfor]="comment"></app-comment>

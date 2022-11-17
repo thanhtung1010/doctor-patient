@@ -1,6 +1,9 @@
 <div class="tung-shift">
+    <ng-container *ngIf="loading">
+        <app-loading></app-loading>
+    </ng-container>
     <ng-container *ngFor="let data of shiftList">
-        <div class="tung-shift-wrap" (click)="onChangeShift(data.shift)">
+        <div [ngClass]="{'tung-disabled': disabled}" class="tung-shift-wrap" (click)="onChangeShift(data)">
             <ng-container [ngTemplateOutlet]="shiftContent" [ngTemplateOutletContext]="{data: data}"></ng-container>
         </div>
     </ng-container>
@@ -8,8 +11,8 @@
 
 <ng-template #shiftContent let-item="data">
     <div class="tung-shift-content" [ngClass]="{
-        'tung-shift-content-normal': !item.expired,
-        'tung-shift-content-expired': item.expired,
+        'tung-shift-content-normal': !item.expired && !item.booked,
+        'tung-shift-content-expired': item.expired || item.booked,
         'tung-shift-content-selected': shift && shift === item.shift
     }">
         <p class="tung-shift-content-title">{{'BOOKING.SHIFT.' + item.shift | translate}}</p>

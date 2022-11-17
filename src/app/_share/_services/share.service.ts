@@ -60,4 +60,11 @@ export class ShareService {
             url: API_POST['INTERACT_POST'].url + id
         }, _params);
     }
+
+    checkInteractPost(id: any) {
+        return this.api.callApi({
+            ...API_POST['CHECK_INTERACT_POST'],
+            url: API_POST['CHECK_INTERACT_POST'].url + id
+        }, {});
+    }
 }

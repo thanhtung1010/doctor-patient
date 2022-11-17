@@ -21,6 +21,7 @@ export class YourBookedCalendarComponent implements OnInit {
         bookedListRaw: [] as IBookingItem[],
         bookedList: [] as {
             bookedAt: Date | string | number,
+            doctorName: string,
             children: IBookingItem[]
         }[]
     }
@@ -35,6 +36,7 @@ export class YourBookedCalendarComponent implements OnInit {
     timeFormat: string = 'HH:mm a';
     tableHeader: ITableElement[] = [
         { title: "Ngày Hẹn", field: "bookedAt" },
+        { title: "Bác sĩ", field: "doctorName" },
         { title: "Ca 1", field: "1" },
         { title: "Ca 2", field: "2" },
         { title: "Ca 3", field: "3" },
@@ -74,10 +76,11 @@ export class YourBookedCalendarComponent implements OnInit {
                             return {
                                 ...item,
                                 expired: !item.bookedAt ? false : moment(new Date()).unix() > item.bookedAt,
-                                shift: item.bookedShift
+                                shift: item.bookedShift,
+                                bookedAt: item.bookedAt.toString().length > 13 ? item.bookedAt / 1000 : item.bookedAt
                             }
                         });
-                        this.data.bookedList = _.orderBy(this.cookingBookedList(resp.data), ['bookedAt']);
+                        this.data.bookedList = _.orderBy(this.cookingBookedList(this.data.bookedListRaw), ['bookedAt'], ['desc']);
                     } else {
                         this.data.bookedListRaw = [];
                         this.data.bookedList = [];
@@ -97,20 +100,46 @@ export class YourBookedCalendarComponent implements OnInit {
         }
     }
 
-    cookingBookedList(_list: IBookingItem[]): { bookedAt: Date | string | number, children: IBookingItem[] }[] {
+    cookingBookedList(_list: IBookingItem[]): { bookedAt: Date | string | number, doctorName: string, children: IBookingItem[] }[] {
         const _bookedListByDate = _.chain(_list)
             .groupBy('bookedAt')
             .toPairs()
             .map(item => {
                 const _object = _.zipObject(['bookedAt', 'children'], item);
-                const child = [..._object['children']]
+                const childs = [..._object['children']]
                 return {
                     ..._object,
-                    bookedAt: +_object['bookedAt'] / 1000,
-                    children: this.cookingShifts(child)
+                    bookedAt: +_object['bookedAt'],
+                    children: childs
                 }
             }).value()
-        return _bookedListByDate as any
+        return this.cookingSameDate(_bookedListByDate as any)
+    }
+
+    cookingSameDate(list: { bookedAt: Date | string | number, doctorName: string, children: IBookingItem[] }[]): { bookedAt: Date | string | number, doctorName: string, children: IBookingItem[] }[] {
+        let cookedList = [] as any[]
+        if (list && list.length) {
+            list.forEach(item => {
+                const _doctorIds = _.union(item.children.map((child: any) => child.doctorId || ''));
+                if (_doctorIds.length > 1) {
+                    _doctorIds.forEach(doctorId => {
+                        const childById = item.children.filter(child => child.doctorId === doctorId);
+                        cookedList.push({
+                            bookedAt: item.bookedAt,
+                            doctorName: childById[0].doctorName || '',
+                            children: this.cookingShifts(childById),
+                        })
+                    });
+                } else {
+                    cookedList.push(_.cloneDeep({
+                        ...item,
+                        doctorName: item.children[0].doctorName || '',
+                        children: this.cookingShifts(item.children),
+                    }));
+                }
+            })
+        }
+        return cookedList
     }
 
     cookingShifts(list: any[]) {
@@ -135,16 +164,18 @@ export class YourBookedCalendarComponent implements OnInit {
         const bookedTime = item.bookedShift === 1 ? 8 : item.bookedShift === 2 ? 10 : item.bookedShift === 3 ? 13 : 15;
         return {
             ...item,
-            start: Helpers.dateTime.setHour(bookedTime, item.bookedAt / 1000),
-            end: Helpers.dateTime.setHour(bookedTime + 2, item.bookedAt / 1000),
-            expired: moment().unix() * 1000 >= Helpers.dateTime.setHour(bookedTime - 1, item.bookedAt / 1000)
+            start: Helpers.dateTime.setHour(bookedTime, item.bookedAt),
+            end: Helpers.dateTime.setHour(bookedTime + 2, item.bookedAt),
+            expired: moment().unix() * 1000 >= Helpers.dateTime.setHour(bookedTime, item.bookedAt),
+            shift: item.bookedShift,
+            visibleInforModal: false,
         }
     }
 
-    approval(id: number, isAccept: boolean) {
+    approval(id: number, approve: boolean, allowApproval: boolean) {
         this.loading.approval = true;
-        if (this.sessionSer.isDoctor()) {
-            this.bookingSer.approvalBooking(id, { approve: isAccept }).subscribe({
+        if (this.sessionSer.isDoctor() && allowApproval) {
+            this.bookingSer.approvalBooking(id, { approve: approve }).subscribe({
                 next: resp => {
                     this.showSuccess();
                     this.getCalendar();
@@ -158,6 +189,14 @@ export class YourBookedCalendarComponent implements OnInit {
                     this.loading.approval = false;
                 },
             });
+        }
+    }
+
+    onToggleBookedInforModal(parentIdx: number, childIdx: number, evt: boolean) {
+        if (this.data.bookedList[parentIdx]) {
+            if (this.data.bookedList[parentIdx].children && this.data.bookedList[parentIdx].children[childIdx]) {
+                this.data.bookedList[parentIdx].children[childIdx].visibleInforModal = evt;
+            }
         }
     }
 

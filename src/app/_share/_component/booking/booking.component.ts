@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Params, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
@@ -12,16 +12,23 @@ import { environment } from "environments/environment";
 import * as _ from "lodash";
 import * as moment from "moment";
 import { NzMessageService } from "ng-zorro-antd/message";
-import { loadingType } from "../../_enum/loading.enum";
+import { differenceInCalendarDays } from 'date-fns';
+import { IBookingItem } from "app/inside/profile/_interfaces";
 
 @Component({
     selector: 'app-booking',
     templateUrl: './booking.component.html'
 })
 
-export class BookingComponent implements OnInit {
+export class BookingComponent implements OnInit, OnChanges {
+    @Input() inputBookingInfor: IBookingInfor | null = null;
     @Input() showBtn: boolean = true;
+    @Input() isUpdate: boolean = false;
+    @Input() allowUpdate: boolean = false;
+    @Input() visibleBookingModal: boolean = false;
+
     @Output() oSubmitSuccess = new EventEmitter();
+    @Output() oChangevisibleBookingModal = new EventEmitter();
     isLogged: boolean = false;
     step = {
         steps: ['BOOKING.SERVICE', 'BOOKING.ORDER', 'BOOKING.APPOINTMENT_INFORMATION'],
@@ -37,7 +44,7 @@ export class BookingComponent implements OnInit {
             'ONLINE_CONSULTATION',
             'COUNSELING_AT_THE_CLINIC'
         ],
-        visibleBookingModal: false,
+        bookedList: [] as IBookingItem[],
         firstStepValid: false,
         secondStepValid: false,
         thirstStepValid: false,
@@ -53,7 +60,8 @@ export class BookingComponent implements OnInit {
     }
     loading = {
         doctor: false,
-        submit: false
+        submit: false,
+        bookedList: false,
     }
     defautlFormat: any = null;
     dateFormatForEdit: string = '';
@@ -76,6 +84,15 @@ export class BookingComponent implements OnInit {
 
     ngOnInit(): void {
         this.initData();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['inputBookingInfor'] && this.inputBookingInfor) {
+            this.bookingInfor = {
+                ...this.inputBookingInfor,
+            };
+            this.checkValidStep();
+        }
     }
 
     initData() {
@@ -103,7 +120,11 @@ export class BookingComponent implements OnInit {
             error: err => {
                 this.showError(err['code'] || 8);
             },
-            complete: () => { },
+            complete: () => {
+                if (this.isUpdate) {
+                    this.getDoctorBySpecialist();
+                }
+            },
         });
     }
 
@@ -140,7 +161,8 @@ export class BookingComponent implements OnInit {
                 this.bookingInfor.shift = evt;
                 break;
             case 'bookedAt':
-                this.bookingInfor.bookedAt = moment(evt).hours(0).unix() * 1000;
+                this.bookingInfor.bookedAt = moment(evt).startOf('day').unix() * 1000;
+                this.bookingInfor.shift = null;
                 this.getBookedAtList();
                 break;
             // step 3
@@ -154,14 +176,28 @@ export class BookingComponent implements OnInit {
     }
 
     getBookedAtList() {
+        this.loading.bookedList = true;
         const _params = {
-            bookedAt: this.bookingInfor.bookedAt,
+            bookedAt: this.bookingInfor.bookedAt ? +this.bookingInfor.bookedAt / 1000 : null,
             doctorId: this.bookingInfor.doctorId
         }
         this.bookingSer.getBookedListByDay(_params).subscribe({
-            next: resp => { },
-            error: (error) => { },
-            complete: () => { }
+            next: resp => {
+                if (resp.data && resp.data.length) {
+                    this.data.bookedList = resp.data;
+                } else {
+                    this.data.bookedList = [];
+                }
+                this.loading.bookedList = false;
+            },
+            error: (error) => {
+                this.showError(error['error'] ? error['error'].code || 8 : 8);
+                this.loading.bookedList = false;
+                this.data.bookedList = [];
+            },
+            complete: () => {
+                this.loading.bookedList = false;
+            }
         });
     }
 
@@ -171,7 +207,12 @@ export class BookingComponent implements OnInit {
     }
 
     onToggleBookingModal(evt: boolean) {
-        this.data.visibleBookingModal = evt;
+        this.visibleBookingModal = evt;
+        this.onEmitToggleBookingModal();
+    }
+
+    onEmitToggleBookingModal() {
+        this.oChangevisibleBookingModal.emit(this.visibleBookingModal)
     }
 
     checkValidStep() {
@@ -221,6 +262,33 @@ export class BookingComponent implements OnInit {
         }
     }
 
+    onClickSubmitUpdate() {
+        if (this.bookingInfor) {
+            this.loading.submit = true;
+            const _params = {
+                newBookedAt: this.bookingInfor.bookedAt,
+                newShift: this.bookingInfor.shift
+            }
+            this.bookingSer.updateBook(this.bookingInfor.id || 0, _params).subscribe({
+                next: resp => {
+                    this.showSuccess();
+                    this.loading.submit = false;
+                    this.onToggleBookingModal(false);
+                    this.onEmitSucces(true);
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.submit = false;
+                },
+                complete: () => {
+                    this.loading.submit = false;
+                },
+            });
+        } else {
+            this.showError('8');
+        }
+    }
+
     getDoctorNameById(type: string, evt: any): string {
         switch (type) {
             case 'doctorName':
@@ -247,9 +315,16 @@ export class BookingComponent implements OnInit {
 
     }
 
-    onEmitSucces() {
+    onEmitSucces(resetInfor: boolean = true) {
         this.step.active = 0;
-        this.bookingInfor = new BookingModel(null);
+        if (resetInfor) this.bookingInfor = new BookingModel(null);
         this.oSubmitSuccess.emit();
+    }
+
+    disabledDate = (current: Date): boolean => {
+        if (differenceInCalendarDays(current, new Date()) < 1) {
+            return true
+        }
+        return current.getDay() === 0 || current.getDay() === 6;
     }
 }

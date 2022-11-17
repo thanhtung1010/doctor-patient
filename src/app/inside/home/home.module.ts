@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './_components';
+import { HomePageComponent, UserProfileComponent } from './_components';
 import SharedModule from 'app/_share/share.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 export const routes: Routes = [
   {
@@ -16,6 +18,10 @@ export const routes: Routes = [
       {
         path: '',
         component: HomePageComponent,
+      },
+      {
+        path: ':id',
+        component: UserProfileComponent,
       },
       {
         path: '**',
@@ -28,15 +34,18 @@ export const routes: Routes = [
 
 @NgModule({
   declarations: [
-    HomePageComponent
+    HomePageComponent,
+    UserProfileComponent,
   ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
     SharedModule,
+    TranslateModule,
 
     NzGridModule,
     NzIconModule,
+    NzListModule,
   ]
 })
 export class HomeModule { }

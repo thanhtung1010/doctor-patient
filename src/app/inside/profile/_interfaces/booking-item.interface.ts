@@ -10,4 +10,6 @@ export interface IBookingItem {
     createdBy?: string;
     content: string;
     consult: string | null;
+
+    visibleInforModal?: boolean;
 }

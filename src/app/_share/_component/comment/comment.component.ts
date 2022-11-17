@@ -1,7 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Params, Router } from "@angular/router";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
 import { TranslateService } from "@ngx-translate/core";
+import { Helpers } from "app/_cores/_helpers/helpers";
 import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
+import { ROUTING_DEFINED } from "app/_share/_enum/router.enum";
 import { IComment } from "app/_share/_interface/comment.interface";
 import { environment } from "environments/environment";
 import * as _ from "lodash";
@@ -45,10 +48,11 @@ export class CommentComponent implements OnInit, OnChanges {
     constructor(
         private translate: TranslateService,
         private msg: NzMessageService,
+        private _router: Router,
     ) {
         this.defautlFormat = environment.FORMAT_SETTING
         if (this.defautlFormat) {
-            this._dateFormatForShow = this.defautlFormat.date;
+            this._dateFormatForShow = this.defautlFormat.dateTime;
             this.dateFormatForEdit = this._dateFormatForShow ? this._dateFormatForShow.replace('DD', 'dd').replace('YYYY', 'yyyy') : '';
         }
     }
@@ -73,6 +77,10 @@ export class CommentComponent implements OnInit, OnChanges {
         return ''
     }
 
+    goToProfile(id: number) {
+        this.goToURL(Helpers.JoinPaths([ROUTING_DEFINED.HOME, id.toString()]));
+    }
+
     showError(code: string) {
         const _msg = getSystemMsgByCode(code || '8') as string;
         this.msg.error(this.translate.instant(_msg));
@@ -80,5 +88,17 @@ export class CommentComponent implements OnInit, OnChanges {
 
     showSuccess() {
         this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+    }
+
+    goToURL(url: string, param?: Params) {
+        if (url) {
+            if (param) {
+                this._router.navigate([url], { queryParams: param });
+            }
+            else {
+                this._router.navigate([url]);
+            }
+        }
+
     }
 }

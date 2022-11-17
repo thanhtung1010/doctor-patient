@@ -4,4 +4,5 @@ export interface IComment {
     createdAt: Date | string | number,
     createdBy: string;
     updatedAt: string;
+    userId: number;
 }

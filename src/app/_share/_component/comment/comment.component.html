@@ -1,6 +1,6 @@
 <ng-container *ngIf="commentInfor">
     <div class="tung-comment-item">
-        <div class="tung-comment-item-infor">
+        <div class="tung-comment-item-infor" (click)="goToProfile(commentInfor.userId)">
             <div class="tung-comment-item-infor-avatar">
                 <span>
                     {{avatarText}}

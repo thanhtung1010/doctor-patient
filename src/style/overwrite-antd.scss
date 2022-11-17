@@ -152,7 +152,7 @@
 
 .ant-empty {
     margin: unset;
-    height: 70vh;
+    height: 90%;
 
     .ant-empty-image {
         height: 100%;
@@ -210,14 +210,6 @@
 .ant-list-item {
     color: $mainColor;
     padding: 10px 5px;
-}
-
-.ant-empty {
-    height: 200px;
-
-    .ant-empty-image {
-        height: 70%;
-    }
 }
 
 // .ant-modal-close-x {

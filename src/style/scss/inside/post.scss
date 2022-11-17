@@ -74,11 +74,23 @@
 
         &-item {
             display: flex;
+            justify-content: center;
 
             .anticon {
                 cursor: pointer;
-                margin: auto;
+                margin-left: 5px;
+                font-size: 15px;
                 color: $shadow;
+                display: flex;
+                align-items: center;
+            }
+
+            &-total {
+                font-size: 15px;
+                color: $shadow;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
 
@@ -102,6 +114,7 @@
         border-bottom: 1px solid $shadow;
 
         &-infor {
+            cursor: pointer;
             min-height: 100px;
             width: 10%;
             padding: 5px;

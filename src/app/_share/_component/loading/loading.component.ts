@@ -6,13 +6,9 @@ import { loadingType } from "../../_enum/loading.enum";
     templateUrl: './loading.component.html'
 })
 
-export class LoadingComponent implements OnInit {
+export class LoadingComponent {
     @Input() type: loadingType = loadingType.dotCycle;
     LOADING_TYPE = loadingType;
 
     constructor() { }
-
-    ngOnInit(): void {
-        console.log('loading')
-    }
 }

@@ -20,6 +20,14 @@ export class CommonService {
     return this.apiService.callApi(API_URL['GET_USER_INFO'], {});
   }
 
+  getUserInfoById(id: number) {
+    return this.apiService.callApi(
+      {
+        ...API_URL['GET_USER_INFO_BY_ID'],
+        url: API_URL['GET_USER_INFO_BY_ID'].url + id
+      }, {});
+  }
+
   logout() {
     return this.apiService.callApi(API_URL['LOGOUT'], {});
   }

@@ -14,6 +14,7 @@ export interface IDoctorInfor {
     fullName: string,
     id: number;
     specialist: string;
+    workingAt: string;
 }
 
 export interface IShift {
@@ -21,5 +22,6 @@ export interface IShift {
     startNumber: number,
     start: number,
     end: number,
-    expired: boolean
+    expired: boolean;
+    booked: boolean;
 }

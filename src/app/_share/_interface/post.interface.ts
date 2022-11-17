@@ -2,6 +2,7 @@ import { IComment } from "./comment.interface";
 
 export interface IPost {
     id: number;
+    userId: number;
     content: string;
     createAt: Date | string | number | null;
     updatedAt: Date | string | number | null;

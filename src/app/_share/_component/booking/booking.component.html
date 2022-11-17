@@ -4,50 +4,75 @@
 </ng-container>
 
 
-<nz-modal [nzWidth]="'50vw'" [nzCloseIcon]="''" [nzVisible]="data.visibleBookingModal">
+<nz-modal [nzWidth]="'50vw'" [nzCloseIcon]="''" [nzVisible]="visibleBookingModal">
     <div *nzModalTitle class="tung-title tung-p-0">
         {{ 'BOOKING.TITLE' | translate }}
     </div>
-    <div *nzModalContent>
-        <app-step [step]="step.steps" [(active)]="step.active">
-            <div class="tung-step-content" content>
-                <ng-container *ngIf="step.active === 0" [ngTemplateOutlet]="step1"></ng-container>
-                <ng-container *ngIf="step.active === 1" [ngTemplateOutlet]="step2"></ng-container>
-                <ng-container *ngIf="step.active === 2" [ngTemplateOutlet]="step3"></ng-container>
-            </div>
-            <div class="tung-step-footer" buttons>
-                <button [ngClass]="{'tung-disabled': step.active === 0}" nz-button nzType="text" (click)="gotoStep(-1)">
-                    <span nz-icon nzType="left-circle" nzTheme="outline"></span>
-                </button>
-                <button [ngClass]="{
-                    'tung-disabled': step.active === 2 || (step.active === 0 && !data.firstStepValid)
-                    || (step.active === 1 && !data.secondStepValid)
-                }" nz-button nzType="text" (click)="gotoStep(1)">
-                    <span nz-icon nzType="right-circle" nzTheme="outline"></span>
-                </button>
-            </div>
-        </app-step>
+    <div *nzModalContent [ngClass]="{'tung-disabled': loading.submit}">
+        <ng-container *ngIf="!isUpdate; else allStep">
+            <app-step [step]="step.steps" [(active)]="step.active">
+                <div class="tung-step-content" content>
+                    <ng-container *ngIf="step.active === 0" [ngTemplateOutlet]="step1"></ng-container>
+                    <ng-container *ngIf="step.active === 1" [ngTemplateOutlet]="step2"></ng-container>
+                    <ng-container *ngIf="step.active === 2" [ngTemplateOutlet]="step3"></ng-container>
+                </div>
+                <div class="tung-step-footer" buttons>
+                    <button [ngClass]="{'tung-disabled': step.active === 0}" nz-button nzType="text"
+                        (click)="gotoStep(-1)">
+                        <span nz-icon nzType="left-circle" nzTheme="outline"></span>
+                    </button>
+                    <button [ngClass]="{
+                        'tung-disabled': step.active === 2 || (step.active === 0 && !data.firstStepValid)
+                        || (step.active === 1 && !data.secondStepValid)
+                    }" nz-button nzType="text" (click)="gotoStep(1)">
+                        <span nz-icon nzType="right-circle" nzTheme="outline"></span>
+                    </button>
+                </div>
+            </app-step>
+        </ng-container>
+        <ng-template #allStep>
+            <ng-container [ngTemplateOutlet]="step1"></ng-container>
+            <ng-container [ngTemplateOutlet]="step2"></ng-container>
+            <ng-container [ngTemplateOutlet]="step3"></ng-container>
+        </ng-template>
     </div>
     <div *nzModalFooter>
-        <button nz-button [nzType]="'primary'" [nzShape]="'round'" (click)="onToggleBookingModal(false)">
-            {{'BTN_CANCEL' | translate}}
-        </button>
-        <button nz-button [disabled]="!data.firstStepValid || !data.secondStepValid || !data.thirstStepValid"
-            nz-popconfirm [nzPopconfirmTitle]="'WARNING_MSG.SUBMIT_BOOKING_WITHOUT_LOGIN' | translate"
-            [nzOkText]="'YES' | translate" [nzCancelText]="'NO' | translate" [nzCondition]="isLogged"
-            (nzOnConfirm)="onClickSubmit()" [nzType]="'primary'" [nzShape]="'round'">
-            {{'BTN_CONFIRM' | translate}}
-        </button>
+        <ng-container *ngIf="!isUpdate">
+            <button nz-button [disabled]="loading.submit" [nzType]="'primary'" [nzShape]="'round'"
+                (click)="onToggleBookingModal(false)">
+                {{'BTN_CANCEL' | translate}}
+            </button>
+            <button nz-button [disabled]="loading.submit"
+                [disabled]="!data.firstStepValid || !data.secondStepValid || !data.thirstStepValid" nz-popconfirm
+                [nzPopconfirmTitle]="'WARNING_MSG.SUBMIT_BOOKING_WITHOUT_LOGIN' | translate"
+                [nzOkText]="'YES' | translate" [nzCancelText]="'NO' | translate" [nzCondition]="isLogged"
+                (nzOnConfirm)="onClickSubmit()" [nzType]="'primary'" [nzShape]="'round'">
+                {{'BTN_CONFIRM' | translate}}
+            </button>
+        </ng-container>
+        <ng-container *ngIf="isUpdate">
+            <button nz-button [disabled]="loading.submit" [nzType]="'primary'" [nzShape]="'round'"
+                (click)="onToggleBookingModal(false)">
+                {{'Quay lại'}}
+            </button>
+            <button nz-button [disabled]="loading.submit"
+                [disabled]="!allowUpdate || !data.firstStepValid || !data.secondStepValid || !data.thirstStepValid"
+                nz-popconfirm [nzPopconfirmTitle]="'Bạn có chắc chấn muốn cập nhật khum?'"
+                [nzOkText]="'YES' | translate" [nzCancelText]="'NO' | translate" [nzCondition]="isLogged"
+                (nzOnConfirm)="onClickSubmitUpdate()" [nzType]="'primary'" [nzShape]="'round'">
+                {{'Cập nhật'}}
+            </button>
+        </ng-container>
     </div>
 </nz-modal>
 
 <ng-template #step1>
-    <div nz-row class="tung-booking-step tung-booking-step-1">
+    <div nz-row class="tung-booking-step tung-booking-step-1" [ngClass]="{'tung-booking-step-update': isUpdate}">
         <div nz-col nzSpan="12">
             <label class="tung-label tung-required">{{'BOOKING.SPECIALIST' | translate}}</label>
             <nz-select nzShowSearch [nzSuffixIcon]="icon" [nzPlaceHolder]="'BOOKING.SPECIALIST_HOLDER' | translate"
                 [(ngModel)]="bookingInfor.specialist" (ngModelChange)="onchange($event, 'specialist')"
-                [nzLoading]="loading.doctor">
+                [disabled]="isUpdate" [nzLoading]="loading.doctor">
                 <ng-container *ngFor="let specialist of data.specialists">
                     <nz-option [nzValue]="specialist" [nzLabel]="'BOOKING.' + specialist | translate"></nz-option>
                 </ng-container>
@@ -56,17 +81,17 @@
         <div nz-col nzSpan="12">
             <label class="tung-label tung-required">{{'BOOKING.DOCTOR' | translate}}</label>
             <nz-select nzShowSearch [nzSuffixIcon]="icon" [nzDisabled]="!bookingInfor.specialist"
-                [nzLoading]="loading.doctor" (ngModelChange)="onchange($event, 'doctorId')"
+                [nzLoading]="loading.doctor" (ngModelChange)="onchange($event, 'doctorId')" [disabled]="isUpdate"
                 [nzPlaceHolder]="'BOOKING.DOCTOR_HOLDER' | translate" [(ngModel)]="bookingInfor.doctorId">
                 <ng-container *ngFor="let doctor of data.doctorList">
-                    <nz-option [nzValue]="doctor.id" [nzLabel]="doctor.fullName"></nz-option>
+                    <nz-option [nzValue]="doctor.id" [nzLabel]="doctor.fullName + ' - ' + doctor.workingAt"></nz-option>
                 </ng-container>
             </nz-select>
         </div>
         <div nz-col nzSpan="12">
             <label class="tung-label tung-required">{{'BOOKING.CONSULT_PACKAGE_HOLDER' | translate}}</label>
             <nz-select nzShowSearch [nzSuffixIcon]="icon" [nzPlaceHolder]="'BOOKING.CONSULT_PACKAGE' | translate"
-                [(ngModel)]="bookingInfor.consult" (ngModelChange)="onchange($event, 'consult')">
+                [disabled]="isUpdate" [(ngModel)]="bookingInfor.consult" (ngModelChange)="onchange($event, 'consult')">
                 <ng-container *ngFor="let consult of data.consultList">
                     <nz-option [nzValue]="consult" [nzLabel]="'BOOKING.' + consult | translate"></nz-option>
                 </ng-container>
@@ -75,26 +100,28 @@
     </div>
 </ng-template>
 <ng-template #step2>
-    <div class="tung-booking-step tung-booking-step-2">
+    <div class="tung-booking-step tung-booking-step-2" [ngClass]="{'tung-booking-step-update': isUpdate}">
         <div class="tung-align-center tung-flex tung-mb-10">
             <div nz-col nzSpan="8"></div>
             <div nz-col nzSpan="8">
-                <!-- <label class="tung-label tung-required">{{'COMMON.SELECT_DATE' | translate}}</label> -->
                 <nz-date-picker [(ngModel)]="bookingInfor.bookedAt" [nzPlaceHolder]="'COMMON.SELECT_DATE' | translate"
-                    [nzAllowClear]="false" [nzRenderExtraFooter]="undefined" [nzSuffixIcon]="prefixTemplateCalendar"
+                    [nzDisabledDate]="disabledDate" [nzAllowClear]="false" [nzRenderExtraFooter]="undefined"
+                    [disabled]="isUpdate && !allowUpdate" [nzSuffixIcon]="prefixTemplateCalendar"
                     (ngModelChange)="onchange($event, 'bookedAt')" [nzFormat]="dateFormatForEdit">
                 </nz-date-picker>
             </div>
             <div nz-col nzSpan="8"></div>
         </div>
         <ng-container *ngIf="bookingInfor.bookedAt">
-            <app-shift-list [bookingDate]="bookingInfor.bookedAt" [shift]="bookingInfor.shift"
-                (oChangeShift)="onchange($event, 'shifts')"></app-shift-list>
+            <app-shift-list [bookingDate]="bookingInfor.bookedAt" [disabled]="isUpdate && !allowUpdate"
+                [loading]="loading.bookedList" [bookedList]="data.bookedList" [shift]="bookingInfor.shift"
+                (oChangeShift)="onchange($event, 'shifts')">
+            </app-shift-list>
         </ng-container>
     </div>
 </ng-template>
 <ng-template #step3>
-    <div class="tung-booking-step tung-booking-step-3">
+    <div class="tung-booking-step tung-booking-step-3" [ngClass]="{'tung-booking-step-update': isUpdate}">
         <div class="tung-title">{{'BOOKING.CONFIRM_INFORMATION' | translate}}</div>
         <div class="tung-booking-step-box">
             <label class="tung-label-step">
@@ -118,11 +145,11 @@
         </div>
         <div class="tung-booking-step-box">
             <label class="tung-label-step">
-                {{'BOOKING.APPOINTMENT_INFORMATION' | translate}}
+                {{'Nội dung'}}
             </label>
             <div class="tung-booking-step-box">
                 <nz-textarea-count [nzMaxCharacterCount]="500">
-                    <textarea rows="4" nz-input [(ngModel)]="bookingInfor.content"
+                    <textarea rows="4" nz-input [(ngModel)]="bookingInfor.content" [disabled]="isUpdate"
                         (ngModelChange)="onchange($event, 'content')"></textarea>
                 </nz-textarea-count>
             </div>

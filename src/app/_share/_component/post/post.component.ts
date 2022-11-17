@@ -1,9 +1,11 @@
-import { Component, EventEmitter, HostListener, Input, Output } from "@angular/core";
+import { Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import { Params, Router } from "@angular/router";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
 import { TranslateService } from "@ngx-translate/core";
-import { getSystemMsgByCode, KEY_CODE_WINDOW } from "app/_share/_enum";
+import { Helpers } from "app/_cores/_helpers";
+import { getSystemMsgByCode, KEY_CODE_WINDOW, ROUTING_DEFINED } from "app/_share/_enum";
 import { IPost } from "app/_share/_interface";
-import { ShareService } from "app/_share/_services";
+import { SessionService, ShareService } from "app/_share/_services";
 import * as _ from "lodash";
 import { NzMessageService } from "ng-zorro-antd/message";
 
@@ -12,7 +14,7 @@ import { NzMessageService } from "ng-zorro-antd/message";
     templateUrl: './post.component.html'
 })
 
-export class PostComponent {
+export class PostComponent implements OnChanges {
     @Input() textOnly: boolean = false;
     @Input() postInfor: IPost | null = null;
     @Input() visibleFullPostModal: boolean = false;
@@ -23,6 +25,7 @@ export class PostComponent {
 
     visibleCommentModal: boolean = false;
     interact: boolean | null = null;
+    isLogged: boolean = false;
     editorConfig: AngularEditorConfig = {
         editable: false,
         spellcheck: false,
@@ -53,7 +56,18 @@ export class PostComponent {
         private translate: TranslateService,
         private shareSer: ShareService,
         private msg: NzMessageService,
+        private sessionSer: SessionService,
+        private _router: Router,
     ) { }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.isLogged = this.sessionSer.isLogged();
+        if (changes['postInfor'] && changes['postInfor'].currentValue) {
+            if (this.isLogged) {
+                this.checkInteractPost();
+            }
+        }
+    }
 
     onToggleVisibleFullPost(visible: boolean) {
         this.visibleFullPostModal = visible;
@@ -78,41 +92,71 @@ export class PostComponent {
     }
 
     onClickInteract(evt: any, field: 'totalDislike' | 'totalLike') {
-        let _interact = _.cloneDeep(this.interact);
-        if (this.postInfor) {
-            if (evt === this.interact) {
-                this.interact = null;
+        if (this.isLogged) {
+            let _interact = _.cloneDeep(this.interact);
+            if (this.postInfor) {
+                if (evt === this.interact) {
+                    this.interact = null;
+                } else {
+                    this.interact = evt;
+                }
+                const _params = { interact: this.interact };
+                this.shareSer.interactPost(this.postInfor.id, _params).subscribe({
+                    next: resp => {
+                        if (this.interact === null) {
+                            this.onChangeReact(field, -1);
+                        } else {
+                            if (_interact === null) {
+                                this.onChangeReact(field, 1);
+                            }
+                            if (_interact === true) {
+                                this.onChangeReact(field, 1);
+                                this.onChangeReact('totalLike', -1);
+                            }
+                            if (_interact === false) {
+                                this.onChangeReact(field, 1);
+                                this.onChangeReact('totalDislike', -1);
+                            }
+                        }
+                    },
+                    error: error => {
+                        console.log(error)
+                        this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    },
+                    complete: () => { }
+                });
             } else {
-                this.interact = evt;
+                this.showError('8')
             }
-            const _params = { interact: this.interact };
-            this.shareSer.interactPost(this.postInfor.id, _params).subscribe({
+        }
+    }
+
+    checkInteractPost() {
+        if (this.postInfor) {
+            this.shareSer.checkInteractPost(this.postInfor.id).subscribe({
                 next: resp => {
-                    if (this.interact === null) {
-                        this.onChangeReact(field, -1);
+                    if (resp) {
+                        if (_.isBoolean(resp.data)) {
+                            this.interact = resp.data
+                        } else {
+                            this.interact = null
+                        }
                     } else {
-                        if (_interact === null) {
-                            this.onChangeReact(field, 1);
-                        }
-                        if (_interact === true) {
-                            this.onChangeReact(field, 1);
-                            this.onChangeReact('totalLike', -1);
-                        }
-                        if (_interact === false) {
-                            this.onChangeReact(field, 1);
-                            this.onChangeReact('totalDislike', -1);
-                        }
+                        this.interact = null
                     }
                 },
                 error: error => {
-                    console.log(error)
                     this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.interact = null
                 },
-                complete: () => { }
             });
         } else {
-            this.showError('8')
+            this.interact = null;
         }
+    }
+
+    goToProfile(id: number) {
+        this.goToURL(Helpers.JoinPaths([ROUTING_DEFINED.HOME, id.toString()]));
     }
 
     onChangeReact(field: 'totalDislike' | 'totalLike', value: number) {
@@ -126,5 +170,17 @@ export class PostComponent {
 
     showSuccess() {
         this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+    }
+
+    goToURL(url: string, param?: Params) {
+        if (url) {
+            if (param) {
+                this._router.navigate([url], { queryParams: param });
+            }
+            else {
+                this._router.navigate([url]);
+            }
+        }
+
     }
 }
