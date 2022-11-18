@@ -7,6 +7,7 @@ import { IUserProfile } from "app/_cores/_models/user.model";
 import { CommonService } from "app/_cores/_services/common.service";
 import { ROUTING_DEFINED } from "app/_share/_enum";
 import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
+import { ROLE } from "app/_share/_enum/role.enum";
 import { IPost } from "app/_share/_interface/post.interface";
 import { SessionService } from "app/_share/_services/session.service";
 import { ShareService } from "app/_share/_services/share.service";
@@ -22,6 +23,8 @@ import { HomePageModel } from "../../_models";
 export class UserProfileComponent implements OnInit {
     id: number | null = null;
     userInfo: IUserProfile | null = null;
+    avatarText: string = '';
+    follow: boolean = false;
     data = {
         posts: [] as IPost[],
         userInforList: [] as {
@@ -29,8 +32,12 @@ export class UserProfileComponent implements OnInit {
             field: string,
             title: string
         }[],
+        followList: [] as any[]
     }
     loading = {
+        infor: false,
+        follow: false,
+        listFollow: false,
     }
     routerSub!: ActivatedRoute;
     USER_FIELD = USER_FIELD;
@@ -63,25 +70,52 @@ export class UserProfileComponent implements OnInit {
 
     getUserInfor() {
         if (this.id) {
+            this.loading.infor = true;
             this.commenSer.getUserInfoById(this.id).subscribe({
                 next: resp => {
                     if (resp.data && _.size(resp.data)) {
-                        this.userInfo = { ...resp.data }
+                        this.userInfo = {
+                            ...resp.data,
+                            role: resp.data['role'] ? resp.data['role'].toUpperCase() : ROLE.USER
+                        }
                         if (resp.data['postSearchResultDtoList'] && resp.data['postSearchResultDtoList'].length) {
-                            this.data.posts = [...resp.data['postSearchResultDtoList']]
+                            this.data.posts = resp.data['postSearchResultDtoList'].map((post: any) => {
+                                return {
+                                    ...post,
+                                    commentList: _.orderBy([...post.commentList], ['createdAt'], ['desc'])
+                                }
+                            });
                         }
                         this.getListUserInfor();
+                        this.avatarText = this.getTextAvatar();
+                        this.checkFollow();
+                        this.getFollowList();
                     }
+                    this.loading.infor = false;
                 },
                 error: error => {
                     this.showError(error['error'] ? error['error'].code || 8 : 8);
                     this.goToURL(ROUTING_DEFINED.NOTFOUND);
+                    this.loading.infor = false;
                 },
-                complete: () => { }
+                complete: () => {
+                    this.loading.infor = false;
+                }
             });
         } else {
             this.goToURL(ROUTING_DEFINED.NOTFOUND);
         }
+    }
+
+    getTextAvatar(): string {
+        if (this.userInfo) {
+            for (let i = 0; i < this.userInfo.fullName.length; i++) {
+                if (this.userInfo.fullName[i].trim()) {
+                    return this.userInfo.fullName[i].toUpperCase();
+                }
+            }
+        }
+        return ''
     }
 
     getListUserInfor() {
@@ -110,13 +144,106 @@ export class UserProfileComponent implements OnInit {
         return (this.userInfo as any)[field]
     }
 
+    onReloadComment(id: number) {
+        this.shareSer.getCommentByPosyId(id).subscribe({
+            next: resp => {
+                if (resp.data && resp.data.length) {
+                    const _exitsIndex = this.data.posts.findIndex(post => post.id === id);
+                    if (_exitsIndex > -1) {
+                        this.data.posts[_exitsIndex].commentList = _.orderBy([...resp.data], ['createdAt'], ['desc'])
+                    }
+                }
+            },
+            error: error => {
+                this.showError(error['error'] ? error['error'].code || 8 : 8);
+            },
+            complete: () => { }
+        });
+    }
+
+    onChangeInteract(evt: { id: number, field: 'totalDislike' | 'totalLike', value: number }) {
+        const { id, field, value } = evt
+        const _existIndex = this.data.posts.findIndex(post => post.id === id);
+        if (_existIndex > -1) {
+            this.data.posts[_existIndex][field] = (this.data.posts[_existIndex][field] || 0) + value
+        }
+    }
+
+    toggleFollow() {
+        if (this.userInfo) {
+            this.loading.follow = true;
+            this.shareSer.toggleFollow(this.userInfo.id).subscribe({
+                next: resp => {
+                    this.follow = !this.follow;
+                    this.loading.follow = false;
+                    this.showSuccess();
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.follow = false;
+                },
+                complete: () => {
+                    this.loading.follow = false;
+                }
+            });
+        } else {
+            this.showError('8')
+        }
+    }
+
+    checkFollow() {
+        if (this.userInfo) {
+            this.loading.follow = true;
+            this.shareSer.checkFollow(this.userInfo.id).subscribe({
+                next: resp => {
+                    this.follow = resp.data || false;
+                    this.loading.follow = false;
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.follow = false;
+                },
+                complete: () => {
+                    this.loading.follow = false;
+                }
+            });
+        } else {
+            this.showError('8')
+        }
+    }
+
+    getFollowList() {
+        if (this.userInfo) {
+            this.loading.listFollow = true;
+            this.shareSer.getUserFollow(this.userInfo.id).subscribe({
+                next: resp => {
+                    if (resp.data && resp.data.length) {
+                        this.data.followList = resp.data;
+                    } else {
+                        this.data.followList = [];
+                    }
+                    this.loading.listFollow = false;
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.listFollow = false;
+                },
+                complete: () => {
+                    this.loading.listFollow = false;
+                }
+            });
+        } else {
+            this.showError('8')
+        }
+    }
+
     showError(code: string) {
         const _msg = getSystemMsgByCode(code || '8') as string;
         this.msg.error(this.translate.instant(_msg));
     }
 
     showSuccess() {
-        this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+        this.msg.success(this.translate.instant('SYS_MSG.SUCCESS'));
     }
 
     goToURL(url: string, param?: Params) {

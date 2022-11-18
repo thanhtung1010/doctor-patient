@@ -1,7 +1,8 @@
 <div class="tung-home" nz-col nzSpan="24">
     <div class="tung-home-left" nz-col nzSpan="5">
         <ng-container *ngFor="let thread of data.threads">
-            <div class="tung-thread-item" [ngClass]="{'tung-thread-item-active': params.threadId === thread.id}"
+            <div class="tung-thread-item tung-bold"
+                [ngClass]="{'tung-thread-item-active': params.threadId === thread.id}"
                 (click)="onChangeThread(thread.id)">
                 <span class="tung-mr-10" nz-icon nzType="search" nzTheme="outline"></span>
                 {{thread.name}}
@@ -16,11 +17,19 @@
             <ng-container *ngIf="loading.post">
                 <app-loading></app-loading>
             </ng-container>
-            <ng-container *ngFor="let post of data.posts">
-                <app-post [postInfor]="post" (oReloadComment)="onReloadComment($event)"
-                    (oChangeReact)="onChangeInteract($event)"></app-post>
+            <ng-container *ngIf="data.posts.length > 0; else nodata">
+                <ng-container *ngFor="let post of data.posts">
+                    <app-post [postInfor]="post" (oReloadComment)="onReloadComment($event)"
+                        (oChangeReact)="onChangeInteract($event)"></app-post>
+                </ng-container>
             </ng-container>
         </div>
     </div>
     <div class="tung-home-right" nz-col nzSpan="5"></div>
 </div>
+
+<ng-template #nodata>
+    <ng-container *ngIf="!loading.post">
+        <nz-empty [nzNotFoundContent]="''" [nzNotFoundImage]="'../../../../../assets/imgs/no-data.jpg'"></nz-empty>
+    </ng-container>
+</ng-template>

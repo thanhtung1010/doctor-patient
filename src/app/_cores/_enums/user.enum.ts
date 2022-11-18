@@ -6,6 +6,7 @@ export enum USER_FIELD {
     role = 'role',
     phone = 'phone',
     userLoaded = 'userLoaded',
+    // totalFollower = 'totalFollower',
 }
 
 export const USER_TITLE_BY_FIELD = [
@@ -33,6 +34,10 @@ export const USER_TITLE_BY_FIELD = [
         field: USER_FIELD.phone,
         title: 'OUTSIDE.SIGN_UP.PHONE_NUMBER'
     },
+    // {
+    //     field: USER_FIELD.totalFollower,
+    //     title: 'COMMON.FOLLOWER'
+    // },
 ];
 
 export const getTitleByField = (field: string): string | null => {

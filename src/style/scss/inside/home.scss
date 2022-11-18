@@ -35,6 +35,10 @@
     &-active {
         background-color: $lightMainColor;
         color: $whiteColor;
+
+        .anticon {
+            color: $whiteColor;
+        }
     }
 
     &:hover {

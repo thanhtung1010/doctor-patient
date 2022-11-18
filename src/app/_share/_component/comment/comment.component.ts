@@ -6,6 +6,7 @@ import { Helpers } from "app/_cores/_helpers/helpers";
 import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
 import { ROUTING_DEFINED } from "app/_share/_enum/router.enum";
 import { IComment } from "app/_share/_interface/comment.interface";
+import { SessionService } from "app/_share/_services";
 import { environment } from "environments/environment";
 import * as _ from "lodash";
 import { NzMessageService } from "ng-zorro-antd/message";
@@ -15,7 +16,7 @@ import { NzMessageService } from "ng-zorro-antd/message";
     templateUrl: './comment.component.html'
 })
 
-export class CommentComponent implements OnInit, OnChanges {
+export class CommentComponent implements OnChanges {
     @Input() commentInfor: IComment | null = null;
     defautlFormat: any = null;
     dateFormatForEdit: string = '';
@@ -49,15 +50,13 @@ export class CommentComponent implements OnInit, OnChanges {
         private translate: TranslateService,
         private msg: NzMessageService,
         private _router: Router,
+        private sesionSer: SessionService,
     ) {
         this.defautlFormat = environment.FORMAT_SETTING
         if (this.defautlFormat) {
             this._dateFormatForShow = this.defautlFormat.dateTime;
             this.dateFormatForEdit = this._dateFormatForShow ? this._dateFormatForShow.replace('DD', 'dd').replace('YYYY', 'yyyy') : '';
         }
-    }
-
-    ngOnInit(): void {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -78,7 +77,11 @@ export class CommentComponent implements OnInit, OnChanges {
     }
 
     goToProfile(id: number) {
-        this.goToURL(Helpers.JoinPaths([ROUTING_DEFINED.HOME, id.toString()]));
+        if (id === this.sesionSer.getID()) {
+            this.goToURL(ROUTING_DEFINED.PROFILE);
+        } else {
+            this.goToURL(Helpers.JoinPaths([ROUTING_DEFINED.HOME, id.toString()]));
+        }
     }
 
     showError(code: string) {
@@ -87,7 +90,7 @@ export class CommentComponent implements OnInit, OnChanges {
     }
 
     showSuccess() {
-        this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+        this.msg.success(this.translate.instant('SYS_MSG.SUCCESS'));
     }
 
     goToURL(url: string, param?: Params) {

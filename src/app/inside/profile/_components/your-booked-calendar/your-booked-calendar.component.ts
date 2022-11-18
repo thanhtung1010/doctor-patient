@@ -208,6 +208,6 @@ export class YourBookedCalendarComponent implements OnInit {
     }
 
     showSuccess() {
-        this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+        this.msg.success(this.translate.instant('SYS_MSG.SUCCESS'));
     }
 }

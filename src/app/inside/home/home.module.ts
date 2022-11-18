@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,7 @@ export const routes: Routes = [
     NzGridModule,
     NzIconModule,
     NzListModule,
+    NzEmptyModule,
   ]
 })
 export class HomeModule { }

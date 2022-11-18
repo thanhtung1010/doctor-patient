@@ -79,4 +79,20 @@ export const API_POST: IApiUrl = {
         method: 'POST',
         url: 'content/interaction-check/'
     },
+    TOGGLE_FOLLOW: {
+        method: 'POST',
+        url: 'users/follow/'
+    },
+    CHECK_FOLLOW: {
+        method: 'POST',
+        url: 'users/follow-check/'
+    },
+    GET_MY_FOLLOW: {
+        method: 'POST',
+        url: 'users/my-follow'
+    },
+    GET_USER_FOLLOW_LIST: {
+        method: 'POST',
+        url: 'users/follow-list/'
+    },
 }

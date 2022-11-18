@@ -12,6 +12,7 @@ export class AppUser {
   phone: string = '';
   postSearchResultDtoList: any[] = [];
   userLoaded: boolean = false;
+  totalFollower: number = 0;
   /** And other else fields
    * ...
   */
@@ -37,6 +38,9 @@ export class AppUser {
       }
       if (_.isNumber(_userInfo['age'])) {
         this.age = +_userInfo['age'];
+      }
+      if (_.isNumber(_userInfo['totalFollower'])) {
+        this.totalFollower = +_userInfo['totalFollower'];
       }
       if (!_.isEmpty(_userInfo['role'])) {
         this.role = _userInfo['role'];

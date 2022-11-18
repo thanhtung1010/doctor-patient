@@ -169,7 +169,7 @@ export class PostComponent implements OnChanges {
     }
 
     showSuccess() {
-        this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+        this.msg.success(this.translate.instant('SYS_MSG.SUCCESS'));
     }
 
     goToURL(url: string, param?: Params) {

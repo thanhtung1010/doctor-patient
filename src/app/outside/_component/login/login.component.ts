@@ -200,6 +200,6 @@ export class LoginComponent implements OnInit {
   }
 
   showSuccess() {
-    this.message.success(this.translate.instant('STATUS.SUCCESS'));
+    this.message.success(this.translate.instant('SYS_MSG.SUCCESS'));
   }
 }

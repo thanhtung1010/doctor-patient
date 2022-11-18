@@ -153,6 +153,7 @@
 .ant-empty {
     margin: unset;
     height: 90%;
+    filter: grayscale(1);
 
     .ant-empty-image {
         height: 100%;

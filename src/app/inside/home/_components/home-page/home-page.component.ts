@@ -72,7 +72,12 @@ export class HomePageComponent implements OnInit {
         this.shareSer.getAllPost().subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
-                    this.data.posts = resp.data;
+                    this.data.posts = resp.data.map((item: any) => {
+                        return {
+                            ...item,
+                            commentList: _.orderBy([...(item.commentList || [])], ['createdAt'], ['desc'])
+                        }
+                    });
                 } else {
                     this.data.posts = [];
                 }
@@ -136,7 +141,11 @@ export class HomePageComponent implements OnInit {
     }
 
     onChangeThread(id: number) {
-        this.params.threadId = +id;
+        if (+id === this.params.threadId) {
+            this.params.threadId = null;
+        } else {
+            this.params.threadId = +id;
+        }
         this.params = new HomePageModel(this.params);
         this.changeURL();
     }
@@ -172,7 +181,7 @@ export class HomePageComponent implements OnInit {
     }
 
     showSuccess() {
-        this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+        this.msg.success(this.translate.instant('SYS_MSG.SUCCESS'));
     }
 
 }

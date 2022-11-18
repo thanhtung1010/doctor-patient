@@ -94,12 +94,37 @@ export class UserProfileComponent implements OnInit {
         return (this.userInfo as any)[field]
     }
 
+    onReloadComment(id: number) {
+        this.shareSer.getCommentByPosyId(id).subscribe({
+            next: resp => {
+                if (resp.data && resp.data.length) {
+                    const _exitsIndex = this.data.posts.findIndex(post => post.id === id);
+                    if (_exitsIndex > -1) {
+                        this.data.posts[_exitsIndex].commentList = _.orderBy([...resp.data], ['createdAt'], ['desc'])
+                    }
+                }
+            },
+            error: error => {
+                this.showError(error['error'] ? error['error'].code || 8 : 8);
+            },
+            complete: () => { }
+        });
+    }
+
+    onChangeInteract(evt: { id: number, field: 'totalDislike' | 'totalLike', value: number }) {
+        const { id, field, value } = evt
+        const _existIndex = this.data.posts.findIndex(post => post.id === id);
+        if (_existIndex > -1) {
+            this.data.posts[_existIndex][field] = (this.data.posts[_existIndex][field] || 0) + value
+        }
+    }
+
     showError(code: string) {
         const _msg = getSystemMsgByCode(code || '8') as string;
         this.msg.error(this.translate.instant(_msg));
     }
 
     showSuccess() {
-        this.msg.success(this.translate.instant('STATUS.SUCCESS'));
+        this.msg.success(this.translate.instant('SYS_MSG.SUCCESS'));
     }
 }

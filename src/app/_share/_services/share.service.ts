@@ -67,4 +67,29 @@ export class ShareService {
             url: API_POST['CHECK_INTERACT_POST'].url + id
         }, {});
     }
+
+    toggleFollow(id: any) {
+        return this.api.callApi({
+            ...API_POST['TOGGLE_FOLLOW'],
+            url: API_POST['TOGGLE_FOLLOW'].url + id
+        }, {});
+    }
+
+    checkFollow(id: any) {
+        return this.api.callApi({
+            ...API_POST['CHECK_FOLLOW'],
+            url: API_POST['CHECK_FOLLOW'].url + id
+        }, {});
+    }
+
+    getMyFollow() {
+        return this.api.callApi(API_POST['GET_MY_FOLLOW'], {});
+    }
+
+    getUserFollow(id: any) {
+        return this.api.callApi({
+            ...API_POST['GET_USER_FOLLOW_LIST'],
+            url: API_POST['GET_USER_FOLLOW_LIST'].url + id
+        }, {});
+    }
 }
