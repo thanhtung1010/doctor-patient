@@ -223,7 +223,7 @@ export class WriteContentComponent implements OnInit, OnChanges {
                         this.showSuccess();
                         this.loading.post = false;
                         this.formPost = null;
-                        this.notiCommentPostSuccess();
+                        this.notiSubmitPostSuccess();
                         this.onToggleCreatePostModal(false);
                     }
                 },
@@ -251,7 +251,7 @@ export class WriteContentComponent implements OnInit, OnChanges {
                         this.showSuccess();
                         this.loading.post = false;
                         this.formPost = null;
-                        this.notiSubmitPostSuccess();
+                        this.notiCommentPostSuccess();
                         this.onToggleCreatePostModal(false);
                     }
                 },

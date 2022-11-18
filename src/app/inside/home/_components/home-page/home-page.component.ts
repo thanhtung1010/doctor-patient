@@ -33,7 +33,7 @@ export class HomePageComponent implements OnInit {
         private _router: Router,
         private sessionSer: SessionService,
     ) {
-        this.allowCreatePost = this.sessionSer.isLogged() && (this.sessionSer.isDoctor() || this.sessionSer.isAdmin());
+        this.allowCreatePost = this.sessionSer.isLogged();
     }
 
     ngOnInit(): void {
@@ -72,12 +72,12 @@ export class HomePageComponent implements OnInit {
         this.shareSer.getAllPost().subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
-                    this.data.posts = resp.data.map((item: any) => {
+                    this.data.posts = _.orderBy(resp.data.map((item: any) => {
                         return {
                             ...item,
                             commentList: _.orderBy([...(item.commentList || [])], ['createdAt'], ['desc'])
                         }
-                    });
+                    }), ['createAt'], ['desc']);
                 } else {
                     this.data.posts = [];
                 }
@@ -119,12 +119,12 @@ export class HomePageComponent implements OnInit {
         this.shareSer.getPostByThread(_params).subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
-                    this.data.posts = resp.data.map((item: any) => {
+                    this.data.posts = _.orderBy(resp.data.map((item: any) => {
                         return {
                             ...item,
                             commentList: _.orderBy([...(item.commentList || [])], ['createdAt'], ['desc'])
                         }
-                    });
+                    }), ['createAt'], ['desc']);
                 } else {
                     this.data.posts = [];
                 }

@@ -11,7 +11,7 @@
     </div>
     <div class="tung-home-center" nz-col nzSpan="14">
         <ng-container *ngIf="allowCreatePost">
-            <app-write-content></app-write-content>
+            <app-write-content (onSubmitPostSuccess)="getPost()"></app-write-content>
         </ng-container>
         <div class="tung-home-center-list-content">
             <ng-container *ngIf="loading.post">

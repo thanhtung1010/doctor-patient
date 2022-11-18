@@ -8,6 +8,7 @@ import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
 import { ROLE } from "app/_share/_enum/role.enum";
 import { IPost } from "app/_share/_interface";
 import { ITableElement } from "app/_share/_interface/share.interface";
+import { BookingService } from "app/_share/_services/booking.service";
 import { environment } from "environments/environment";
 import * as _ from "lodash";
 import * as moment from "moment";
@@ -29,6 +30,7 @@ export class BookedManagerComponent implements OnInit {
     }
     loading = {
         list: false,
+        approval: false,
     }
     defautlFormat: any = null;
     dateFormatForEdit: string = '';
@@ -47,6 +49,7 @@ export class BookedManagerComponent implements OnInit {
         private translate: TranslateService,
         private readonly commonSer: CommonService,
         private msg: NzMessageService,
+        private bookingSer: BookingService,
     ) {
         this.defautlFormat = environment.FORMAT_SETTING;
         if (this.defautlFormat) {
@@ -106,12 +109,38 @@ export class BookedManagerComponent implements OnInit {
                 const child = [..._object['children']]
                 return {
                     ..._object,
-                    bookedAt: +_object['bookedAt'] / 1000,
+                    bookedAt: _object['bookedAt'].toString().length > 13 ? +_object['bookedAt'] / 1000 : _object['bookedAt'],
                     createdBy: (child[0] as any)['createdBy'] || '',
-                    children: this.cookingShifts(child)
+                    children: child
                 }
             }).value()
-        return _bookedListByDate as any
+        return this.cookingSameDate(_bookedListByDate as any)
+    }
+
+    cookingSameDate(list: { bookedAt: Date | string | number, createdBy: string, children: IBookingItem[] }[]): { bookedAt: Date | string | number, createdBy: string, children: IBookingItem[] }[] {
+        let cookedList = [] as any[]
+        if (list && list.length) {
+            list.forEach(item => {
+                const _doctorIds = _.union(item.children.map((child: any) => child.doctorId || ''));
+                if (_doctorIds.length > 1) {
+                    _doctorIds.forEach(doctorId => {
+                        const childById = item.children.filter(child => child.doctorId === doctorId);
+                        cookedList.push({
+                            bookedAt: item.bookedAt,
+                            createdBy: childById[0].doctorName || '',
+                            children: this.cookingShifts(childById),
+                        })
+                    });
+                } else {
+                    cookedList.push(_.cloneDeep({
+                        ...item,
+                        createdBy: item.children[0].doctorName || '',
+                        children: this.cookingShifts(item.children),
+                    }));
+                }
+            })
+        }
+        return cookedList
     }
 
     cookingShifts(list: any[]) {
@@ -134,11 +163,44 @@ export class BookedManagerComponent implements OnInit {
     parseMissingfield(item: any) {
         if (!item) return null
         const bookedTime = item.bookedShift === 1 ? 8 : item.bookedShift === 2 ? 10 : item.bookedShift === 3 ? 13 : 15;
+        const _bookedAt = item.bookedAt.toString().length > 13 ? +item.bookedAt / 1000 : item.bookedAt;
         return {
             ...item,
-            start: Helpers.dateTime.setHour(bookedTime, item.bookedAt / 1000),
-            end: Helpers.dateTime.setHour(bookedTime + 2, item.bookedAt / 1000),
-            expired: moment().unix() * 1000 >= Helpers.dateTime.setHour(bookedTime - 1, item.bookedAt / 1000)
+            start: Helpers.dateTime.setHour(bookedTime, _bookedAt),
+            end: Helpers.dateTime.setHour(bookedTime + 2, _bookedAt),
+            expired: moment().unix() * 1000 >= Helpers.dateTime.setHour(bookedTime - 1, _bookedAt),
+            shift: item.bookedShift,
+            visibleInforModal: false,
+        }
+    }
+
+    onToggleBookedInforModal(parentIdx: number, childIdx: number, evt: boolean) {
+        if (!this.loading.approval) {
+            if (this.data.bookedList[parentIdx]) {
+                if (this.data.bookedList[parentIdx].children && this.data.bookedList[parentIdx].children[childIdx]) {
+                    this.data.bookedList[parentIdx].children[childIdx].visibleInforModal = evt;
+                }
+            }
+        }
+    }
+
+    approval(id: number, approve: boolean, allowApproval: boolean) {
+        if (allowApproval) {
+            this.loading.approval = true;
+            this.bookingSer.approvalBooking(id, { approve: approve }).subscribe({
+                next: resp => {
+                    this.showSuccess();
+                    this.getAllBooked();
+                    this.loading.approval = false;
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.approval = false;
+                },
+                complete: () => {
+                    this.loading.approval = false;
+                },
+            });
         }
     }
 

@@ -18,10 +18,11 @@
                 </td>
                 <td [nzAlign]="'center'">{{ data.bookedAt ? (+data.bookedAt | dateTimeLabel:_dateFormatForShow) : ''
                     }}</td>
-                <ng-container *ngFor="let child of data.children">
+                <ng-container *ngFor="let child of data.children; let _childIdx = index">
                     <td [nzAlign]="'center'">
                         <ng-container *ngIf="child">
-                            <ng-container [ngTemplateOutlet]="shiftContent" [ngTemplateOutletContext]="{data: child}">
+                            <ng-container [ngTemplateOutlet]="shiftContent"
+                                [ngTemplateOutletContext]="{data: child, parentIdx: idx, childIdx: _childIdx}">
                             </ng-container>
                         </ng-container>
                     </td>
@@ -31,13 +32,21 @@
     </nz-table>
 </div>
 
-<ng-template #shiftContent let-item="data">
+<ng-template #shiftContent let-item="data" let-parentIdx="parentIdx" let-childIdx="childIdx">
     <div class="tung-shift-content" [ngClass]="{
         'tung-shift-content-normal': !item.expired,
         'tung-shift-content-expired': item.expired,
+        'tung-shift-content-hover': item.isApproved === null && !item.expired,
         'tung-shift-content-rejected': item.isApproved === false,
         'tung-shift-content-approved': item.isApproved === true
-    }">
+    }" (click)="onToggleBookedInforModal(parentIdx, childIdx, true)">
+        <div class="tung-shift-content-hover-overlay"></div>
+        <div class="tung-shift-content-hover-button">
+            <button class="tung-mr-10" nz-button nzType="primary" nzDanger
+                (click)="approval(item.id, false, item.isApproved === null && !item.expired)">Huỷ</button>
+            <button nz-button nzType="primary"
+                (click)="approval(item.id, true, item.isApproved === null && !item.expired)">Xác nhận</button>
+        </div>
         <p class="tung-shift-content-title">
             {{'BOOKING.SHIFT.' + item.bookedShift | translate}}: {{item.start | dateTimeLabel:timeFormat}} - {{item.end
             |
@@ -48,6 +57,10 @@
             {{'BOOKING.CONSULT_PACKAGE' | translate}}: {{'BOOKING.' + item.consult | translate}}<br>
         </p>
     </div>
+    <app-booking [isUpdate]="true" [allowUpdate]="item.isApproved !== false && !item.expired" [inputBookingInfor]="item"
+        [visibleBookingModal]="item.visibleInforModal" [showBtn]="false" (oSubmitSuccess)="getAllBooked()"
+        (oChangevisibleBookingModal)="onToggleBookedInforModal(parentIdx, childIdx, $event)">
+    </app-booking>
 </ng-template>
 
 <ng-template #loadingTable>

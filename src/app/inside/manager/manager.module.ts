@@ -7,6 +7,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 import { AccountManagerComponent, BookedManagerComponent, PostManagerComponent } from './_components';
 import { ROUTING_DEFINED } from 'app/_share/_enum';
@@ -55,6 +56,7 @@ export const routes: Routes = [
     NzTableModule,
     NzIconModule,
     NzPopconfirmModule,
+    NzButtonModule,
   ]
 })
 export class ManagerModule { }

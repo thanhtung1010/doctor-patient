@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 export const routes: Routes = [
   {
@@ -58,6 +59,7 @@ export const routes: Routes = [
     NzTableModule,
     NzButtonModule,
     NzEmptyModule,
+    NzModalModule,
   ]
 })
 export class ProfileModule { }

@@ -97,6 +97,15 @@
                 height: 75vh;
                 overflow: auto;
                 position: relative;
+                padding-top: 10px;
+            }
+
+            &-follow-infor {
+                display: flex;
+                justify-content: space-around;
+                margin: 20px 0px 20px 0px;
+                cursor: pointer;
+                color: $mainColor;
             }
         }
     }
@@ -146,4 +155,45 @@
     &-content {
         margin: 10px 0px 10px 0px;
     }
+}
+
+&-follow-modal {
+    color: $mainColor;
+    max-height: 600px;
+    overflow: scroll auto;
+}
+
+&-follow-item {
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+
+    &-avatar {
+        height: 30px;
+        width: 30px;
+        border-radius: 50px;
+        box-shadow: 0px 0px 3px $mainColor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        font-weight: bold;
+        color: $mainColor;
+        margin-right: 10px;
+    }
+
+    &-full-name {
+        height: 30px;
+        width: 200px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    &:hover {
+        background-color: $lightShadow;
+    }
+
 }

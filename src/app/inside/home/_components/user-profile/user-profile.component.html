@@ -22,6 +22,13 @@
                         </ng-container>
                     </div>
                 </div>
+                <div class="tung-user-profile-content-item-follow-infor">
+                    <span (click)="onToggleFollowModal(true, true)">{{'Theo dõi: '}}{{userInfo ? userInfo.totalFollower
+                        || 0
+                        : 0}}</span>
+                    <span (click)="onToggleFollowModal(true, false)">{{'Đang theo dõi: '}}{{userInfo ?
+                        userInfo.totalFollowing || 0 : 0}}</span>
+                </div>
                 <nz-list>
                     <ng-container *ngFor="let item of data.userInforList">
                         <ng-container [ngSwitch]="item.field">
@@ -74,3 +81,30 @@
         <nz-empty [nzNotFoundContent]="''" [nzNotFoundImage]="'../../../../../assets/imgs/no-data.jpg'"></nz-empty>
     </ng-container>
 </ng-template>
+
+<nz-modal [nzWidth]="'300px'" [nzCloseIcon]="''" [nzVisible]="visibleFollowModal">
+    <div *nzModalTitle>
+    </div>
+    <div *nzModalContent>
+        <div class="tung-follow-modal">
+            <ng-container *ngIf="data.showFollowList.length === 0">
+                <span>{{'Chưa có ai cả...'}}</span>
+            </ng-container>
+            <ng-container *ngIf="data.showFollowList.length > 0">
+                <ng-container *ngFor="let item of data.showFollowList">
+                    <div class="tung-follow-item" (click)="goToProfile(item.userId)">
+                        <div class="tung-follow-item-avatar">
+                            <span>{{item.avatarText}}</span>
+                        </div>
+                        <div class="tung-follow-item-full-name">{{item.fullName}}</div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div *nzModalFooter>
+        <button nz-button [nzType]="'primary'" [nzShape]="'round'" (click)="onToggleFollowModal(false)">
+            {{'Đóng'}}
+        </button>
+    </div>
+</nz-modal>

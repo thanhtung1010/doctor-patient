@@ -13,7 +13,6 @@ import { SessionService } from "app/_share/_services/session.service";
 import { ShareService } from "app/_share/_services/share.service";
 import * as _ from "lodash";
 import { NzMessageService } from "ng-zorro-antd/message";
-import { HomePageModel } from "../../_models";
 
 @Component({
     selector: "app-user-profile",
@@ -32,7 +31,9 @@ export class UserProfileComponent implements OnInit {
             field: string,
             title: string
         }[],
-        followList: [] as any[]
+        listFollower: [] as { userId: number, fullName: string, avatarText: string }[],
+        listFollowing: [] as { userId: number, fullName: string, avatarText: string }[],
+        showFollowList: [] as { userId: number, fullName: string, avatarText: string }[],
     }
     loading = {
         infor: false,
@@ -41,6 +42,7 @@ export class UserProfileComponent implements OnInit {
     }
     routerSub!: ActivatedRoute;
     USER_FIELD = USER_FIELD;
+    visibleFollowModal: boolean = false;
     constructor(
         private translate: TranslateService,
         private shareSer: ShareService,
@@ -48,7 +50,7 @@ export class UserProfileComponent implements OnInit {
         private msg: NzMessageService,
         private _router: Router,
         private _activeRouter: ActivatedRoute,
-        private sessionSer: SessionService,
+        private sesionSer: SessionService,
     ) {
     }
 
@@ -79,12 +81,12 @@ export class UserProfileComponent implements OnInit {
                             role: resp.data['role'] ? resp.data['role'].toUpperCase() : ROLE.USER
                         }
                         if (resp.data['postSearchResultDtoList'] && resp.data['postSearchResultDtoList'].length) {
-                            this.data.posts = resp.data['postSearchResultDtoList'].map((post: any) => {
+                            this.data.posts = _.orderBy(resp.data['postSearchResultDtoList'].map((post: any) => {
                                 return {
                                     ...post,
                                     commentList: _.orderBy([...post.commentList], ['createdAt'], ['desc'])
                                 }
-                            });
+                            }), ['createAt'], ['desc'])
                         }
                         this.getListUserInfor();
                         this.avatarText = this.getTextAvatar();
@@ -107,12 +109,11 @@ export class UserProfileComponent implements OnInit {
         }
     }
 
-    getTextAvatar(): string {
-        if (this.userInfo) {
-            for (let i = 0; i < this.userInfo.fullName.length; i++) {
-                if (this.userInfo.fullName[i].trim()) {
-                    return this.userInfo.fullName[i].toUpperCase();
-                }
+    getTextAvatar(name?: string): string {
+        const _name = name ? name : this.userInfo ? this.userInfo.fullName : '';
+        for (let i = 0; i < _name.length; i++) {
+            if (_name[i].trim()) {
+                return _name[i].toUpperCase();
             }
         }
         return ''
@@ -217,10 +218,22 @@ export class UserProfileComponent implements OnInit {
             this.loading.listFollow = true;
             this.shareSer.getUserFollow(this.userInfo.id).subscribe({
                 next: resp => {
-                    if (resp.data && resp.data.length) {
-                        this.data.followList = resp.data;
+                    if (resp.data) {
+                        this.data.listFollower = (resp.data['followedByDtoList'] || []).map((item: any) => {
+                            return {
+                                ...item,
+                                avatarText: this.getTextAvatar(item.fullName),
+                            }
+                        });
+                        this.data.listFollowing = (resp.data['followingDtoList'] || []).map((item: any) => {
+                            return {
+                                ...item,
+                                avatarText: this.getTextAvatar(item.fullName),
+                            }
+                        });
                     } else {
-                        this.data.followList = [];
+                        this.data.listFollower = [];
+                        this.data.listFollowing = [];
                     }
                     this.loading.listFollow = false;
                 },
@@ -234,6 +247,31 @@ export class UserProfileComponent implements OnInit {
             });
         } else {
             this.showError('8')
+        }
+    }
+
+    getFollowListForShow(isFollower: boolean) {
+        if (isFollower) {
+            this.data.showFollowList = [...this.data.listFollower];
+        } else {
+            this.data.showFollowList = [...this.data.listFollowing];
+        }
+    }
+
+    onToggleFollowModal(visible: boolean, isFollower?: boolean) {
+        if (visible) {
+            this.getFollowListForShow(isFollower || false);
+        } else {
+            this.data.showFollowList = [];
+        }
+        this.visibleFollowModal = visible;
+    }
+
+    goToProfile(id: number) {
+        if (id === this.sesionSer.getID()) {
+            this.goToURL(ROUTING_DEFINED.PROFILE);
+        } else {
+            this.goToURL(Helpers.JoinPaths([ROUTING_DEFINED.HOME, id.toString()]));
         }
     }
 

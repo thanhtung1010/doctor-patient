@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Params, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { getTitleByField, USER_FIELD } from "app/_cores/_enums/user.enum";
+import { Helpers } from "app/_cores/_helpers";
 import { IUserProfile } from "app/_cores/_models/user.model";
 import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
 import { ROUTING_DEFINED } from "app/_share/_enum/router.enum";
@@ -19,6 +20,7 @@ export class UserProfileComponent implements OnInit {
     userInfo: IUserProfile | null = null;
     loading = {
         post: false,
+        listFollow: false
     }
     data = {
         posts: [] as IPost[],
@@ -27,14 +29,20 @@ export class UserProfileComponent implements OnInit {
             field: string,
             title: string
         }[],
+        listFollower: [] as { userId: number, fullName: string, avatarText: string }[],
+        listFollowing: [] as { userId: number, fullName: string, avatarText: string }[],
+        showFollowList: [] as { userId: number, fullName: string, avatarText: string }[],
     }
     USER_FIELD = USER_FIELD;
     ROUTING_DEFINED = ROUTING_DEFINED;
+    visibleFollowModal: boolean = false;
     constructor(
         private sessionSer: SessionService,
         private shareSer: ShareService,
         private translate: TranslateService,
         private msg: NzMessageService,
+        private sesionSer: SessionService,
+        private _router: Router,
     ) { }
 
     ngOnInit(): void {
@@ -67,7 +75,7 @@ export class UserProfileComponent implements OnInit {
         this.shareSer.getPostByID({ userId: this.sessionSer.getID() }).subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
-                    this.data.posts = resp.data;
+                    this.data.posts = _.orderBy(resp.data, ['createAt'], ['desc']);
                 } else {
                     this.data.posts = [];
                 }
@@ -119,6 +127,78 @@ export class UserProfileComponent implements OnInit {
         }
     }
 
+    getFollowList() {
+        if (this.userInfo) {
+            this.loading.listFollow = true;
+            this.shareSer.getMyFollow().subscribe({
+                next: resp => {
+                    if (resp.data) {
+                        this.data.listFollower = (resp.data['followedByDtoList'] || []).map((item: any) => {
+                            return {
+                                ...item,
+                                avatarText: this.getTextAvatar(item.fullName),
+                            }
+                        });
+                        this.data.listFollowing = (resp.data['followingDtoList'] || []).map((item: any) => {
+                            return {
+                                ...item,
+                                avatarText: this.getTextAvatar(item.fullName),
+                            }
+                        });
+                    } else {
+                        this.data.listFollower = [];
+                        this.data.listFollowing = [];
+                    }
+                    this.loading.listFollow = false;
+                },
+                error: error => {
+                    this.showError(error['error'] ? error['error'].code || 8 : 8);
+                    this.loading.listFollow = false;
+                },
+                complete: () => {
+                    this.loading.listFollow = false;
+                }
+            });
+        } else {
+            this.showError('8')
+        }
+    }
+
+    onToggleFollowModal(visible: boolean, isFollower?: boolean) {
+        if (visible) {
+            this.getFollowListForShow(isFollower || false);
+        } else {
+            this.data.showFollowList = [];
+        }
+        this.visibleFollowModal = visible;
+    }
+
+    getFollowListForShow(isFollower: boolean) {
+        if (isFollower) {
+            this.data.showFollowList = [...this.data.listFollower];
+        } else {
+            this.data.showFollowList = [...this.data.listFollowing];
+        }
+    }
+
+    getTextAvatar(name?: string): string {
+        const _name = name ? name : this.userInfo ? this.userInfo.fullName : '';
+        for (let i = 0; i < _name.length; i++) {
+            if (_name[i].trim()) {
+                return _name[i].toUpperCase();
+            }
+        }
+        return ''
+    }
+
+    goToProfile(id: number) {
+        if (id === this.sesionSer.getID()) {
+            this.goToURL(ROUTING_DEFINED.PROFILE);
+        } else {
+            this.goToURL(Helpers.JoinPaths([ROUTING_DEFINED.HOME, id.toString()]));
+        }
+    }
+
     showError(code: string) {
         const _msg = getSystemMsgByCode(code || '8') as string;
         this.msg.error(this.translate.instant(_msg));
@@ -126,5 +206,17 @@ export class UserProfileComponent implements OnInit {
 
     showSuccess() {
         this.msg.success(this.translate.instant('SYS_MSG.SUCCESS'));
+    }
+
+    goToURL(url: string, param?: Params) {
+        if (url) {
+            if (param) {
+                this._router.navigate([url], { queryParams: param });
+            }
+            else {
+                this._router.navigate([url]);
+            }
+        }
+
     }
 }

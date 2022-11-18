@@ -13,6 +13,7 @@ export class AppUser {
   postSearchResultDtoList: any[] = [];
   userLoaded: boolean = false;
   totalFollower: number = 0;
+  totalFollowing: number = 0;
   /** And other else fields
    * ...
   */
@@ -79,5 +80,7 @@ export interface IUserProfile {
   age: number;
   role: ROLE;
   phone: string;
+  totalFollower: number;
+  totalFollowing: number;
 }
 

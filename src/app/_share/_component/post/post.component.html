@@ -60,7 +60,7 @@
             <ng-container *ngIf="isLogged">
                 <app-write-content [isPopup]="false" [isComment]="true" [visibleCreatePostModal]="visibleCommentModal"
                     [postId]="postInfor.id" (oToggleVisiblePostModal)="onTogglevisibleCommentModal($event)"
-                    (onSubmitPostSuccess)="reloadComment()">
+                    (onCommentPostSuccess)="reloadComment()">
                 </app-write-content>
             </ng-container>
             <div class="tung-comment">

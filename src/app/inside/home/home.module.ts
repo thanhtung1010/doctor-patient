@@ -10,6 +10,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 export const routes: Routes = [
   {
@@ -48,6 +50,8 @@ export const routes: Routes = [
     NzIconModule,
     NzListModule,
     NzEmptyModule,
+    NzModalModule,
+    NzButtonModule,
   ]
 })
 export class HomeModule { }
