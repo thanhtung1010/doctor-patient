@@ -68,6 +68,17 @@
 
 <ng-template #step1>
     <div nz-row class="tung-booking-step tung-booking-step-1" [ngClass]="{'tung-booking-step-update': isUpdate}">
+        <ng-container *ngIf="isUpdate">
+            <div nz-col nzSpan="12">
+                <label class="tung-label">{{'Người tạo'}}</label>
+                <input [type]="'text'" nz-input [ngModel]="bookingInfor.createdBy || ''" [disabled]="true" class="tung-br-25"/>
+            </div>
+            <div nz-col nzSpan="12">
+                <label class="tung-label">{{'Bác sĩ'}}</label>
+                <input [type]="'text'" nz-input [ngModel]="bookingInfor.doctorName || ''" [disabled]="true" class="tung-br-25"/>
+            </div>
+        </ng-container>
+
         <div nz-col nzSpan="12">
             <label class="tung-label tung-required">{{'BOOKING.SPECIALIST' | translate}}</label>
             <nz-select nzShowSearch [nzSuffixIcon]="icon" [nzPlaceHolder]="'BOOKING.SPECIALIST_HOLDER' | translate"

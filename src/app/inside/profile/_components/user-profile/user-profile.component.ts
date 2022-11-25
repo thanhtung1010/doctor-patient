@@ -52,6 +52,7 @@ export class UserProfileComponent implements OnInit {
     initData() {
         this.getListUserInfor();
         this.getPostByID();
+        this.getFollowList();
     }
 
     getListUserInfor() {

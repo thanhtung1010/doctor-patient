@@ -1,6 +1,5 @@
 export interface IBookingInfor {
     id?: number;
-    doctorName?: string;
     doctorId: null | number;
     specialist: null | string;
 
@@ -8,6 +7,8 @@ export interface IBookingInfor {
     shift: null | number;
     content: string;
     consult: string | null;
+    createdBy?: string;
+    doctorName?: string;
 }
 
 export interface IDoctorInfor {
