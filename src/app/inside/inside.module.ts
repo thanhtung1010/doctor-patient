@@ -13,6 +13,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import SharedModule from 'app/_share/share.module';
 import { HomeComponent } from './home/home.component';
@@ -86,7 +88,9 @@ export const routes: Routes = [
     NzGridModule,
     NzButtonModule,
     NzModalModule,
-    NzIconModule
+    NzIconModule,
+    NzInputModule,
+    NzSelectModule,
   ]
 })
 export class InsideModule { }

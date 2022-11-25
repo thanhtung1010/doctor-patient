@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { IBookingItem } from "app/inside/profile/_interfaces";
+import { IBookedCalendar, IBookingItem } from "app/inside/profile/_interfaces";
 import { Helpers } from "app/_cores/_helpers/helpers";
 import { IUserProfile } from "app/_cores/_models";
 import { CommonService } from "app/_cores/_services/common.service";
@@ -22,11 +22,7 @@ import { NzMessageService } from "ng-zorro-antd/message";
 export class BookedManagerComponent implements OnInit {
     data = {
         bookedListRaw: [] as IBookingItem[],
-        bookedList: [] as {
-            bookedAt: Date | string | number,
-            createdBy: string,
-            children: IBookingItem[]
-        }[]
+        bookedList: [] as IBookedCalendar[]
     }
     loading = {
         list: false,
@@ -38,12 +34,13 @@ export class BookedManagerComponent implements OnInit {
     timeFormat: string = 'HH:mm a';
     ROLE = ROLE
     tableHeader: ITableElement[] = [
-        { title: "Người tạo", field: "createdBy", align: 'left' },
-        { title: "Ngày Hẹn", field: "bookedAt" },
-        { title: "Ca 1", field: "1" },
-        { title: "Ca 2", field: "2" },
-        { title: "Ca 3", field: "3" },
-        { title: "Ca 4", field: "4" },
+        { title: "Ngày Hẹn", field: "bookedAt", align: 'left', width: 150 },
+        { title: "Bác sĩ", field: "doctorName", width: 200 },
+        { title: "Người hẹn", field: "createdBy", width: 200 },
+        { title: "Ca 1", field: "1", width: 250 },
+        { title: "Ca 2", field: "2", width: 250 },
+        { title: "Ca 3", field: "3", width: 250 },
+        { title: "Ca 4", field: "4", width: 250 },
     ]
     constructor(
         private translate: TranslateService,
@@ -100,7 +97,7 @@ export class BookedManagerComponent implements OnInit {
         });
     }
 
-    cookingBookedList(_list: IBookingItem[]): { bookedAt: Date | string | number, createdBy: string, children: IBookingItem[] }[] {
+    cookingBookedList(_list: IBookingItem[]): IBookedCalendar[] {
         const _bookedListByDate = _.chain(_list)
             .groupBy('bookedAt')
             .toPairs()
@@ -117,7 +114,7 @@ export class BookedManagerComponent implements OnInit {
         return this.cookingSameDate(_bookedListByDate as any)
     }
 
-    cookingSameDate(list: { bookedAt: Date | string | number, createdBy: string, children: IBookingItem[] }[]): { bookedAt: Date | string | number, createdBy: string, children: IBookingItem[] }[] {
+    cookingSameDate(list: IBookedCalendar[]): IBookedCalendar[] {
         let cookedList = [] as any[]
         if (list && list.length) {
             list.forEach(item => {
@@ -127,6 +124,7 @@ export class BookedManagerComponent implements OnInit {
                         const childById = item.children.filter(child => child.doctorId === doctorId);
                         cookedList.push({
                             bookedAt: item.bookedAt,
+                            doctorName: childById[0].doctorName || '',
                             createdBy: childById[0].doctorName || '',
                             children: this.cookingShifts(childById),
                         })
@@ -134,6 +132,7 @@ export class BookedManagerComponent implements OnInit {
                 } else {
                     cookedList.push(_.cloneDeep({
                         ...item,
+                        doctorName: item.children[0].doctorName || '',
                         createdBy: item.children[0].doctorName || '',
                         children: this.cookingShifts(item.children),
                     }));

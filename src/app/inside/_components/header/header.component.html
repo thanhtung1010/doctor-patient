@@ -2,6 +2,16 @@
     <div class="tung-logo" (click)="goToURL(ROUTING_DEFINED.HOME)">
         {{'TITLE' | translate}}
     </div>
+    <div class="tung-search">
+        <nz-select nzShowSearch [nzSuffixIcon]="icon" [(ngModel)]="selectedUser" (ngModelChange)="onSelectUser()"
+        [nzPlaceHolder]="'Nhập tên cần tìm'"
+        [disabled]="loading.user">
+            <ng-container *ngFor="let user of data.users">
+                <nz-option [nzValue]="user.id" [nzLabel]="user.fullName + ' - ' + ('ROLE.' + user.role | translate)">
+                </nz-option>
+            </ng-container>
+        </nz-select>
+    </div>
     <div class="tung-avatar">
         <ng-container *ngIf="isLogged; else noAuth">
             <app-avatar></app-avatar>
@@ -15,4 +25,9 @@
 </div>
 <ng-template #suffixIconSearch>
     <span nz-icon nzType="search"></span>
+</ng-template>
+<ng-template #icon>
+    <svg style="width: 8px; height: 8px;">
+        <use xlink:href="#play-icon-down"></use>
+    </svg>
 </ng-template>

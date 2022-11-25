@@ -4,16 +4,17 @@
     width: 600px;
     overflow: hidden;
     border-radius: 10px;
+    border: 1px solid $shadow;
+    border-radius: 10px;
 
     img {
-        height: 400px;
+        width: 100%;
+        height: fit-content;
     }
 
     &-demo {
         height: 75px;
-        border: 1px solid $shadow;
         border-top: unset;
-        border-radius: 10px;
         border-top-left-radius: 0px;
         border-top-right-radius: 0px;
         padding: 5px;

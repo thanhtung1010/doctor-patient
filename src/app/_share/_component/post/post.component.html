@@ -1,7 +1,9 @@
 <ng-container *ngIf="postInfor">
     <ng-container *ngIf="!textOnly;else titleTextOnly">
         <div class="tung-post" (click)="onToggleVisibleFullPost(true)">
-            <img [src]="postInfor.thumbnailImage" [alt]="postInfor.title" />
+            <ng-container *ngIf="postInfor.thumbnailImage">
+                <img [src]="postInfor.thumbnailImage" [alt]="postInfor.title" />
+            </ng-container>
             <div class="tung-post-demo">
                 <div class="tung-post-demo-title">
                     {{postInfor.title}}

@@ -1,6 +1,13 @@
 <nz-upload [nzDisabled]="disabled" nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
-    <ng-container>
-        <span class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></span>
-        <div class="ant-upload-text">Upload</div>
-    </ng-container>
+        <ng-container *ngIf="loading">
+            <div class="ant-upload-text">{{'Đang tải...'}}</div>
+        </ng-container>
+        <ng-container *ngIf="!loading">
+            <ng-container *ngIf="currentSelected === ''">
+                <div class="ant-upload-text">{{'Chọn ảnh bìa'}}</div>
+            </ng-container>
+            <ng-container *ngIf="currentSelected !== ''">
+                <img class="tung-upload-thumnail-img" [src]="currentSelected"/>
+            </ng-container>
+        </ng-container>
 </nz-upload>

@@ -18,6 +18,12 @@
     cursor: pointer;
 }
 
+&-search {
+    width: 400px;
+    display: flex;
+    align-items: center;
+}
+
 &-avatar {
     margin: auto 0 auto 0;
 
@@ -200,4 +206,8 @@
             background-image: url('../../../assets/imgs/shift-background.png');
         }
     }
+}
+
+&-upload-thumnail-img {
+    width: 100%;
 }

@@ -13,3 +13,10 @@ export interface IBookingItem {
 
     visibleInforModal?: boolean;
 }
+
+export interface IBookedCalendar {
+    bookedAt: Date | string | number,
+            doctorName: string,
+            createdBy: string,
+            children: IBookingItem[]
+}

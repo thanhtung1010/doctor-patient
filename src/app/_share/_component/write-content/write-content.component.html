@@ -32,7 +32,7 @@
         <button nz-button [nzType]="'primary'" [nzShape]="'round'" (click)="onToggleCreatePostModal(false)">
             {{'BTN_CANCEL' | translate}}
         </button>
-        <button nz-button [disabled]="!formPost || !formPost.valid || loading.uploadImage || loading.post"
+        <button nz-button [disabled]="!formPost || !formPost.valid || loading.uploadImage || loading.post || loading.uploadThumnailImage"
             (click)="onSubmit()" [nzType]="'primary'" [nzShape]="'round'">
             {{'BTN_CONFIRM' | translate}}
         </button>
@@ -75,6 +75,10 @@
                             </nz-form-control>
                         </nz-form-item>
                     </div>
+                </ng-container>
+
+                <ng-container *ngIf="formPost.contains('thumbnailImage')">
+                    <app-upload-file (emitImgUrl)="onChange('thumnail', $event)" (emitLoadingStt)="onChangeLoadingThumnail($event)"></app-upload-file>
                 </ng-container>
             </div>
             <ng-container *ngIf="formPost.contains('content')">

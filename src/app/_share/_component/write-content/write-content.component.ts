@@ -32,7 +32,8 @@ export class WriteContentComponent implements OnInit, OnChanges {
     loading = {
         thread: false,
         post: false,
-        uploadImage: false
+        uploadImage: false,
+        uploadThumnailImage: false,
     }
     editorConfig: AngularEditorConfig = {
         editable: true,
@@ -109,12 +110,14 @@ export class WriteContentComponent implements OnInit, OnChanges {
             this.formPost = this.fb.group({
                 title: [null, Validators.required],
                 threadId: [null, Validators.required],
+                thumbnailImage: [null],
                 content: ['', Validators.required],
             })
 
             if (this.isComment) {
                 this.formPost.removeControl('title');
                 this.formPost.removeControl('threadId');
+                this.formPost.removeControl('thumbnailImage');
             }
         }
     }
@@ -211,6 +214,23 @@ export class WriteContentComponent implements OnInit, OnChanges {
 
     showSuccess() {
         this.msg.success(this.translate.instant('SYS_MSG.SUCCESS'));
+    }
+
+    onChange(type: string, evt: any) {
+        switch (type) {
+            case 'thumnail':
+                if (this.formPost && this.formPost.contains('thumbnailImage')) {
+                    this.formPost.patchValue({'thumbnailImage': evt || ''});
+                }
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+    onChangeLoadingThumnail(evt: boolean) {
+        this.loading.uploadThumnailImage = evt || false;
     }
 
     onSubmit() {

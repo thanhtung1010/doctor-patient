@@ -1,11 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { getSystemMsgByCode } from "app/_share/_enum";
 import { ShareService } from "app/_share/_services/share.service";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { NzUploadFile } from "ng-zorro-antd/upload";
-import { delay, Observable, Observer } from "rxjs";
-import { loadingType } from "../../_enum/loading.enum";
 
 @Component({
     selector: 'app-upload-file',
@@ -14,9 +12,12 @@ import { loadingType } from "../../_enum/loading.enum";
 
 export class UploadFileComponent implements OnInit {
     @Input() disabled: boolean = false;
+    @Input() loading: boolean = false;
 
-    valueSelected: any = null;
-    loading: boolean = false;
+    @Output() emitImgUrl = new EventEmitter<string>();
+    @Output() emitLoadingStt = new EventEmitter<boolean>();
+
+    currentSelected: string = '';
 
     constructor(
         private msg: NzMessageService,
@@ -27,6 +28,8 @@ export class UploadFileComponent implements OnInit {
     ngOnInit(): void { }
 
     beforeUpload = (file: NzUploadFile) => {
+        this.loading = true;
+        this.emitLoadingStatus();
         if (file) {
             if (file.type !== 'image/jpeg') {
                 this.showError('15');
@@ -35,10 +38,11 @@ export class UploadFileComponent implements OnInit {
             if (file.size! / 1024 / 1024 >= 2) {
                 this.showError('16');
             }
-
             this.uploadImg(file);
         } else {
             this.showError('8');
+            this.loading = false;
+            this.emitLoadingStatus();
         }
         return false
     }
@@ -47,13 +51,31 @@ export class UploadFileComponent implements OnInit {
         const _params = new FormData();
         _params.append('file', file as (string | Blob), file.name as string)
         this.shareSer.uploadImg(_params).subscribe({
-            next(resp) {
-                console.log(resp)
+            next: (resp) => {
+                if (resp.imageUrl) {
+                    this.currentSelected = resp.imageUrl || '';
+                } else {
+                    this.currentSelected = '';
+                }
+                this.loading = false;
+                this.emitCurrentSelectImg();
+                this.emitLoadingStatus();
             },
-            error(err) {
-                console.log(err)
+            error: (err) => {
+                console.log(err);
+                this.showError('8');
+                this.loading = false;
+                this.emitLoadingStatus();
             },
         });
+    }
+
+    emitCurrentSelectImg() {
+        this.emitImgUrl.emit(this.currentSelected);
+    }
+
+    emitLoadingStatus() {
+        this.emitLoadingStt.emit(this.loading);
     }
 
     showError(code: string) {

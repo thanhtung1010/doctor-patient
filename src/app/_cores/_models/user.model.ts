@@ -40,6 +40,9 @@ export class AppUser {
       if (_.isNumber(_userInfo['age'])) {
         this.age = +_userInfo['age'];
       }
+      if (_.isNumber(_userInfo['totalFollowing'])) {
+        this.totalFollowing = +_userInfo['totalFollowing'];
+      }
       if (_.isNumber(_userInfo['totalFollower'])) {
         this.totalFollower = +_userInfo['totalFollower'];
       }
