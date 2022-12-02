@@ -32,6 +32,7 @@ export class APIService {
       headers = headers.append('Authorization', `Bearer ${access_token}`);
     }
     headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Access-Control-Allow-Origin', '*');
 
     if (_customHeader) {
       for (let d in _customHeader) {
