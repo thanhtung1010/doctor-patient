@@ -53,7 +53,7 @@ export const API_POST: IApiUrl = {
     },
     GET_POST_FOLLOWING: {
         method: 'POST',
-        url: '/api/content/get-post-by-followed-users'
+        url: 'content/get-post-by-followed-users'
     },
     GET_POST_BY_ID: {
         method: 'POST',
