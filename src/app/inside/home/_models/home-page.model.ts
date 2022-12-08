@@ -1,14 +1,16 @@
 import * as _ from "lodash";
 
 export class HomePageModel {
-    threadId: null | number = null;
+    threadFilter: 'ALL' | 'FOLLOW' | number = 'ALL';
 
     constructor(_params: any) {
         if (_params) {
-            if (_params['threadId']) {
-                this.threadId = +_params['threadId'];
-            } else {
-                this.threadId = null;
+            if (_params['threadFilter']) {
+                if (_.isNumber(_params['threadFilter'])) {
+                    this.threadFilter = +_params['threadFilter'];
+                } else {
+                    this.threadFilter = _params['threadFilter'];
+                }
             }
         }
     }

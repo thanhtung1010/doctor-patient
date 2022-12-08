@@ -60,10 +60,14 @@ export class HomePageComponent implements OnInit {
     }
 
     getPost() {
-        if (this.params && this.params.threadId) {
-            this.getPostbyThread();
-        } else {
-            this.getAllPost();
+        if (this.params) {
+            if (this.params.threadFilter === 'ALL') {
+                this.getAllPost();
+            } else if (this.params.threadFilter === 'FOLLOW') {
+                this.getPostFolowing();
+            } else {
+                this.getPostbyThread();
+            }
         }
     }
 
@@ -105,6 +109,7 @@ export class HomePageComponent implements OnInit {
                 this.loading.thread = false;
             },
             error: error => {
+                this.showError(error['error'] ? error['error'].code || 8 : 8);
                 this.loading.thread = false;
             },
             complete: () => {
@@ -115,7 +120,7 @@ export class HomePageComponent implements OnInit {
 
     getPostbyThread() {
         this.loading.post = true;
-        const _params = { threadId: this.params.threadId }
+        const _params = { threadId: this.params.threadFilter }
         this.shareSer.getPostByThread(_params).subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
@@ -140,11 +145,45 @@ export class HomePageComponent implements OnInit {
         });
     }
 
-    onChangeThread(id: number) {
-        if (+id === this.params.threadId) {
-            this.params.threadId = null;
+    getPostFolowing() {
+        this.loading.post = true;
+        this.shareSer.getPostFollowing().subscribe({
+            next: resp => {
+                if (resp.data && resp.data.length) {
+                    this.data.posts = _.orderBy(resp.data.map((item: any) => {
+                        return {
+                            ...item,
+                            commentList: _.orderBy([...(item.commentList || [])], ['createdAt'], ['desc'])
+                        }
+                    }), ['createAt'], ['desc']);
+                } else {
+                    this.data.posts = [];
+                }
+                this.loading.post = false;
+            },
+            error: error => {
+                this.showError(error['error'] ? error['error'].code || 8 : 8);
+                this.loading.post = false;
+            },
+            complete: () => {
+                this.loading.post = false;
+            }
+        });
+    }
+
+    onChangeThread(id: 'ALL' | 'FOLLOW' | number) {
+        if (_.isNumber(id)) {
+            if (+id === this.params.threadFilter) {
+                this.params.threadFilter = 'ALL';
+            } else {
+                this.params.threadFilter = +id;
+            }
         } else {
-            this.params.threadId = +id;
+            if (id === this.params.threadFilter) {
+                this.params.threadFilter = 'ALL';
+            } else {
+                this.params.threadFilter = id;
+            }
         }
         this.params = new HomePageModel(this.params);
         this.changeURL();

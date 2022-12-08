@@ -5,7 +5,7 @@
     height: 90vh;
 
     &-left {
-        padding: 100px 20px 0px 20px;
+        padding: 10px 20px 0px 20px;
     }
 
     &-center {
@@ -16,7 +16,7 @@
             box-shadow: 0px 0px 3px $shadow;
             background-color: $whiteColor;
             height: 80vh;
-            width: 800px;
+            width: 90%;
             overflow: scroll;
             overflow-x: hidden;
         }
@@ -30,7 +30,7 @@
     color: $lightMainColor;
     padding: 5px;
     border-bottom: 1px solid $shadow;
-    margin: 0px 5px 0px 5px;
+    margin: auto 5px auto 5px;
 
     &-active {
         background-color: $lightMainColor;

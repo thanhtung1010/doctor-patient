@@ -5,6 +5,7 @@ import { Helpers } from "app/_cores/_helpers/helpers";
 import { IUserProfile } from "app/_cores/_models/user.model";
 import { CommonService } from "app/_cores/_services/common.service";
 import { getSystemMsgByCode } from "app/_share/_enum/errors.enum";
+import { ROLE } from "app/_share/_enum/role.enum";
 import { ROUTING_DEFINED } from "app/_share/_enum/router.enum";
 import { SessionService } from "app/_share/_services";
 import { NzMessageService } from "ng-zorro-antd/message";
@@ -19,10 +20,11 @@ export class HeaderComponent implements OnInit {
     isLogged = false;
     selectedUser: number | null = null;
     loading = {
-        user: false,
+        doctor: false,
     }
     data = {
-        users: [] as IUserProfile[],
+        doctorRaws: [] as IUserProfile[],
+        doctors: [] as IUserProfile[],
     }
     constructor(
         private _router: Router,
@@ -31,7 +33,7 @@ export class HeaderComponent implements OnInit {
         private translate: TranslateService,
         private readonly commonSer: CommonService,
         private msg: NzMessageService,
-    ) { 
+    ) {
         this._router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
                 this._activeRouter.params.subscribe(params => {
@@ -53,27 +55,27 @@ export class HeaderComponent implements OnInit {
     }
 
     getAllUser() {
-        this.loading.user = true
+        this.loading.doctor = true
         this.commonSer.getAllAccount().subscribe({
             next: resp => {
                 if (resp.data && resp.data.length) {
-                    this.data.users = resp.data.map((item: any) => {
+                    this.data.doctorRaws = resp.data.map((item: any) => {
                         return {
                             ...item,
                             role: (item.role || 'USER').toUpperCase()
                         }
-                    });
+                    }).filter((user: IUserProfile) => user.role === ROLE.DOCTOR);
                 } else {
-                    this.data.users = [];
+                    this.data.doctorRaws = [];
                 }
-                this.loading.user = false;
+                this.loading.doctor = false;
             },
             error: error => {
                 this.showError(error['error'] ? error['error'].code || 8 : 8);
-                this.loading.user = false;
+                this.loading.doctor = false;
             },
             complete: () => {
-                this.loading.user = false;
+                this.loading.doctor = false;
             }
         });
     }
@@ -84,6 +86,16 @@ export class HeaderComponent implements OnInit {
         } else {
             this.goToURL(ROUTING_DEFINED.NOTFOUND)
         }
+    }
+
+    onSearch(evt: string) {
+        if (evt.length) {
+            this.data.doctors = this.data.doctorRaws.filter(doctor => (doctor.fullName.toLocaleLowerCase()).includes(evt.toLocaleLowerCase().trim()));
+        }
+    }
+
+    onOpen(evt: any) {
+        this.data.doctors = [];
     }
 
     goToURL(url: string, param?: Params) {

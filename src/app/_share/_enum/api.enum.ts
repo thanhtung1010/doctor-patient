@@ -51,6 +51,10 @@ export const API_POST: IApiUrl = {
         method: 'POST',
         url: 'admin/post/all'
     },
+    GET_POST_FOLLOWING: {
+        method: 'POST',
+        url: '/api/content/get-post-by-followed-users'
+    },
     GET_POST_BY_ID: {
         method: 'POST',
         url: 'content/get-post-by-user/'

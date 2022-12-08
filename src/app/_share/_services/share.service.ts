@@ -31,6 +31,10 @@ export class ShareService {
         return this.api.callApi(API_POST['GET_ALL_POST'], {});
     }
 
+    getPostFollowing() {
+        return this.api.callApi(API_POST['GET_POST_FOLLOWING'], {});
+    }
+
     getPostByID(_params: any) {
         return this.api.callApi(API_POST['GET_POST_BY_ID'], _params);
     }

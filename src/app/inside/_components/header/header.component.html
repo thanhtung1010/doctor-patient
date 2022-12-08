@@ -4,9 +4,9 @@
     </div>
     <div class="tung-search">
         <nz-select nzShowSearch [nzSuffixIcon]="icon" [(ngModel)]="selectedUser" (ngModelChange)="onSelectUser()"
-        [nzPlaceHolder]="'Nhập tên cần tìm'"
-        [disabled]="loading.user">
-            <ng-container *ngFor="let user of data.users">
+            (nzOnSearch)="onSearch($event)" (nzOpenChange)="onOpen($event)" [nzPlaceHolder]="'Nhập tên cần tìm'"
+            [disabled]="loading.doctor">
+            <ng-container *ngFor="let user of data.doctors">
                 <nz-option [nzValue]="user.id" [nzLabel]="user.fullName + ' - ' + ('ROLE.' + user.role | translate)">
                 </nz-option>
             </ng-container>
