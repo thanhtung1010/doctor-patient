@@ -1,97 +1,98 @@
 <div class="tung-user-calendar">
-    <div nz-row class="tung-user-calendar-head">
-        <div nz-col nzSpan="8" class="tung-user-calendar-head-select-date">
-            <!-- <nz-date-picker [nzPlaceHolder]="'COMMON.SELECT_DATE' | translate" [nzAllowClear]="false"
+  <div nz-row class="tung-user-calendar-head">
+    <div nz-col nzSpan="8" class="tung-user-calendar-head-select-date">
+      <!-- <nz-date-picker [nzPlaceHolder]="'COMMON.SELECT_DATE' | translate" [nzAllowClear]="false"
                 [nzRenderExtraFooter]="undefined" [nzSuffixIcon]="prefixTemplateCalendar"
                 [nzFormat]="dateFormatForEdit">
             </nz-date-picker> -->
-        </div>
-        <div nz-col nzSpan="8"></div>
-        <div class="tung-user-calendar-head-book tung-align-right" nz-col nzSpan="8">
-            <div class="tung-user-calendar-head-book-btn">
-                <ng-container *ngIf="!isDoctor">
-                    <app-booking (oSubmitSuccess)="getCalendar()"></app-booking>
+    </div>
+    <div nz-col nzSpan="8"></div>
+    <div class="tung-user-calendar-head-book tung-align-right" nz-col nzSpan="8">
+      <div class="tung-user-calendar-head-book-btn">
+        <!-- <ng-container *ngIf="!isDoctor">
+          <app-booking (oSubmitSuccess)="getCalendar()"></app-booking>
+        </ng-container> -->
+      </div>
+    </div>
+  </div>
+  <div class="tung-user-calendar-content">
+    <nz-table [nzData]="data.bookedList" [nzShowPagination]="false" [nzFrontPagination]="false"
+      [nzShowPagination]="false" [nzScroll]="{ x: '70vh', y: '65vh'}" [nzLoading]="loading.list"
+      [nzLoadingIndicator]="loadingTable" nzSize="small">
+      <thead>
+        <tr>
+          <ng-container *ngFor="let head of tableHeader">
+            <th [style.text-align]="'center'" [nzWidth]="head.width ? head.width + 'px' : 'auto'">
+              {{ head.title }}
+            </th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of data.bookedList; let idx = index; let lst = last">
+          <td [nzAlign]="'center'">{{ data.bookedAt ? (+data.bookedAt | dateTimeLabel:_dateFormatForShow) : ''
+            }}</td>
+          <ng-container *ngIf="isDoctor">
+            <td [nzAlign]="'center'">{{ data.createdBy || '' }}</td>
+          </ng-container>
+          <ng-container *ngIf="!isDoctor">
+            <td [nzAlign]="'center'">{{ data.doctorName || '' }}</td>
+          </ng-container>
+          <ng-container *ngFor="let child of data.children; let _childIdx = index">
+            <td [nzAlign]="'center'">
+              <ng-container *ngIf="child">
+                <ng-container [ngTemplateOutlet]="shiftContent"
+                  [ngTemplateOutletContext]="{data: child, parentIdx: idx, childIdx: _childIdx}">
                 </ng-container>
-            </div>
-        </div>
-    </div>
-    <div class="tung-user-calendar-content">
-        <nz-table [nzData]="data.bookedList" [nzShowPagination]="false" [nzFrontPagination]="false"
-            [nzShowPagination]="false" [nzScroll]="{ x: '70vh', y: '65vh'}" [nzLoading]="loading.list"
-            [nzLoadingIndicator]="loadingTable" nzSize="small">
-            <thead>
-                <tr>
-                    <ng-container *ngFor="let head of tableHeader">
-                        <th [style.text-align]="'center'" [nzWidth]="head.width ? head.width + 'px' : 'auto'">
-                            {{ head.title }}
-                        </th>
-                    </ng-container>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of data.bookedList; let idx = index; let lst = last">
-                    <td [nzAlign]="'center'">{{ data.bookedAt ? (+data.bookedAt | dateTimeLabel:_dateFormatForShow) : ''
-                        }}</td>
-                    <ng-container *ngIf="isDoctor">
-                        <td [nzAlign]="'center'">{{ data.createdBy || '' }}</td>
-                    </ng-container>
-                    <ng-container *ngIf="!isDoctor">
-                        <td [nzAlign]="'center'">{{ data.doctorName || '' }}</td>
-                    </ng-container>
-                    <ng-container *ngFor="let child of data.children; let _childIdx = index">
-                        <td [nzAlign]="'center'">
-                            <ng-container *ngIf="child">
-                                <ng-container [ngTemplateOutlet]="shiftContent"
-                                    [ngTemplateOutletContext]="{data: child, parentIdx: idx, childIdx: _childIdx}">
-                                </ng-container>
-                            </ng-container>
-                        </td>
-                    </ng-container>
-                </tr>
-            </tbody>
-        </nz-table>
-    </div>
+              </ng-container>
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
 </div>
 
 <ng-template #shiftContent let-item="data" let-parentIdx="parentIdx" let-childIdx="childIdx">
-    <div class="tung-shift-content" [ngClass]="{
+  <div class="tung-shift-content" [ngClass]="{
         'tung-shift-content-normal': !item.expired,
         'tung-shift-content-expired': item.expired,
         'tung-shift-content-hover': item.isApproved === null && !item.expired,
         'tung-shift-content-rejected': item.isApproved === false,
         'tung-shift-content-approved': item.isApproved === true
     }" (click)="onToggleBookedInforModal(parentIdx, childIdx, true)">
-        <div class="tung-shift-content-hover-overlay"></div>
-        <div class="tung-shift-content-hover-button">
-            <button class="tung-mr-10" nz-button nzType="primary" nzDanger
-                (click)="approval(item.id, false, item.isApproved === null && !item.expired)">Huỷ</button>
-            <ng-container *ngIf="isDoctor">
-                <button nz-button nzType="primary"
-                    (click)="approval(item.id, true, item.isApproved === null && !item.expired)">Xác nhận</button>
-            </ng-container>
-        </div>
-        <p class="tung-shift-content-title">
-            {{'BOOKING.SHIFT.' + item.bookedShift | translate}}: {{item.start | dateTimeLabel:timeFormat}} - {{item.end
-            |
-            dateTimeLabel:timeFormat}}
-        </p>
-        <p class="tung-shift-content-content">
-            {{'BOOKING.SPECIALIST_HOLDER' | translate}}: {{item.specialist ? ('BOOKING.' + item.specialist | translate) : ''}}<br>
-            {{'BOOKING.CONSULT_PACKAGE' | translate}}: {{'BOOKING.' + item.consult | translate}}<br>
-        </p>
+    <div class="tung-shift-content-hover-overlay"></div>
+    <div class="tung-shift-content-hover-button">
+      <button class="tung-mr-10" nz-button nzType="primary" nzDanger
+        (click)="approval(item.id, false, item.isApproved === null && !item.expired)">Huỷ</button>
+      <ng-container *ngIf="isDoctor">
+        <button nz-button nzType="primary"
+          (click)="approval(item.id, true, item.isApproved === null && !item.expired)">Xác nhận</button>
+      </ng-container>
     </div>
-    <app-booking [isUpdate]="true"
-        [allowUpdate]="item.isApproved === null && !item.expired && (!isDoctor || (isDoctor && item.isApproved))"
-        [inputBookingInfor]="item" [visibleBookingModal]="item.visibleInforModal" [showBtn]="false"
-        (oSubmitSuccess)="getCalendar()"
-        (oChangevisibleBookingModal)="onToggleBookedInforModal(parentIdx, childIdx, $event)">
-    </app-booking>
+    <p class="tung-shift-content-title">
+      {{'BOOKING.SHIFT.' + item.bookedShift | translate}}: {{item.start | dateTimeLabel:timeFormat}} - {{item.end
+      |
+      dateTimeLabel:timeFormat}}
+    </p>
+    <p class="tung-shift-content-content">
+      {{'BOOKING.SPECIALIST_HOLDER' | translate}}: {{item.specialist ? ('BOOKING.' + item.specialist | translate) :
+      ''}}<br>
+      {{'BOOKING.CONSULT_PACKAGE' | translate}}: {{'BOOKING.' + item.consult | translate}}<br>
+    </p>
+  </div>
+  <app-booking [isUpdate]="true"
+    [allowUpdate]="item.isApproved === null && !item.expired && (!isDoctor || (isDoctor && item.isApproved))"
+    [inputBookingInfor]="item" [visibleBookingModal]="item.visibleInforModal" [showBtn]="false"
+    (oSubmitSuccess)="getCalendar()"
+    (visibleBookingModalChange)="onToggleBookedInforModal(parentIdx, childIdx, $event)">
+  </app-booking>
 </ng-template>
 
 <ng-template #prefixTemplateCalendar>
-    <span class="tung-icon" nz-icon nzType="calendar" nzTheme="outline"></span>
+  <span class="tung-icon" nz-icon nzType="calendar" nzTheme="outline"></span>
 </ng-template>
 
 <ng-template #loadingTable>
-    <app-loading></app-loading>
+  <app-loading></app-loading>
 </ng-template>

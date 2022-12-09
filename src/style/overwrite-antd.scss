@@ -1,216 +1,216 @@
 .ant-form-item-explain {
-    .ant-form-item-explain-error {
-        text-align: left;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
+  .ant-form-item-explain-error {
+    text-align: left;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 }
 
 .tung-avatar {
-    .ant-btn {
-        border: unset;
-        color: $whiteColor;
-        background-color: $greenColor;
-        font-weight: 3px;
+  .ant-btn {
+    border: unset;
+    color: $whiteColor;
+    background-color: $greenColor;
+    font-weight: 3px;
 
-        &:hover {
-            background-color: $lightGreenColor;
-        }
+    &:hover {
+      background-color: $lightGreenColor;
     }
+  }
 }
 
 .ant-modal {
+  border-radius: 10px;
+
+  .ant-modal-content {
     border-radius: 10px;
+  }
 
-    .ant-modal-content {
-        border-radius: 10px;
-    }
-
-    .ant-modal-header {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    }
+  .ant-modal-header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
 }
 
 .ant-steps {
-    margin: auto;
-    width: 50%;
+  margin: auto;
+  width: 50%;
 
-    &-item {
-        width: 30%;
-    }
+  &-item {
+    width: 30%;
+  }
 }
 
 .ant-steps-item-container {
-    .ant-steps-item-tail {
-        top: 25%;
-        left: 50%;
-        margin: unset;
-        padding: unset;
+  .ant-steps-item-tail {
+    top: 25%;
+    left: 50%;
+    margin: unset;
+    padding: unset;
+  }
+
+  .ant-steps-item-icon {
+    display: block;
+    width: auto !important;
+    height: auto !important;
+    margin: unset;
+    padding: unset;
+
+    .ant-steps-icon {
+      align-content: center;
     }
+  }
 
-    .ant-steps-item-icon {
-        display: block;
-        width: auto !important;
-        height: auto !important;
-        margin: unset;
-        padding: unset;
+  .ant-steps-item-content {
+    width: auto;
+    margin: unset;
+    padding: unset;
 
-        .ant-steps-icon {
-            align-content: center;
-        }
+    .ant-steps-item-title {
+      margin: unset;
+      padding: unset;
+      font-size: 15px;
+      color: $mainColor !important;
     }
-
-    .ant-steps-item-content {
-        width: auto;
-        margin: unset;
-        padding: unset;
-
-        .ant-steps-item-title {
-            margin: unset;
-            padding: unset;
-            font-size: 15px;
-            color: $mainColor !important;
-        }
-    }
+  }
 }
 
 .anticon {
-    font-size: 25px;
-    color: $mainColor;
+  font-size: 25px;
+  color: $mainColor;
 }
 
 .tung-delete {
-    .anticon {
-        font-size: 20px;
-        color: $lightRedColor;
-    }
+  .anticon {
+    font-size: 20px;
+    color: $lightRedColor;
+  }
 }
 
 .tung-update {
-    .anticon {
-        font-size: 20px;
-        color: $lightMainColor;
-    }
+  .anticon {
+    font-size: 20px;
+    color: $lightMainColor;
+  }
 }
 
 .tung-post-demo-title {
-    .anticon {
-        font-size: 10px;
-        color: $shadow;
-        font-weight: unset;
-    }
+  .anticon {
+    font-size: 10px;
+    color: $shadow;
+    font-weight: unset;
+  }
 }
 
 .tung-step-footer {
-    .ant-btn {
-        margin: 0;
-    }
+  .ant-btn {
+    margin: 0;
+  }
 }
 
 .ant-select {
-    width: 90%;
-    margin: 0 5px 0 5px;
+  width: 90%;
+  margin: 0 5px 0 5px;
 
-    .ant-select-selector {
-        border-radius: 50px !important;
-    }
+  .ant-select-selector {
+    border-radius: 50px !important;
+  }
 }
 
 .ant-select-dropdown {
-    border-radius: 10px;
+  border-radius: 10px;
 
-    .ant-select-item-option {
-        .ant-select-item-option-content {
-            color: $mainColor
-        }
+  .ant-select-item-option {
+    .ant-select-item-option-content {
+      color: $mainColor
     }
+  }
 }
 
 .ant-picker {
-    width: 100%;
-    border-radius: 20px;
+  width: 100%;
+  border-radius: 20px;
 }
 
 .ant-picker-input {
-    input {
-        font-size: 13px
-    }
+  input {
+    font-size: 13px
+  }
 }
 
 .ant-picker-panel-container {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .ant-picker-suffix {
-    .tung-icon {
-        svg {
-            font-size: 15px;
-        }
+  .tung-icon {
+    svg {
+      font-size: 15px;
     }
+  }
 }
 
 .ant-empty {
-    margin: unset;
-    height: 90%;
-    filter: grayscale(1);
+  margin: unset;
+  height: 90%;
+  filter: grayscale(1);
 
-    .ant-empty-image {
-        height: 100%;
-        margin: auto;
-    }
+  .ant-empty-image {
+    height: 100%;
+    margin: auto;
+  }
 }
 
 .ant-select-selection-item {
-    color: $mainColor
+  color: $mainColor
 }
 
 .ant-select-selection-search-input {
-    color: $mainColor
+  color: $mainColor
 }
 
 .ant-popover-inner {
-    border-radius: 10px;
+  border-radius: 10px;
 
-    .ant-popover-inner-content {
-        .ant-popover-message {
-            .ant-popover-message-title {
-                color: $mainColor;
-            }
-        }
-
-        .ant-popover-buttons {
-            .ant-btn {
-                border-radius: 5px !important;
-            }
-        }
-
-        .ant-popover-buttons .ant-btn-primary {
-            border-color: $stepColor !important;
-            background-color: $stepColor;
-            color: $whiteColor !important;
-
-            &:hover {
-                border-color: $lightMainColor !important;
-                background-color: $lightMainColor;
-            }
-        }
-
-        .ant-popover-buttons .ant-btn-sm {
-            border-color: $stepColor;
-            color: $stepColor;
-
-            &:hover {
-                border-color: $lightMainColor;
-                background-color: $lightMainColor;
-            }
-        }
+  .ant-popover-inner-content {
+    .ant-popover-message {
+      .ant-popover-message-title {
+        color: $mainColor;
+      }
     }
+
+    .ant-popover-buttons {
+      .ant-btn {
+        border-radius: 5px !important;
+      }
+    }
+
+    .ant-popover-buttons .ant-btn-primary {
+      border-color: $stepColor !important;
+      background-color: $stepColor;
+      color: $whiteColor !important;
+
+      &:hover {
+        border-color: $lightMainColor !important;
+        background-color: $lightMainColor;
+      }
+    }
+
+    .ant-popover-buttons .ant-btn-sm {
+      border-color: $stepColor;
+      color: $stepColor;
+
+      &:hover {
+        border-color: $lightMainColor;
+        background-color: $lightMainColor;
+      }
+    }
+  }
 }
 
 .ant-list-item {
-    color: $mainColor;
-    padding: 10px 5px;
+  color: $mainColor;
+  padding: 10px 5px;
 }
 
 // .ant-modal-close-x {
@@ -218,21 +218,31 @@
 // }
 
 .ant-message-notice-content {
-    border-radius: 10px;
-    font-size: 13px;
+  border-radius: 10px;
+  font-size: 13px;
 
-    .ant-message-custom-content {
-        display: flex;
-        align-items: center;
-    }
+  .ant-message-custom-content {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .ant-upload {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .ant-input {
-    width: 90%;
-    margin: 0px 5px;
-    color: $mainColor !important;
+  width: 90%;
+  margin: 0px 5px;
+  color: $mainColor !important;
+}
+
+.ant-dropdown-menu {
+  padding: 0px;
+  border-radius: 10px;
+
+  .ant-dropdown-menu-item {
+    font-size: 13px;
+    color: $mainColor;
+  }
 }

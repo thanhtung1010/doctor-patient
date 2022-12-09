@@ -1,70 +1,71 @@
 <div class="tung-manager-post">
-    <nz-table [nzData]="data.bookedList" [nzShowPagination]="false" [nzFrontPagination]="false"
-        [nzShowPagination]="false" [nzScroll]="{ x: '70vw', y: '75vh'}" [nzLoading]="loading.list"
-        [nzLoadingIndicator]="loadingTable" nzSize="small">
-        <thead>
-            <tr>
-                <ng-container *ngFor="let head of tableHeader">
-                    <th [style.text-align]="head.align ? head.align : 'center'" [nzWidth]="head.width ? head.width + 'px' : 'auto'">
-                        {{ head.title }}
-                    </th>
-                </ng-container>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of data.bookedList; let idx = index; let lst = last">
-                <td [nzAlign]="'center'">
-                    {{ data.bookedAt ? (+data.bookedAt | dateTimeLabel:_dateFormatForShow) : '' }}
-                </td>
-                <td [nzAlign]="'center'">{{ data.doctorName || '' }}</td>
-                <td>
-                    {{ data.createdBy || ''}}
-                </td>
-                <ng-container *ngFor="let child of data.children; let _childIdx = index">
-                    <td [nzAlign]="'center'">
-                        <ng-container *ngIf="child">
-                            <ng-container [ngTemplateOutlet]="shiftContent"
-                                [ngTemplateOutletContext]="{data: child, parentIdx: idx, childIdx: _childIdx}">
-                            </ng-container>
-                        </ng-container>
-                    </td>
-                </ng-container>
-            </tr>
-        </tbody>
-    </nz-table>
+  <nz-table [nzData]="data.bookedList" [nzShowPagination]="false" [nzFrontPagination]="false" [nzShowPagination]="false"
+    [nzScroll]="{ x: '70vw', y: '75vh'}" [nzLoading]="loading.list" [nzLoadingIndicator]="loadingTable" nzSize="small">
+    <thead>
+      <tr>
+        <ng-container *ngFor="let head of tableHeader">
+          <th [style.text-align]="head.align ? head.align : 'center'"
+            [nzWidth]="head.width ? head.width + 'px' : 'auto'">
+            {{ head.title }}
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of data.bookedList; let idx = index; let lst = last">
+        <td [nzAlign]="'center'">
+          {{ data.bookedAt ? (+data.bookedAt | dateTimeLabel:_dateFormatForShow) : '' }}
+        </td>
+        <td [nzAlign]="'center'">{{ data.doctorName || '' }}</td>
+        <td>
+          {{ data.createdBy || ''}}
+        </td>
+        <ng-container *ngFor="let child of data.children; let _childIdx = index">
+          <td [nzAlign]="'center'">
+            <ng-container *ngIf="child">
+              <ng-container [ngTemplateOutlet]="shiftContent"
+                [ngTemplateOutletContext]="{data: child, parentIdx: idx, childIdx: _childIdx}">
+              </ng-container>
+            </ng-container>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </nz-table>
 </div>
 
 <ng-template #shiftContent let-item="data" let-parentIdx="parentIdx" let-childIdx="childIdx">
-    <div class="tung-shift-content" [ngClass]="{
+  <div class="tung-shift-content" [ngClass]="{
         'tung-shift-content-normal': !item.expired,
         'tung-shift-content-expired': item.expired,
         'tung-shift-content-hover': item.isApproved === null && !item.expired,
         'tung-shift-content-rejected': item.isApproved === false,
         'tung-shift-content-approved': item.isApproved === true
     }" (click)="onToggleBookedInforModal(parentIdx, childIdx, true)">
-        <div class="tung-shift-content-hover-overlay"></div>
-        <div class="tung-shift-content-hover-button">
-            <button class="tung-mr-10" nz-button nzType="primary" nzDanger
-                (click)="approval(item.id, false, item.isApproved === null && !item.expired)">Huỷ</button>
-            <button nz-button nzType="primary"
-                (click)="approval(item.id, true, item.isApproved === null && !item.expired)">Xác nhận</button>
-        </div>
-        <p class="tung-shift-content-title">
-            {{'BOOKING.SHIFT.' + item.bookedShift | translate}}: {{item.start | dateTimeLabel:timeFormat}} - {{item.end
-            |
-            dateTimeLabel:timeFormat}}
-        </p>
-        <p class="tung-shift-content-content">
-            {{'BOOKING.SPECIALIST_HOLDER' | translate}}: {{item.specialist ? ('BOOKING.' + item.specialist | translate) : ''}}<br>
-            {{'BOOKING.CONSULT_PACKAGE' | translate}}: {{'BOOKING.' + item.consult | translate}}<br>
-        </p>
+    <div class="tung-shift-content-hover-overlay"></div>
+    <div class="tung-shift-content-hover-button">
+      <button class="tung-mr-10" nz-button nzType="primary" nzDanger
+        (click)="approval(item.id, false, item.isApproved === null && !item.expired)">Huỷ</button>
+      <button nz-button nzType="primary"
+        (click)="approval(item.id, true, item.isApproved === null && !item.expired)">Xác nhận</button>
     </div>
-    <app-booking [isUpdate]="true" [allowUpdate]="item.isApproved !== false && !item.expired" [inputBookingInfor]="item"
-        [visibleBookingModal]="item.visibleInforModal" [showBtn]="false" (oSubmitSuccess)="getAllBooked()"
-        (oChangevisibleBookingModal)="onToggleBookedInforModal(parentIdx, childIdx, $event)">
-    </app-booking>
+    <p class="tung-shift-content-title">
+      {{'BOOKING.SHIFT.' + item.bookedShift | translate}}: {{item.start | dateTimeLabel:timeFormat}} - {{item.end
+      |
+      dateTimeLabel:timeFormat}}
+    </p>
+    <p class="tung-shift-content-content">
+      {{'BOOKING.SPECIALIST_HOLDER' | translate}}: {{item.specialist ? ('BOOKING.' + item.specialist | translate) :
+      ''}}<br>
+      {{'BOOKING.CONSULT_PACKAGE' | translate}}: {{'BOOKING.' + item.consult | translate}}<br>
+    </p>
+  </div>
+  <app-booking [isUpdate]="true" [allowUpdate]="item.isApproved !== false && !item.expired" [inputBookingInfor]="item"
+    [visibleBookingModal]="item.visibleInforModal" [showBtn]="false" (oSubmitSuccess)="getAllBooked()"
+    (visibleBookingModalChange)="onToggleBookedInforModal(parentIdx, childIdx, $event)">
+  </app-booking>
 </ng-template>
 
 <ng-template #loadingTable>
-    <app-loading></app-loading>
+  <app-loading></app-loading>
 </ng-template>

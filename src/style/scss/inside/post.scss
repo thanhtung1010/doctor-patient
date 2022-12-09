@@ -1,149 +1,175 @@
 &-post {
-    cursor: pointer;
-    margin: 20px auto 20px auto;
-    width: 80%;
-    overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid $shadow;
-    border-radius: 10px;
+  cursor: pointer;
+  margin: 20px auto 20px auto;
+  width: 80%;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid $shadow;
+  border-radius: 10px;
 
-    img {
-        width: 100%;
-        height: fit-content;
-    }
+  img {
+    width: 100%;
+    height: fit-content;
+  }
 
-    &-demo {
-        height: 75px;
-        border-top: unset;
-        border-top-left-radius: 0px;
-        border-top-right-radius: 0px;
-        padding: 5px;
+  &-demo {
+    height: 75px;
+    border-top: unset;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    padding: 5px;
 
-        &-title {
-            color: $mainColor;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 5px;
-            margin-top: 5px;
-            display: flex;
-            justify-content: space-between;
+    &-title {
+      color: $mainColor;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 5px;
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
 
-            &-like {
-                display: flex;
-                color: $shadow;
-                font-weight: normal;
-                font-size: 10px;
+      &-like {
+        display: flex;
+        color: $shadow;
+        font-weight: normal;
+        font-size: 10px;
 
-                span {
-                    margin: auto 5px auto 5px;
-                }
-
-                .anticon {
-                    margin: auto;
-                }
-            }
-
-            &-text {
-                cursor: pointer;
-                color: $mainColor;
-            }
+        span {
+          margin: auto 5px auto 5px;
         }
 
-        &-infor {
-            padding: 5px;
-            display: flex;
-            justify-content: space-between;
-            color: $shadow;
+        .anticon {
+          margin: auto;
         }
+      }
+
+      &-text {
+        cursor: pointer;
+        color: $mainColor;
+      }
     }
+
+    &-infor {
+      padding: 5px;
+      display: flex;
+      justify-content: space-between;
+      color: $shadow;
+    }
+  }
+
+  &-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+
+    .anticon {
+      font-size: 30px;
+      color: $darkBlueColor;
+    }
+
+    &:hover {
+      background-color: $lightShadow;
+    }
+
+    &-normal {
+      text-align: end;
+      padding-right: 10px;
+      position: unset;
+    }
+  }
+
+  &-thumbnail {
+    position: relative;
+  }
 }
 
 &-full-post {
-    .angular-editor {
-        .angular-editor-wrapper {
-            .angular-editor-textarea {
-                border: unset !important;
-                padding: 0px 10px 0px 10px !important;
-                margin-top: 0px !important;
-            }
-        }
+  .angular-editor {
+    .angular-editor-wrapper {
+      .angular-editor-textarea {
+        border: unset !important;
+        padding: 0px 10px 0px 10px !important;
+        margin-top: 0px !important;
+      }
+    }
+  }
+
+  &-react {
+    margin-top: 10px;
+    padding: 5px;
+
+    &-item {
+      display: flex;
+      justify-content: center;
+
+      .anticon {
+        cursor: pointer;
+        margin-left: 5px;
+        font-size: 15px;
+        color: $shadow;
+        display: flex;
+        align-items: center;
+      }
+
+      &-total {
+        font-size: 15px;
+        color: $shadow;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
-    &-react {
-        margin-top: 10px;
-        padding: 5px;
+    &-active {
 
-        &-item {
-            display: flex;
-            justify-content: center;
-
-            .anticon {
-                cursor: pointer;
-                margin-left: 5px;
-                font-size: 15px;
-                color: $shadow;
-                display: flex;
-                align-items: center;
-            }
-
-            &-total {
-                font-size: 15px;
-                color: $shadow;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-
-        &-active {
-
-            .anticon {
-                color: $mainColor;
-            }
-        }
+      .anticon {
+        color: $mainColor;
+      }
     }
+  }
 }
 
 &-comment {
-    min-height: 200px;
+  min-height: 200px;
 
-    &-item {
-        text-align: left;
+  &-item {
+    text-align: left;
+    display: flex;
+    margin-top: 10px;
+    border-top: 1px solid $shadow;
+    border-bottom: 1px solid $shadow;
+
+    &-infor {
+      cursor: pointer;
+      min-height: 100px;
+      width: 10%;
+      padding: 5px;
+      border-right: 1px solid $shadow;
+      text-align: center;
+
+      &-avatar {
+        border: 1px solid $mainColor;
+        height: 50px;
+        width: 50px;
+        border-radius: 25px;
+        text-align: center;
+        margin: auto;
         display: flex;
-        margin-top: 10px;
-        border-top: 1px solid $shadow;
-        border-bottom: 1px solid $shadow;
-
-        &-infor {
-            cursor: pointer;
-            min-height: 100px;
-            width: 10%;
-            padding: 5px;
-            border-right: 1px solid $shadow;
-            text-align: center;
-
-            &-avatar {
-                border: 1px solid $mainColor;
-                height: 50px;
-                width: 50px;
-                border-radius: 25px;
-                text-align: center;
-                margin: auto;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-            }
-        }
-
-        &-content {
-            width: 90%;
-            padding: 5px;
-
-            &-createat {
-                font-size: 10px;
-                color: $shadow;
-            }
-        }
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
     }
+
+    &-content {
+      width: 90%;
+      padding: 5px;
+
+      &-createat {
+        font-size: 10px;
+        color: $shadow;
+      }
+    }
+  }
 }

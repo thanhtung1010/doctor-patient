@@ -1,33 +1,34 @@
 <div class="tung-header">
-    <div class="tung-logo" (click)="goToURL(ROUTING_DEFINED.HOME)">
-        {{'TITLE' | translate}}
-    </div>
-    <div class="tung-search">
-        <nz-select nzShowSearch [nzSuffixIcon]="icon" [(ngModel)]="selectedUser" (ngModelChange)="onSelectUser()"
-            (nzOnSearch)="onSearch($event)" (nzOpenChange)="onOpen($event)" [nzPlaceHolder]="'Nhập tên cần tìm'"
-            [disabled]="loading.doctor">
-            <ng-container *ngFor="let user of data.doctors">
-                <nz-option [nzValue]="user.id" [nzLabel]="user.fullName + ' - ' + ('ROLE.' + user.role | translate)">
-                </nz-option>
-            </ng-container>
-        </nz-select>
-    </div>
-    <div class="tung-avatar">
-        <ng-container *ngIf="isLogged; else noAuth">
-            <app-avatar></app-avatar>
-        </ng-container>
-        <ng-template #noAuth>
-            <app-booking></app-booking>
-            <button class="tung-br-10 tung-ml-10" nz-button [nzType]="'default'"
-                (click)="goToURL(ROUTING_DEFINED.OUTSIDE)">{{'BTN_LOGIN' | translate}}</button>
-        </ng-template>
-    </div>
+  <div class="tung-logo" (click)="goToURL(ROUTING_DEFINED.HOME)">
+    {{'TITLE' | translate}}
+  </div>
+  <div class="tung-search">
+    <nz-select nzShowSearch [nzSuffixIcon]="icon" [(ngModel)]="selectedUser" (ngModelChange)="onSelectUser()"
+      (nzOnSearch)="onSearch($event)" (nzOpenChange)="onOpen($event)" [nzPlaceHolder]="'Nhập tên cần tìm'"
+      [disabled]="loading.doctor">
+      <ng-container *ngFor="let user of data.doctors">
+        <nz-option [nzValue]="user.id" [nzLabel]="user.fullName + ' - ' + ('ROLE.' + user.role | translate)">
+        </nz-option>
+      </ng-container>
+    </nz-select>
+  </div>
+  <div class="tung-avatar">
+    <app-booking></app-booking>
+    <div class="tung-w-10"></div>
+    <ng-container *ngIf="isLogged; else noAuth">
+      <app-avatar></app-avatar>
+    </ng-container>
+    <ng-template #noAuth>
+      <button class="tung-br-10" nz-button [nzType]="'default'" (click)="goToURL(ROUTING_DEFINED.OUTSIDE)">{{'BTN_LOGIN'
+        | translate}}</button>
+    </ng-template>
+  </div>
 </div>
 <ng-template #suffixIconSearch>
-    <span nz-icon nzType="search"></span>
+  <span nz-icon nzType="search"></span>
 </ng-template>
 <ng-template #icon>
-    <svg style="width: 8px; height: 8px;">
-        <use xlink:href="#play-icon-down"></use>
-    </svg>
+  <svg style="width: 8px; height: 8px;">
+    <use xlink:href="#play-icon-down"></use>
+  </svg>
 </ng-template>
