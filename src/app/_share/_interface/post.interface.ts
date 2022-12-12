@@ -12,4 +12,5 @@ export interface IPost {
     totalLike?: number;
     totalDislike?: number;
     commentList?: IComment[];
+    isDoctor: boolean | null;
 }

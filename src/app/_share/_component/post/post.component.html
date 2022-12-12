@@ -19,7 +19,9 @@
                     </div>
                 </div>
                 <div class="tung-post-demo-infor">
-                    <span (click)="goToProfile(postInfor.userId)">{{postInfor.author}}</span>
+                    <span (click)="goToProfile(postInfor.userId)">
+                        {{postInfor.isDoctor ? 'Bác sĩ' : ''}}{{postInfor.author}}
+                    </span>
                     <span>{{postInfor.createAt | dateTimeLabel}}</span>
                 </div>
             </div>
