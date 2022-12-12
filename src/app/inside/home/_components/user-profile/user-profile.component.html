@@ -1,110 +1,114 @@
 <div class="tung-user-profile">
-    <div class="tung-user-profile-content">
-        <div class="tung-user-profile-content-item tung-user-profile-content-item-infor">
-            <ng-container *ngIf="!loading.infor">
-                <div class="tung-user-profile-content-item-infor-wrap">
-                    <div class="tung-user-profile-content-item-infor-wrap-avatar">
-                        <span>
-                            {{avatarText}}
-                        </span>
-                    </div>
-                    <div class="tung-user-profile-content-item-infor-wrap-follow"
-                        [ngClass]="{'tung-user-profile-content-item-infor-wrap-follow-active': follow}"
-                        (click)="toggleFollow()">
-                        <ng-container *ngIf="follow && !loading.follow">
-                            <span nz-icon nzType="check-circle" nzTheme="outline"></span>
-                        </ng-container>
-                        <ng-container *ngIf="!follow && !loading.follow">
-                            <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
-                        </ng-container>
-                        <ng-container *ngIf="loading.follow">
-                            <span nz-icon [nzType]="'loading'"></span>
-                        </ng-container>
-                    </div>
-                </div>
-                <div class="tung-user-profile-content-item-follow-infor">
-                    <span (click)="onToggleFollowModal(true, true)">{{'Theo dõi: '}}{{userInfo ? userInfo.totalFollower
-                        || 0
-                        : 0}}</span>
-                    <span (click)="onToggleFollowModal(true, false)">{{'Đang theo dõi: '}}{{userInfo ?
-                        userInfo.totalFollowing || 0 : 0}}</span>
-                </div>
-                <nz-list>
-                    <ng-container *ngFor="let item of data.userInforList">
-                        <ng-container [ngSwitch]="item.field">
-                            <ng-container *ngSwitchCase="USER_FIELD.gender">
-                                <nz-list-item>
-                                    <span>{{item.title | translate}}</span>
-                                    {{item.value | translate}}
-                                </nz-list-item>
-                            </ng-container>
-                            <ng-container *ngSwitchCase="USER_FIELD.role">
-                                <nz-list-item>
-                                    <span>{{item.title | translate}}</span>
-                                    {{'ROLE.' + item.value | translate}}
-                                </nz-list-item>
-                            </ng-container>
-                            <!-- <ng-container *ngSwitchCase="USER_FIELD.totalFollower">
+  <div class="tung-user-profile-content">
+    <div class="tung-user-profile-content-item tung-user-profile-content-item-infor">
+      <ng-container *ngIf="!loading.infor">
+        <div class="tung-user-profile-content-item-infor-wrap">
+          <div class="tung-user-profile-content-item-infor-wrap-avatar">
+            <span>
+              {{avatarText}}
+            </span>
+          </div>
+          <div class="tung-user-profile-content-item-infor-wrap-follow"
+            [ngClass]="{'tung-user-profile-content-item-infor-wrap-follow-active': follow}" (click)="toggleFollow()">
+            <ng-container *ngIf="follow && !loading.follow">
+              <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+            </ng-container>
+            <ng-container *ngIf="!follow && !loading.follow">
+              <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+            </ng-container>
+            <ng-container *ngIf="loading.follow">
+              <span nz-icon [nzType]="'loading'"></span>
+            </ng-container>
+          </div>
+        </div>
+        <div class="tung-user-profile-content-item-follow-infor">
+          <app-booking [(visibleBookingModal)]="bookingData.visibleBookingModal" [doctorInfor]="bookingData.infor">
+          </app-booking>
+        </div>
+        <div class="tung-user-profile-content-item-follow-infor">
+          <span (click)="onToggleFollowModal(true, true)">
+            {{'Theo dõi: '}}{{userInfo ? userInfo.totalFollower || 0 : 0}}
+          </span>
+          <span (click)="onToggleFollowModal(true, false)">
+            {{'Đang theo dõi: '}}{{userInfo ? userInfo.totalFollowing || 0 : 0}}
+          </span>
+        </div>
+        <nz-list>
+          <ng-container *ngFor="let item of data.userInforList">
+            <ng-container [ngSwitch]="item.field">
+              <ng-container *ngSwitchCase="USER_FIELD.gender">
+                <nz-list-item>
+                  <span>{{item.title | translate}}</span>
+                  {{item.value | translate}}
+                </nz-list-item>
+              </ng-container>
+              <ng-container *ngSwitchCase="USER_FIELD.role">
+                <nz-list-item>
+                  <span>{{item.title | translate}}</span>
+                  {{'ROLE.' + item.value | translate}}
+                </nz-list-item>
+              </ng-container>
+              <!-- <ng-container *ngSwitchCase="USER_FIELD.totalFollower">
                                 <nz-list-item>
                                     <span>{{item.title | translate}}</span>
                                     {{item.value || 0}}
                                 </nz-list-item>
                             </ng-container> -->
 
-                            <ng-container *ngSwitchDefault>
-                                <nz-list-item>
-                                    <span>{{item.title | translate}}</span>
-                                    {{item.value || ''}}
-                                </nz-list-item>
-                            </ng-container>
-                        </ng-container>
-                    </ng-container>
-                </nz-list>
+              <ng-container *ngSwitchDefault>
+                <nz-list-item>
+                  <span>{{item.title | translate}}</span>
+                  {{item.value || ''}}
+                </nz-list-item>
+              </ng-container>
             </ng-container>
-        </div>
-        <div class="tung-user-profile-content-item tung-user-profile-content-item-post">
-            <ng-container *ngIf="loading.infor">
-                <app-loading></app-loading>
-            </ng-container>
-            <ng-container *ngIf="data.posts.length > 0; else nodata">
-                <ng-container *ngFor="let post of data.posts">
-                    <app-post [postInfor]="post" (oReloadComment)="onReloadComment($event)"
-                        (oChangeReact)="onChangeInteract($event)"></app-post>
-                </ng-container>
-            </ng-container>
-        </div>
+          </ng-container>
+        </nz-list>
+      </ng-container>
     </div>
+    <div class="tung-user-profile-content-item tung-user-profile-content-item-post">
+      <ng-container *ngIf="loading.infor">
+        <app-loading></app-loading>
+      </ng-container>
+      <ng-container *ngIf="data.posts.length > 0; else nodata">
+        <ng-container *ngFor="let post of data.posts">
+          <app-post [postInfor]="post" (oReloadComment)="onReloadComment($event)"
+            (oChangeReact)="onChangeInteract($event)"></app-post>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </div>
 
 <ng-template #nodata>
-    <ng-container *ngIf="!loading.infor">
-        <nz-empty [nzNotFoundContent]="''" [nzNotFoundImage]="'../../../../../assets/imgs/no-data.jpg'"></nz-empty>
-    </ng-container>
+  <ng-container *ngIf="!loading.infor">
+    <nz-empty [nzNotFoundContent]="''" [nzNotFoundImage]="'../../../../../assets/imgs/no-data.jpg'"></nz-empty>
+  </ng-container>
 </ng-template>
 
 <nz-modal [nzWidth]="'300px'" [nzCloseIcon]="''" [nzVisible]="visibleFollowModal">
-    <div *nzModalTitle>
+  <div *nzModalTitle>
+  </div>
+  <div *nzModalContent>
+    <div class="tung-follow-modal">
+      <ng-container *ngIf="data.showFollowList.length === 0">
+        <span>{{'Chưa có ai cả...'}}</span>
+      </ng-container>
+      <ng-container *ngIf="data.showFollowList.length > 0">
+        <ng-container *ngFor="let item of data.showFollowList">
+          <div class="tung-follow-item" (click)="goToProfile(item.userId)">
+            <div class="tung-follow-item-avatar">
+              <span>{{item.avatarText}}</span>
+            </div>
+            <div class="tung-follow-item-full-name">{{item.fullName}}</div>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
-    <div *nzModalContent>
-        <div class="tung-follow-modal">
-            <ng-container *ngIf="data.showFollowList.length === 0">
-                <span>{{'Chưa có ai cả...'}}</span>
-            </ng-container>
-            <ng-container *ngIf="data.showFollowList.length > 0">
-                <ng-container *ngFor="let item of data.showFollowList">
-                    <div class="tung-follow-item" (click)="goToProfile(item.userId)">
-                        <div class="tung-follow-item-avatar">
-                            <span>{{item.avatarText}}</span>
-                        </div>
-                        <div class="tung-follow-item-full-name">{{item.fullName}}</div>
-                    </div>
-                </ng-container>
-            </ng-container>
-        </div>
-    </div>
-    <div *nzModalFooter>
-        <button nz-button [nzType]="'primary'" [nzShape]="'round'" (click)="onToggleFollowModal(false)">
-            {{'Đóng'}}
-        </button>
-    </div>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button [nzType]="'primary'" [nzShape]="'round'" (click)="onToggleFollowModal(false)">
+      {{'Đóng'}}
+    </button>
+  </div>
 </nz-modal>

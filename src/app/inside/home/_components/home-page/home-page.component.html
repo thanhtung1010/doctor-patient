@@ -1,48 +1,47 @@
 <div class="tung-home" nz-col nzSpan="24">
-    <div class="tung-home-left" nz-col nzSpan="5">
-        <ng-container *ngIf="!loading.thread">
-            <div class="tung-thread-item tung-bold"
-                [ngClass]="{'tung-thread-item-active': params.threadFilter === 'ALL'}" (click)="onChangeThread('ALL')">
-                <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
-                {{'Tất cả bài viết'}}
-            </div>
-            <div class="tung-thread-item tung-bold"
-                [ngClass]="{'tung-thread-item-active': params.threadFilter === 'FOLLOW'}"
-                (click)="onChangeThread('FOLLOW')">
-                <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
-                {{'Bài viết đang theo dõi'}}
-            </div>
-            <ng-container *ngFor="let thread of data.threads">
-                <div class="tung-thread-item tung-bold"
-                    [ngClass]="{'tung-thread-item-active': params.threadFilter === thread.id}"
-                    (click)="onChangeThread(thread.id)">
-                    <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
-                    {{thread.name}}
-                </div>
-            </ng-container>
-        </ng-container>
-    </div>
-    <div class="tung-home-center" nz-col nzSpan="14">
-        <ng-container *ngIf="allowCreatePost">
-            <app-write-content (onSubmitPostSuccess)="getPost()"></app-write-content>
-        </ng-container>
-        <div class="tung-home-center-list-content">
-            <ng-container *ngIf="loading.post">
-                <app-loading></app-loading>
-            </ng-container>
-            <ng-container *ngIf="data.posts.length > 0; else nodata">
-                <ng-container *ngFor="let post of data.posts">
-                    <app-post [postInfor]="post" (oReloadComment)="onReloadComment($event)"
-                        (oChangeReact)="onChangeInteract($event)"></app-post>
-                </ng-container>
-            </ng-container>
+  <div class="tung-home-left" nz-col nzSpan="5">
+    <ng-container *ngIf="!loading.thread">
+      <div class="tung-thread-item tung-bold" [ngClass]="{'tung-thread-item-active': params.threadFilter === 'ALL'}"
+        (click)="onChangeThread('ALL')">
+        <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
+        {{'Tất cả bài viết'}}
+      </div>
+      <div class="tung-thread-item tung-bold" [ngClass]="{'tung-thread-item-active': params.threadFilter === 'FOLLOW'}"
+        (click)="onChangeThread('FOLLOW')">
+        <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
+        {{'Bài viết đang theo dõi'}}
+      </div>
+      <ng-container *ngFor="let thread of data.threads">
+        <div class="tung-thread-item tung-bold"
+          [ngClass]="{'tung-thread-item-active': params.threadFilter === thread.id}"
+          (click)="onChangeThread(thread.id)">
+          <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
+          {{thread.name}}
         </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="tung-home-center" nz-col nzSpan="14">
+    <ng-container *ngIf="allowCreatePost">
+      <app-write-content (onSubmitPostSuccess)="getPost()"></app-write-content>
+    </ng-container>
+    <div class="tung-home-center-list-content">
+      <ng-container *ngIf="loading.post">
+        <app-loading></app-loading>
+      </ng-container>
+      <ng-container *ngIf="data.posts.length > 0; else nodata">
+        <ng-container *ngFor="let post of data.posts">
+          <app-post [postInfor]="post" (oReloadComment)="onReloadComment($event)" (oDeletePost)="getPost()"
+            (oEditPost)="getPost()" (oChangeReact)="onChangeInteract($event)"></app-post>
+        </ng-container>
+      </ng-container>
     </div>
-    <div class="tung-home-right" nz-col nzSpan="5"></div>
+  </div>
+  <div class="tung-home-right" nz-col nzSpan="5"></div>
 </div>
 
 <ng-template #nodata>
-    <ng-container *ngIf="!loading.post">
-        <nz-empty [nzNotFoundContent]="''" [nzNotFoundImage]="'../../../../../assets/imgs/no-data.jpg'"></nz-empty>
-    </ng-container>
+  <ng-container *ngIf="!loading.post">
+    <nz-empty [nzNotFoundContent]="''" [nzNotFoundImage]="'../../../../../assets/imgs/no-data.jpg'"></nz-empty>
+  </ng-container>
 </ng-template>

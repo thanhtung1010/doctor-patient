@@ -3,97 +3,101 @@ import { APIService } from "app/_cores/_services/api.service";
 import { API_POST, API_URL } from "../_enum/api.enum";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 
 export class ShareService {
-    constructor(
-        private api: APIService
-    ) { }
+  constructor(
+    private api: APIService
+  ) { }
 
-    uploadImg(_params: any) {
-        return this.api.callApiUpload(API_URL['UPLOAD_IMG'], _params);
-    }
+  uploadImg(_params: any) {
+    return this.api.callApiUpload(API_URL['UPLOAD_IMG'], _params);
+  }
 
-    uploadImgWithHTTPRequest(_params: any) {
-        return this.api.callUploadHTTPRequest(API_URL['UPLOAD_IMG'], _params);
-    }
+  uploadImgWithHTTPRequest(_params: any) {
+    return this.api.callUploadHTTPRequest(API_URL['UPLOAD_IMG'], _params);
+  }
 
-    getThread() {
-        return this.api.callApi(API_POST['GET_ALL_THREAD'], {});
-    }
+  getThread() {
+    return this.api.callApi(API_POST['GET_ALL_THREAD'], {});
+  }
 
-    createPost(_params: any) {
-        return this.api.callApi(API_POST['CREATE_POST'], _params);
-    }
+  createPost(_params: any) {
+    return this.api.callApi(API_POST['CREATE_POST'], _params);
+  }
 
-    getAllPost() {
-        return this.api.callApi(API_POST['GET_ALL_POST'], {});
-    }
+  getAllPost() {
+    return this.api.callApi(API_POST['GET_ALL_POST'], {});
+  }
 
-    getPostFollowing() {
-        return this.api.callApi(API_POST['GET_POST_FOLLOWING'], {});
-    }
+  getPostFollowing() {
+    return this.api.callApi(API_POST['GET_POST_FOLLOWING'], {});
+  }
 
-    getPostByID(_params: any) {
-        return this.api.callApi(API_POST['GET_POST_BY_ID'], _params);
-    }
+  getPostByID(_params: any) {
+    return this.api.callApi(API_POST['GET_POST_BY_ID'], _params);
+  }
 
-    getPostByThread(_params: any) {
-        return this.api.callApi(API_POST['GET_POST_BY_THREAD'], _params);
-    }
+  getPostByThread(_params: any) {
+    return this.api.callApi(API_POST['GET_POST_BY_THREAD'], _params);
+  }
 
-    deletePost(_params: any) {
-        return this.api.callApi(API_POST['DELETE_POST'], _params);
-    }
+  deletePost(_params: any) {
+    return this.api.callApi(API_POST['DELETE_POST'], _params);
+  }
 
-    commentPost(_params: any) {
-        return this.api.callApi(API_POST['COMMENT_POST'], _params);
-    }
+  commentPost(_params: any) {
+    return this.api.callApi(API_POST['COMMENT_POST'], _params);
+  }
 
-    getCommentByPosyId(id: number) {
-        return this.api.callApi({
-            ...API_POST['GET_COMMENT_BY_POST_ID'],
-            url: API_POST['GET_COMMENT_BY_POST_ID'].url + id
-        }, {});
-    }
+  editPost(_params: any) {
+    return this.api.callApi(API_POST['EDIT_POST'], _params);
+  }
 
-    interactPost(id: any, _params: any) {
-        return this.api.callApi({
-            ...API_POST['INTERACT_POST'],
-            url: API_POST['INTERACT_POST'].url + id
-        }, _params);
-    }
+  getCommentByPosyId(id: number) {
+    return this.api.callApi({
+      ...API_POST['GET_COMMENT_BY_POST_ID'],
+      url: API_POST['GET_COMMENT_BY_POST_ID'].url + id
+    }, {});
+  }
 
-    checkInteractPost(id: any) {
-        return this.api.callApi({
-            ...API_POST['CHECK_INTERACT_POST'],
-            url: API_POST['CHECK_INTERACT_POST'].url + id
-        }, {});
-    }
+  interactPost(id: any, _params: any) {
+    return this.api.callApi({
+      ...API_POST['INTERACT_POST'],
+      url: API_POST['INTERACT_POST'].url + id
+    }, _params);
+  }
 
-    toggleFollow(id: any) {
-        return this.api.callApi({
-            ...API_POST['TOGGLE_FOLLOW'],
-            url: API_POST['TOGGLE_FOLLOW'].url + id
-        }, {});
-    }
+  checkInteractPost(id: any) {
+    return this.api.callApi({
+      ...API_POST['CHECK_INTERACT_POST'],
+      url: API_POST['CHECK_INTERACT_POST'].url + id
+    }, {});
+  }
 
-    checkFollow(id: any) {
-        return this.api.callApi({
-            ...API_POST['CHECK_FOLLOW'],
-            url: API_POST['CHECK_FOLLOW'].url + id
-        }, {});
-    }
+  toggleFollow(id: any) {
+    return this.api.callApi({
+      ...API_POST['TOGGLE_FOLLOW'],
+      url: API_POST['TOGGLE_FOLLOW'].url + id
+    }, {});
+  }
 
-    getMyFollow() {
-        return this.api.callApi(API_POST['GET_MY_FOLLOW'], {});
-    }
+  checkFollow(id: any) {
+    return this.api.callApi({
+      ...API_POST['CHECK_FOLLOW'],
+      url: API_POST['CHECK_FOLLOW'].url + id
+    }, {});
+  }
 
-    getUserFollow(id: any) {
-        return this.api.callApi({
-            ...API_POST['GET_USER_FOLLOW_LIST'],
-            url: API_POST['GET_USER_FOLLOW_LIST'].url + id
-        }, {});
-    }
+  getMyFollow() {
+    return this.api.callApi(API_POST['GET_MY_FOLLOW'], {});
+  }
+
+  getUserFollow(id: any) {
+    return this.api.callApi({
+      ...API_POST['GET_USER_FOLLOW_LIST'],
+      url: API_POST['GET_USER_FOLLOW_LIST'].url + id
+    }, {});
+  }
 }

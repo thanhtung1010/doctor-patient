@@ -13,4 +13,5 @@ export interface IPost {
     totalDislike?: number;
     commentList?: IComment[];
     isDoctor: boolean | null;
+  visibleAction: boolean;
 }

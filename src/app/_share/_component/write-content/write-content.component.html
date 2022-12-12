@@ -1,104 +1,121 @@
-<ng-container *ngIf="isPopup || !visibleCreatePostModal">
-    <div class="tung-wc-btn" (click)="onToggleCreatePostModal(true)">
-        <div class="tung-wc-btn-avatar">
-            <span class="tung-fs-10 tung-bold">
-                {{avatarText}}
-            </span>
-        </div>
-        <div class="tung-wc-btn-input">
-            <span>
-                {{isComment ? 'Chia sẻ cảm nghĩ của bạn' : ('COMMON.CREATE_POST' | translate)}}
-            </span>
-        </div>
+<ng-container *ngIf="(isPopup || !visibleCreatePostModal) && !isUpdate">
+  <div class="tung-wc-btn" (click)="onToggleCreatePostModal(true)">
+    <div class="tung-wc-btn-avatar">
+      <span class="tung-fs-10 tung-bold">
+        {{avatarText}}
+      </span>
     </div>
+    <div class="tung-wc-btn-input">
+      <span>
+        {{isComment ? 'Chia sẻ cảm nghĩ của bạn' : ('COMMON.CREATE_POST' | translate)}}
+      </span>
+    </div>
+  </div>
 </ng-container>
 
-<ng-container *ngIf="visibleCreatePostModal && !isPopup">
+<ng-container *ngIf="visibleCreatePostModal && !isPopup && !isUpdate">
+  <ng-container [ngTemplateOutlet]="form"></ng-container>
+  <div>
+    <button nz-button [disabled]="!formPost || !formPost.valid || loading.uploadImage || loading.post"
+      (click)="onSubmitComment()" [nzType]="'primary'" [nzShape]="'round'">
+      {{'BTN_CONFIRM' | translate}}
+    </button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isUpdate">
+  <div>
     <ng-container [ngTemplateOutlet]="form"></ng-container>
-    <div>
-        <button nz-button [disabled]="!formPost || !formPost.valid || loading.uploadImage || loading.post"
-            (click)="onSubmitComment()" [nzType]="'primary'" [nzShape]="'round'">
-            {{'BTN_CONFIRM' | translate}}
-        </button>
-    </div>
+  </div>
+  <div [style.text-align]="'end'">
+    <button nz-button class="tung-mr-10" [nzType]="'primary'" [nzShape]="'round'"
+      (click)="onToggleVisibleEditModal(false)">
+      {{'BTN_CANCEL' | translate}}
+    </button>
+    <button nz-button
+      [disabled]="!formPost || !formPost.valid || loading.uploadImage || loading.post || loading.uploadThumnailImage"
+      (click)="onEdit()" [nzType]="'primary'" [nzShape]="'round'">
+      {{'BTN_CONFIRM' | translate}}
+    </button>
+  </div>
 </ng-container>
 
-<nz-modal [nzWidth]="'50vw'" [nzCloseIcon]="''" [nzVisible]="visibleCreatePostModal && isPopup">
-
-    <div *nzModalContent>
-        <ng-container [ngTemplateOutlet]="form"></ng-container>
-    </div>
-    <div *nzModalFooter>
-        <button nz-button [nzType]="'primary'" [nzShape]="'round'" (click)="onToggleCreatePostModal(false)">
-            {{'BTN_CANCEL' | translate}}
-        </button>
-        <button nz-button [disabled]="!formPost || !formPost.valid || loading.uploadImage || loading.post || loading.uploadThumnailImage"
-            (click)="onSubmit()" [nzType]="'primary'" [nzShape]="'round'">
-            {{'BTN_CONFIRM' | translate}}
-        </button>
-    </div>
+<nz-modal [nzWidth]="'50vw'" [nzCloseIcon]="''" [nzVisible]="visibleCreatePostModal && isPopup && !isUpdate">
+  <div *nzModalContent>
+    <ng-container [ngTemplateOutlet]="form"></ng-container>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button [nzType]="'primary'" [nzShape]="'round'" (click)="onToggleCreatePostModal(false)">
+      {{'BTN_CANCEL' | translate}}
+    </button>
+    <button nz-button
+      [disabled]="!formPost || !formPost.valid || loading.uploadImage || loading.post || loading.uploadThumnailImage"
+      (click)="onSubmit()" [nzType]="'primary'" [nzShape]="'round'">
+      {{'BTN_CONFIRM' | translate}}
+    </button>
+  </div>
 </nz-modal>
 
 <ng-template #form>
-    <ng-container *ngIf="formPost">
-        <form [formGroup]="formPost" [ngClass]="{'tung-disabled': loading.post}">
-            <div nz-row>
-                <ng-container *ngIf="formPost.contains('title')">
-                    <div nz-col nzSpan="16">
-                        <nz-form-item>
-                            <nz-form-control [nzErrorTip]="confirmError">
-                                <label class="tung-label tung-bold tung-pl-10 tung-required">
-                                    {{'POST.TITLE' | translate}}
-                                </label>
-                                <input [type]="'text'" nz-input formControlName="title"
-                                    [placeholder]="'POST.TITLE_HOLDER' | translate" class="tung-br-25" />
-                            </nz-form-control>
-                        </nz-form-item>
-                    </div>
-                </ng-container>
+  <ng-container *ngIf="formPost">
+    <form [formGroup]="formPost" [ngClass]="{'tung-disabled': loading.post}">
+      <div nz-row>
+        <ng-container *ngIf="formPost.contains('title')">
+          <div nz-col nzSpan="16">
+            <nz-form-item>
+              <nz-form-control [nzErrorTip]="confirmError">
+                <label class="tung-label tung-bold tung-required">
+                  {{'POST.TITLE' | translate}}
+                </label>
+                <input [type]="'text'" nz-input formControlName="title" [placeholder]="'POST.TITLE_HOLDER' | translate"
+                  class="tung-br-25" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </ng-container>
 
-                <ng-container *ngIf="formPost.contains('threadId')">
-                    <div nz-col nzSpan="8" class="tung-pl-10">
-                        <nz-form-item>
-                            <nz-form-control [nzErrorTip]="confirmError">
-                                <label class="tung-label tung-bold tung-pl-10 tung-required">{{'POST.THREAD'
-                                    |
-                                    translate}}</label>
-                                <nz-select nzShowSearch [nzSuffixIcon]="icon"
-                                    [nzPlaceHolder]="'BOOKING.SPECIALIST_HOLDER' | translate" formControlName="threadId"
-                                    [nzLoading]="loading.thread">
-                                    <ng-container *ngFor="let thread of data.threads">
-                                        <nz-option [nzValue]="thread.id" [nzLabel]="thread.name | translate">
-                                        </nz-option>
-                                    </ng-container>
-                                </nz-select>
-                            </nz-form-control>
-                        </nz-form-item>
-                    </div>
-                </ng-container>
+        <ng-container *ngIf="formPost.contains('threadId')">
+          <div nz-col nzSpan="8" class="tung-pl-10">
+            <nz-form-item>
+              <nz-form-control [nzErrorTip]="confirmError">
+                <label class="tung-label tung-bold tung-required">{{'POST.THREAD'
+                  |
+                  translate}}</label>
+                <nz-select nzShowSearch [nzSuffixIcon]="icon" [nzPlaceHolder]="'BOOKING.SPECIALIST_HOLDER' | translate"
+                  formControlName="threadId" [nzLoading]="loading.thread">
+                  <ng-container *ngFor="let thread of data.threads">
+                    <nz-option [nzValue]="thread.id" [nzLabel]="thread.name | translate">
+                    </nz-option>
+                  </ng-container>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </ng-container>
 
-                <ng-container *ngIf="formPost.contains('thumbnailImage')">
-                    <app-upload-file (emitImgUrl)="onChange('thumnail', $event)" (emitLoadingStt)="onChangeLoadingThumnail($event)"></app-upload-file>
-                </ng-container>
-            </div>
-            <ng-container *ngIf="formPost.contains('content')">
-                <nz-form-item>
-                    <nz-form-control [nzErrorTip]="confirmError">
-                        <angular-editor formControlName="content" [config]="editorConfig"></angular-editor>
-                    </nz-form-control>
-                </nz-form-item>
-            </ng-container>
-        </form>
-    </ng-container>
+        <ng-container *ngIf="formPost.contains('thumbnailImage')">
+          <app-upload-file (emitImgUrl)="onChange('thumnail', $event)"
+            (emitLoadingStt)="onChangeLoadingThumnail($event)"></app-upload-file>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="formPost.contains('content')">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="confirmError">
+            <angular-editor formControlName="content" [config]="editorConfig"></angular-editor>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+    </form>
+  </ng-container>
 </ng-template>
 
 
 <ng-template #confirmError let-control>
-    <app-error [control]=" control"></app-error>
+  <app-error [control]=" control"></app-error>
 </ng-template>
 
 <ng-template #icon>
-    <svg style="width: 8px; height: 8px;">
-        <use xlink:href="#play-icon-down"></use>
-    </svg>
+  <svg style="width: 8px; height: 8px;">
+    <use xlink:href="#play-icon-down"></use>
+  </svg>
 </ng-template>

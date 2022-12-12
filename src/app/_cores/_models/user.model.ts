@@ -76,7 +76,7 @@ export class AppUser {
 }
 
 export interface IUserProfile {
-  id?: number;
+  id: number;
   email: string;
   fullName: string;
   gender: number;
@@ -85,5 +85,7 @@ export interface IUserProfile {
   phone: string;
   totalFollower: number;
   totalFollowing: number;
+  specialist?: string;
+  doctorId?: number;
 }
 

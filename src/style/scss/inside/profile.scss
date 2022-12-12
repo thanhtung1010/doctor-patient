@@ -1,199 +1,209 @@
 &-profile {
-    background-image: url('../../../assets/imgs/background-home.png');
-    padding-left: 10vh;
-    padding-right: 10vh;
-    padding-top: 10px;
-    height: 90vh;
+  background-image: url('../../../assets/imgs/background-home.png');
+  padding-left: 10vh;
+  padding-right: 10vh;
+  padding-top: 10px;
+  height: 90vh;
 }
 
 &-user-profile {
 
-    &-head {
-        height: 50px;
-        background-color: $whiteColor;
-        border-radius: 10px;
-        box-shadow: 0px 0px 3px $shadow;
-        display: flex;
-        margin: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-        justify-content: center;
+  &-head {
+    height: 50px;
+    background-color: $whiteColor;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px $shadow;
+    display: flex;
+    margin: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
 
-        &-item {
-            cursor: pointer;
+    &-item {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $mainColor;
+      margin: 5px;
+
+      &-active {
+        border-bottom: 2px solid $mainColor;
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  &-content {
+    display: flex;
+
+    &-item {
+      box-shadow: 0px 0px 3px $shadow;
+      background-color: $whiteColor;
+      border-radius: 10px;
+
+      &-infor {
+        margin: 5px;
+        width: 30%;
+        padding: 5px;
+        height: fit-content;
+        min-height: 200px;
+        max-height: 75vh;
+        overflow: auto;
+
+        &-wrap {
+          display: flex;
+          justify-content: center;
+          position: relative;
+
+          &-avatar {
+            height: 100px;
+            width: 100px;
+            border-radius: 50px;
+            box-shadow: 0px 0px 3px $mainColor;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-size: 30px;
+            font-weight: bold;
             color: $mainColor;
-            margin: 5px;
+          }
+
+          &-follow {
+            position: absolute;
+            bottom: -10px;
+            background-color: $whiteColor;
+            cursor: pointer;
+            z-index: 999;
+
+            .anticon {
+              font-size: 20px;
+              color: $mainColor;
+            }
 
             &-active {
-                border-bottom: 2px solid $mainColor;
-                margin-bottom: 3px;
-            }
-        }
-    }
 
-    &-content {
+              .anticon {
+                color: $lightGreenColor;
+              }
+            }
+          }
+        }
+      }
+
+      &-post {
+        margin: 5px;
+        width: 70%;
+        height: 75vh;
+        overflow: auto;
+        position: relative;
+        padding-top: 10px;
+      }
+
+      &-follow-infor {
         display: flex;
+        justify-content: space-around;
+        margin: 20px 0px 20px 0px;
+        cursor: pointer;
+        color: $mainColor;
 
-        &-item {
-            box-shadow: 0px 0px 3px $shadow;
-            background-color: $whiteColor;
-            border-radius: 10px;
+        .ant-btn {
+          color: $mainColor;
+          border-color: $mainColor;
 
-            &-infor {
-                margin: 5px;
-                width: 30%;
-                padding: 5px;
-                height: fit-content;
-                min-height: 200px;
-                max-height: 75vh;
-                overflow: auto;
-
-                &-wrap {
-                    display: flex;
-                    justify-content: center;
-                    position: relative;
-
-                    &-avatar {
-                        height: 100px;
-                        width: 100px;
-                        border-radius: 50px;
-                        box-shadow: 0px 0px 3px $mainColor;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        font-size: 30px;
-                        font-weight: bold;
-                        color: $mainColor;
-                    }
-
-                    &-follow {
-                        position: absolute;
-                        bottom: -10px;
-                        background-color: $whiteColor;
-                        cursor: pointer;
-                        z-index: 999;
-
-                        .anticon {
-                            font-size: 20px;
-                            color: $mainColor;
-                        }
-
-                        &-active {
-
-                            .anticon {
-                                color: $lightGreenColor;
-                            }
-                        }
-                    }
-                }
-            }
-
-            &-post {
-                margin: 5px;
-                width: 70%;
-                height: 75vh;
-                overflow: auto;
-                position: relative;
-                padding-top: 10px;
-            }
-
-            &-follow-infor {
-                display: flex;
-                justify-content: space-around;
-                margin: 20px 0px 20px 0px;
-                cursor: pointer;
-                color: $mainColor;
-            }
+          &:hover {
+            background-color: $mainColor;
+            color: $whiteColor;
+          }
         }
+      }
     }
+  }
 }
 
 &-user-calendar {
-    width: 80%;
-    height: 80vh;
-    background-color: $whiteColor;
-    margin: auto;
-    border-radius: 10px;
-    box-shadow: 0px 0px 3px $shadow;
+  width: 80%;
+  height: 80vh;
+  background-color: $whiteColor;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px $shadow;
 
-    &-head {
-        height: 50px;
-        border-bottom: 1px solid $shadow;
-        margin: 0px 10px 0px 10px;
+  &-head {
+    height: 50px;
+    border-bottom: 1px solid $shadow;
+    margin: 0px 10px 0px 10px;
 
-        &-select-date {
-            padding: 10px;
-        }
-
-        .ant-picker {
-            margin: auto;
-        }
-
-        &-book {
-            padding: 0px 10px 0px 10px;
-            display: flex;
-
-            &-btn {
-                margin: auto 0px auto 0px;
-            }
-        }
-
-        .ant-btn {
-            border: unset;
-            background-color: $mainColor;
-            color: $whiteColor;
-
-            &:hover {
-                background-color: $secondColor;
-            }
-        }
+    &-select-date {
+      padding: 10px;
     }
 
-    &-content {
-        margin: 10px 0px 10px 0px;
+    .ant-picker {
+      margin: auto;
     }
+
+    &-book {
+      padding: 0px 10px 0px 10px;
+      display: flex;
+
+      &-btn {
+        margin: auto 0px auto 0px;
+      }
+    }
+
+    .ant-btn {
+      border: unset;
+      background-color: $mainColor;
+      color: $whiteColor;
+
+      &:hover {
+        background-color: $secondColor;
+      }
+    }
+  }
+
+  &-content {
+    margin: 10px 0px 10px 0px;
+  }
 }
 
 &-follow-modal {
-    color: $mainColor;
-    max-height: 600px;
-    overflow: scroll auto;
+  color: $mainColor;
+  max-height: 600px;
+  overflow: scroll auto;
 }
 
 &-follow-item {
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+
+  &-avatar {
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+    box-shadow: 0px 0px 3px $mainColor;
     display: flex;
-    justify-content: space-around;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: $mainColor;
+    margin-right: 10px;
+  }
 
-    &-avatar {
-        height: 30px;
-        width: 30px;
-        border-radius: 50px;
-        box-shadow: 0px 0px 3px $mainColor;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 15px;
-        font-weight: bold;
-        color: $mainColor;
-        margin-right: 10px;
-    }
+  &-full-name {
+    height: 30px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
 
-    &-full-name {
-        height: 30px;
-        width: 200px;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-    }
-
-    &:hover {
-        background-color: $lightShadow;
-    }
+  &:hover {
+    background-color: $lightShadow;
+  }
 
 }
