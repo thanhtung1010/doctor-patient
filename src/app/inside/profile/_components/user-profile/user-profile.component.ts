@@ -27,7 +27,8 @@ export class UserProfileComponent implements OnInit {
     userInforList: [] as {
       value: any,
       field: string,
-      title: string
+      title: string,
+      order: number
     }[],
     listFollower: [] as { userId: number, fullName: string, avatarText: string }[],
     listFollowing: [] as { userId: number, fullName: string, avatarText: string }[],
@@ -59,15 +60,17 @@ export class UserProfileComponent implements OnInit {
     this.userInfo = this.sessionSer.getUserInfor();
     if (this.userInfo && _.size(this.userInfo)) {
       for (const field in this.userInfo) {
-        const _title = this.getTitleByField(field);
-        if (_title) {
+        const _field = this.getTitleByField(field);
+        if (_field) {
           this.data.userInforList.push({
             value: this.getValueByField(field),
             field: field,
-            title: _title
+            title: _field.title,
+            order: _field.order
           });
         }
       }
+      this.data.userInforList = _.orderBy(this.data.userInforList, ['order']);
     }
   }
 
@@ -92,7 +95,11 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  getTitleByField(field: string): string | null {
+  getTitleByField(field: string): {
+    field: string,
+    title: string,
+    order: number
+} | null {
     return getTitleByField(field);
   }
 

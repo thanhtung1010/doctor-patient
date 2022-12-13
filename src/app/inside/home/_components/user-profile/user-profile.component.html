@@ -22,8 +22,10 @@
           </div>
         </div>
         <div class="tung-user-profile-content-item-follow-infor">
-          <app-booking [(visibleBookingModal)]="bookingData.visibleBookingModal" [doctorInfor]="bookingData.infor">
-          </app-booking>
+          <ng-container *ngIf="userInfo && userInfo.role === ROLE.DOCTOR">
+            <app-booking [(visibleBookingModal)]="bookingData.visibleBookingModal" [doctorInfor]="bookingData.infor">
+            </app-booking>
+          </ng-container>
         </div>
         <div class="tung-user-profile-content-item-follow-infor">
           <span (click)="onToggleFollowModal(true, true)">
@@ -48,12 +50,6 @@
                   {{'ROLE.' + item.value | translate}}
                 </nz-list-item>
               </ng-container>
-              <!-- <ng-container *ngSwitchCase="USER_FIELD.totalFollower">
-                                <nz-list-item>
-                                    <span>{{item.title | translate}}</span>
-                                    {{item.value || 0}}
-                                </nz-list-item>
-                            </ng-container> -->
 
               <ng-container *ngSwitchDefault>
                 <nz-list-item>
