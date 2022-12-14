@@ -13,7 +13,9 @@
     </nz-select>
   </div>
   <div class="tung-avatar">
-    <app-booking></app-booking>
+    <ng-container *ngIf="showBookingHeader">
+      <app-booking></app-booking>
+    </ng-container>
     <div class="tung-w-10"></div>
     <ng-container *ngIf="isLogged; else noAuth">
       <app-avatar></app-avatar>

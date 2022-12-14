@@ -26,6 +26,10 @@ export class HeaderComponent implements OnInit {
         doctorRaws: [] as IUserProfile[],
         doctors: [] as IUserProfile[],
     }
+
+    get showBookingHeader(): boolean {
+        return this.sessionSer.getRole() === ROLE.USER
+    }
     constructor(
         private _router: Router,
         private _activeRouter: ActivatedRoute,
