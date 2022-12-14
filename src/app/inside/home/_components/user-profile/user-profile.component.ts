@@ -14,6 +14,7 @@ import { SessionService } from "app/_share/_services/session.service";
 import { ShareService } from "app/_share/_services/share.service";
 import * as _ from "lodash";
 import { NzMessageService } from "ng-zorro-antd/message";
+import { USER_FIELD_NAME } from "../../_enums";
 
 @Component({
   selector: "app-user-profile",
@@ -30,7 +31,8 @@ export class UserProfileComponent implements OnInit {
     userInforList: [] as {
       value: any,
       field: string,
-      title: string
+      title: string,
+      order: number
     }[],
     listFollower: [] as { userId: number, fullName: string, avatarText: string }[],
     listFollowing: [] as { userId: number, fullName: string, avatarText: string }[],
@@ -40,6 +42,7 @@ export class UserProfileComponent implements OnInit {
     visibleBookingModal: false,
     infor: null as null | IDoctorBookingInfor
   };
+  ROLE = ROLE;
   loading = {
     infor: false,
     follow: false,
@@ -47,6 +50,37 @@ export class UserProfileComponent implements OnInit {
   }
   routerSub!: ActivatedRoute;
   USER_FIELD = USER_FIELD;
+  USER_FIELD_NAME = USER_FIELD_NAME;
+  showProfileByField = [
+    {
+      role: [ROLE.USER, ROLE.ADMIN],
+      fields: [
+        this.USER_FIELD_NAME.FULL_NAME,
+        this.USER_FIELD_NAME.ROLE,
+        this.USER_FIELD_NAME.EMAIL,
+        this.USER_FIELD_NAME.AGE,
+        this.USER_FIELD_NAME.GENDER,
+        this.USER_FIELD_NAME.PHONE,
+      ]
+    },
+    {
+      role: [ROLE.DOCTOR],
+      fields: [
+        this.USER_FIELD_NAME.FULL_NAME,
+        this.USER_FIELD_NAME.ROLE,
+        this.USER_FIELD_NAME.EMAIL,
+        this.USER_FIELD_NAME.AGE,
+        this.USER_FIELD_NAME.GENDER,
+        this.USER_FIELD_NAME.PHONE,
+        this.USER_FIELD_NAME.CERTIFICATE,
+        this.USER_FIELD_NAME.DEGREE,
+        this.USER_FIELD_NAME.STARTWORKATTIME,
+        this.USER_FIELD_NAME.ENDWORKATTIME,
+        this.USER_FIELD_NAME.WORKINGAT,
+        this.USER_FIELD_NAME.WORKAT,
+      ]
+    },
+  ];
   visibleFollowModal: boolean = false;
   constructor(
     private translate: TranslateService,
@@ -92,6 +126,8 @@ export class UserProfileComponent implements OnInit {
                   commentList: _.orderBy([...post.commentList], ['createdAt'], ['desc'])
                 }
               }), ['createAt'], ['desc'])
+            } else {
+              this.data.posts = [];
             }
             this.getListUserInfor();
             this.avatarText = this.getTextAvatar();
@@ -126,21 +162,35 @@ export class UserProfileComponent implements OnInit {
   }
 
   getListUserInfor() {
+    this.data.userInforList = [];
     if (this.userInfo && _.size(this.userInfo)) {
       for (const field in this.userInfo) {
-        const _title = this.getTitleByField(field);
-        if (_title) {
+        const _field = this.getTitleByField(field);
+        if (_field && this.checkFieldByRole(field)) {
           this.data.userInforList.push({
             value: this.getValueByField(field),
             field: field,
-            title: _title
+            title: _field.title,
+            order: _field.order
           });
         }
       }
+      this.data.userInforList = _.orderBy(this.data.userInforList, ['order'])
     }
   }
 
-  getTitleByField(field: string): string | null {
+  checkFieldByRole(field: any): boolean {
+    if (!this.userInfo) return false;
+    const _fieldNameByRole = this.showProfileByField.find(item => item.role.includes((this.userInfo?.role || '') as any));
+    if (!_fieldNameByRole) return false;
+    return _fieldNameByRole.fields.includes(field);
+  }
+
+  getTitleByField(field: string): {
+    field: string,
+    title: string,
+    order: number
+} | null {
     return getTitleByField(field);
   }
 

@@ -3,19 +3,19 @@
     <ng-container *ngIf="!loading.thread">
       <div class="tung-thread-item tung-bold" [ngClass]="{'tung-thread-item-active': params.threadFilter === 'ALL'}"
         (click)="onChangeThread('ALL')">
-        <span class="tung-mr-10" nz-icon nzType="search" nzTheme="outline"></span>
+        <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
         {{'Tất cả bài viết'}}
       </div>
       <div class="tung-thread-item tung-bold" [ngClass]="{'tung-thread-item-active': params.threadFilter === 'FOLLOW'}"
         (click)="onChangeThread('FOLLOW')">
-        <span class="tung-mr-10" nz-icon nzType="search" nzTheme="outline"></span>
+        <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
         {{'Bài viết đang theo dõi'}}
       </div>
       <ng-container *ngFor="let thread of data.threads">
         <div class="tung-thread-item tung-bold"
           [ngClass]="{'tung-thread-item-active': params.threadFilter === thread.id}"
           (click)="onChangeThread(thread.id)">
-          <span class="tung-mr-10" nz-icon nzType="search" nzTheme="outline"></span>
+          <span class="tung-mr-5" nz-icon nzType="minus" nzTheme="outline"></span>
           {{thread.name}}
         </div>
       </ng-container>

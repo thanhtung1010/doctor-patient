@@ -87,5 +87,11 @@ export interface IUserProfile {
   totalFollowing: number;
   specialist?: string;
   doctorId?: number;
+  certificate?: string;
+  degree?: string;
+  startWorkAtTime?: string;
+  endWorkAtTime?: string;
+  workingAt?: string;
+  workAt?: string;
 }
 

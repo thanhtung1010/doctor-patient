@@ -211,6 +211,10 @@
 .ant-list-item {
   color: $mainColor;
   padding: 10px 5px;
+
+  span {
+    width: 40%;
+  }
 }
 
 // .ant-modal-close-x {

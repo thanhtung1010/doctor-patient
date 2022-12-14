@@ -19,7 +19,13 @@
         "APPOINTMENT_SCHEDULE": "Appointment Schedule",
         "CREATE_POST": "Create New Post",
         "ENTER_YOUR_CONTENT": "Enter Your Content",
-        "FOLLOWER": "Follower"
+        "FOLLOWER": "Follower",
+        "CERTIFICATE": "Học vấn",
+        "DEGREE": "Chuyên khoa",
+        "STARTWORKATTIME": "Thời gian bắt đầu",
+        "ENDWORKATTIME": "Thời gian kết thúc",
+        "WORKINGAT": "Nơi làm việc",
+        "WORKAT": "Ngày làm việc"
     },
     "TITLE": "CHILD CARE",
     "OUTSIDE": {
