@@ -125,7 +125,7 @@ export class BookedManagerComponent implements OnInit {
                         cookedList.push({
                             bookedAt: item.bookedAt,
                             doctorName: childById[0].doctorName || '',
-                            createdBy: childById[0].doctorName || '',
+                            createdBy: childById[0].createdBy || '',
                             children: this.cookingShifts(childById),
                         })
                     });
@@ -133,7 +133,7 @@ export class BookedManagerComponent implements OnInit {
                     cookedList.push(_.cloneDeep({
                         ...item,
                         doctorName: item.children[0].doctorName || '',
-                        createdBy: item.children[0].doctorName || '',
+                        createdBy: item.children[0].createdBy || '',
                         children: this.cookingShifts(item.children),
                     }));
                 }
